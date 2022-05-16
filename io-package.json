@@ -1,0 +1,100 @@
+{
+    "common": {
+        "name": "pjlink",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Control a projector via PJLink",
+        "titleLang": {
+            "en": "Control a projector via PJLink",
+            "de": "Steuern Sie einen Projektor über PJLink",
+            "ru": "Управление проектором через PJLink",
+            "pt": "Controle um projetor via PJLink",
+            "nl": "Bedien een projector via PJLink",
+            "fr": "Contrôler un projecteur via PJLink",
+            "it": "Controlla un proiettore tramite PJLink",
+            "es": "Controlar un proyector a través de PJLink",
+            "pl": "Steruj projektorem przez PJLink",
+            "zh-cn": "通过 PJLink 控制投影仪"
+        },
+        "desc": {
+            "en": "PJLink Protector controll",
+            "de": "PJLink Protector-Steuerung",
+            "ru": "Управление защитой PJLink",
+            "pt": "Controle PJLink Protector",
+            "nl": "PJLink Protector-besturing",
+            "fr": "Contrôle PJLink Protector",
+            "it": "Controllo PJLink Protector",
+            "es": "Control protector PJLink",
+            "pl": "Kontrola PJLink Protector",
+            "zh-cn": "PJLink 保护器控制器"
+        },
+        "authors": [
+            "Bannsaenger <bannsaenger@gmx.de>"
+        ],
+        "keywords": [
+            "pjlink",
+            "projector"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "pjlink.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/Bannsaenger/ioBroker.pjlink/main/admin/pjlink.png",
+        "readme": "https://github.com/Bannsaenger/ioBroker.pjlink/blob/main/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "multimedia",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "poll",
+        "materialize": true,
+        "eraseOnUpload": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
+    },
+    "native": {
+        "option1": true,
+        "option2": "42"
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "Device or service connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        }
+    ]
+}
