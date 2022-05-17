@@ -70,9 +70,13 @@
         ]
     },
     "native": {
-        "option1": true,
-        "option2": "42"
-    },
+        "host": "127.0.0.1",
+        "port": 23,
+        "projectorType": "Vivitek DU7098Z",
+        "pollDelay": 1000,
+        "reconnectDelay": 10000,
+        "answerTimeout": 500,
+        "inactivityTimeout": 10000    },
     "objects": [],
     "instanceObjects": [
         {
