@@ -13,7 +13,7 @@
 
 ## pjlink adapter for ioBroker
 
-PJLink Protector controll
+PJLink Projector controll
 
 ## Developer manual
 This section is intended for the developer. It can be deleted later
