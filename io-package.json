@@ -30,7 +30,7 @@
             "zh-cn": "通过 PJLink 控制投影仪"
         },
         "desc": {
-            "en": "PJLink Protector controll",
+            "en": "PJLink projector controll",
             "de": "PJLink Protector-Steuerung",
             "ru": "Управление защитой PJLink",
             "pt": "Controle PJLink Protector",
@@ -76,7 +76,8 @@
         "pollDelay": 1000,
         "reconnectDelay": 10000,
         "answerTimeout": 500,
-        "inactivityTimeout": 10000    },
+        "inactivityTimeout": 10000
+    },
     "objects": [],
     "instanceObjects": [
         {
