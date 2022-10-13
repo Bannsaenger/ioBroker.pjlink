@@ -99,7 +99,7 @@ class Pjlink extends utils.Adapter {
 	 */
     getProjectorStatus() {
         try {
-            this.log.info(`PJLink requesting projector status`);
+            this.log.debug(`PJLink requesting projector status`);
             this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
             this.projector.getInput(this.pjlinkAnswerHandler.bind(this, 'GETINPUT'));
             this.projector.getMute(this.pjlinkAnswerHandler.bind(this, 'GETMUTE'));
@@ -119,7 +119,7 @@ class Pjlink extends utils.Adapter {
 	 */
     getProjectorInformation() {
         try {
-            this.log.info(`PJLink requesting projector information`);
+            this.log.debug(`PJLink requesting projector information`);
             // first get all status states
             this.getProjectorStatus();
             // and then all additional information
@@ -161,7 +161,7 @@ class Pjlink extends utils.Adapter {
                 this.projector.powerOn();
                 return;
             }
-            if (powerStatus === 0) {
+            if (powerStatus === 1) {
                 this.log.info(`PJLink Projector is currently on. Trying to switch projector off`);
                 this.projector.powerOff();
                 return;
@@ -472,8 +472,12 @@ class Pjlink extends utils.Adapter {
     onStateChange(id, state) {
         try {
             if (state) {
+                if (state.ack) {
+                    this.log.debug(`PJLink state ${id} changed: ${state.val} (ack = ${state.ack})`);
+                } else {
+                    this.log.info(`PJLink state ${id} changed: ${state.val} (ack = ${state.ack})`);
+                }
                 // The state was changed
-                this.log.info(`PJLink state ${id} changed: ${state.val} (ack = ${state.ack})`);
                 if (!state.ack && state.val) {           // only if the state is set manually
                     const onlyId = id.replace(this.namespace + '.', '');
                     switch (onlyId) {
