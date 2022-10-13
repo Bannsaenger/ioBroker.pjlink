@@ -1,0 +1,19 @@
+{
+    "options": "opções",
+    "Host": "Hospedeiro",
+    "IP address or FQDN from the device": "Endereço IP ou FQDN do dispositivo",
+    "Port": "Port",
+    "TCP port (default: 4352, some older devices have: 10000)": "Port TCP (padrão: 4352, alguns dispositivos mais antigos têm: 10000)",
+    "Password": "Senha",
+    "maximum 32 ASCII Characters (could be left empty if projector security is set to OFF)": "máximo de 32 caracteres ASCII (podem ser deixados em branco se a segurança do projetor estiver DESLIGADA)",
+    "Class": "Classe",
+    "select the maximum supported class from the projector": "selecione a classe máxima suportada do projetor",
+    "Socket timeout": "tempo limite do soquete",
+    "sets the socket to timeout after timeout milliseconds of inactivity on the socket. Default: 800": "Define o soquete para o tempo limite após o tempo limite de milissegundos de inatividade no soquete. Padrão: 800",
+    "Status poll interval": "Intervalo de pesquisa de status",
+    "interval to refresh the power status, input switch and mute status": "intervalo para atualizar o status de energia, interruptor de entrada e status mudo (em ms)",
+    "Information poll interval": "Intervalo de pesquisa de informações",
+    "interval to refresh the whole projector status, default 60000 ms (1 minute)": "intervalo para atualizar todo o status do projetor, padrão 60.000 ms (1 minuto)",
+    "Reconnect timeout": "reconectar tempo limite",
+    "time to recheck the projector connection after a connection failure. Default: 10000 ms (10 Seconds)": "hora de verificar novamente a conexão do projetor após uma falha de conexão. Padrão: 10.000 ms (10 segundos)"
+}

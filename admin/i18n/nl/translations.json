@@ -1,0 +1,19 @@
+{
+    "options": "opties",
+    "Host": "Gastheer",
+    "IP address or FQDN from the device": "IP-adres of FQDN van het apparaat",
+    "Port": "Port",
+    "TCP port (default: 4352, some older devices have: 10000)": "TCP-Port (standaard: 4352, sommige oudere apparaten hebben: 10000)",
+    "Password": "Wachtwoord",
+    "maximum 32 ASCII Characters (could be left empty if projector security is set to OFF)": "maximaal 32 ASCII-tekens (kan leeg blijven als projectorbeveiliging is ingesteld op UIT)",
+    "Class": "Klas",
+    "select the maximum supported class from the projector": "selecteer de maximaal ondersteunde klasse van de projector",
+    "Socket timeout": "socket time-out",
+    "sets the socket to timeout after timeout milliseconds of inactivity on the socket. Default: 800": "Stelt de socket in op een time-out na een time-out van milliseconden inactiviteit op de socket. Standaard: 800",
+    "Status poll interval": "Interval status poll",
+    "interval to refresh the power status, input switch and mute status": "interval om de stroomstatus, ingangsschakelaar en mute-status te vernieuwen (in ms)",
+    "Information poll interval": "Interval informatie poll",
+    "interval to refresh the whole projector status, default 60000 ms (1 minute)": "interval om de hele projectorstatus te vernieuwen, standaard 60000 ms (1 minuut)",
+    "Reconnect timeout": "time-out opnieuw verbinden",
+    "time to recheck the projector connection after a connection failure. Default: 10000 ms (10 Seconds)": "tijd om de projectorverbinding opnieuw te controleren na een verbindingsfout. Standaard: 10000 ms (10 seconden)"
+}

@@ -1,0 +1,19 @@
+{
+    "options": "опции",
+    "Host": "Хозяин",
+    "IP address or FQDN from the device": "IP-адрес или полное доменное имя с устройства",
+    "Port": "Порт",
+    "TCP port (default: 4352, some older devices have: 10000)": "Порт TCP (по умолчанию: 4352, некоторые старые устройства имеют: 10000)",
+    "Password": "Пароль",
+    "maximum 32 ASCII Characters (could be left empty if projector security is set to OFF)": "максимум 32 символа ASCII (можно оставить пустым, если безопасность проектора отключена)",
+    "Class": "Учебный класс",
+    "select the maximum supported class from the projector": "выберите максимально поддерживаемый класс проектора",
+    "Socket timeout": "время ожидания сокета",
+    "sets the socket to timeout after timeout milliseconds of inactivity on the socket. Default: 800": "Устанавливает для сокета тайм-аут после тайм-аута в миллисекундах бездействия на сокете. По умолчанию: 800",
+    "Status poll interval": "Интервал опроса состояния",
+    "interval to refresh the power status, input switch and mute status": "интервал обновления состояния питания, входного переключателя и состояния отключения звука (в мс)",
+    "Information poll interval": "Интервал информационного опроса",
+    "interval to refresh the whole projector status, default 60000 ms (1 minute)": "интервал обновления всего состояния проектора, по умолчанию 60000 мс (1 минута)",
+    "Reconnect timeout": "время ожидания повторного подключения",
+    "time to recheck the projector connection after a connection failure. Default: 10000 ms (10 Seconds)": "время для повторной проверки подключения проектора после сбоя подключения. По умолчанию: 10000 мс (10 секунд)"
+}

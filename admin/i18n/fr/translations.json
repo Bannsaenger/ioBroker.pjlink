@@ -1,0 +1,19 @@
+{
+    "options": "choix",
+    "Host": "Héberger",
+    "IP address or FQDN from the device": "Adresse IP ou FQDN de l'appareil",
+    "Port": "Port",
+    "TCP port (default: 4352, some older devices have: 10000)": "Port TCP (par défaut : 4352, certains appareils plus anciens en ont : 10000)",
+    "Password": "Mot de passe",
+    "maximum 32 ASCII Characters (could be left empty if projector security is set to OFF)": "maximum 32 caractères ASCII (peut être laissé vide si la sécurité du projecteur est désactivée)",
+    "Class": "Classer",
+    "select the maximum supported class from the projector": "sélectionner la classe maximale prise en charge à partir du projecteur",
+    "Socket timeout": "délai d'attente de la prise",
+    "sets the socket to timeout after timeout milliseconds of inactivity on the socket. Default: 800": "Définit le délai d'expiration du socket après un délai d'expiration de millisecondes d'inactivité sur le socket. Par défaut : 800",
+    "Status poll interval": "Intervalle d'interrogation d'état",
+    "interval to refresh the power status, input switch and mute status": "intervalle de rafraîchissement de l'état de l'alimentation, du commutateur d'entrée et de l'état de la sourdine (en ms)",
+    "Information poll interval": "Intervalle d'interrogation des informations",
+    "interval to refresh the whole projector status, default 60000 ms (1 minute)": "intervalle pour rafraîchir l'ensemble de l'état du projecteur, par défaut 60000 ms (1 minute)",
+    "Reconnect timeout": "délai de reconnexion",
+    "time to recheck the projector connection after a connection failure. Default: 10000 ms (10 Seconds)": "temps de revérifier la connexion du projecteur après un échec de connexion. Par défaut : 10 000 ms (10 secondes)"
+}

@@ -5,8 +5,6 @@
 [![Downloads](https://img.shields.io/npm/dm/iobroker.pjlink.svg)](https://www.npmjs.com/package/iobroker.pjlink)
 ![Number of Installations](https://iobroker.live/badges/pjlink-installed.svg)
 ![Current version in stable repository](https://iobroker.live/badges/pjlink-stable.svg)
-[![Dependency Status](https://img.shields.io/david/Bannsaenger/iobroker.pjlink.svg)](https://david-dm.org/Bannsaenger/iobroker.pjlink)
-
 [![NPM](https://nodei.co/npm/iobroker.pjlink.png?downloads=true)](https://nodei.co/npm/iobroker.pjlink/)
 
 **Tests:** ![Test and Release](https://github.com/Bannsaenger/ioBroker.pjlink/workflows/Test%20and%20Release/badge.svg)
@@ -15,97 +13,74 @@
 
 PJLink Projector controll
 
-## Developer manual
-This section is intended for the developer. It can be deleted later
+**!! For now only class 1 protocol is supported**
 
-### Getting started
+## About PJLink
 
-You are almost done, only a few steps left:
-1. Create a new repository on GitHub with the name `ioBroker.pjlink`
+> PJLink is a unified standard for operating and controlling data projectors.
+PJLink enables central control of projectors manufactured by different vendors and projectors can be operated by a controller.
+PJLink compliant equipment can be managed and controlled at any time and in any place, regardless of manufacturer.
+PJLink is a new standard designed to make communication interfaces and communication protocols that have been different from one projector manufacturer to another uniform and common.
 
-1. Push all files to the GitHub repo. The creator has already set up the local repository for you:  
-    ```bash
-    git push origin main
-    ```
-1. Add a new secret under https://github.com/Bannsaenger/ioBroker.pjlink/settings/secrets. It must be named `AUTO_MERGE_TOKEN` and contain a personal access token with push access to the repository, e.g. yours. You can create a new token under https://github.com/settings/tokens.
+> PJLink compliant equipment features a high interconnectivity across different models and manufacturers, enabling easy construction of environments that are mixed with different models and systems and easy replacement of systems that are already in place.
 
-1. Head over to [main.js](main.js) and start programming!
+* [Taken from PJLink Homepage](https://pjlink.jbmia.or.jp/english/)
 
-### Best Practices
-We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
-check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
+## Credits
 
-### Scripts in `package.json`
-Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
-| Script name | Description |
-|-------------|-------------|
-| `build` | Compile the React sources. |
-| `watch` | Compile the React sources and watch for changes. |
-| `test:js` | Executes the tests you defined in `*.test.js` files. |
-| `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
-| `test:unit` | Tests the adapter startup with unit tests (fast, but might require module mocks to work). |
-| `test:integration` | Tests the adapter startup with an actual instance of ioBroker. |
-| `test` | Performs a minimal test run on package files and your tests. |
-| `check` | Performs a type-check on your code (without compiling anything). |
-| `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
-| `translate` | Translates texts in your adapter to all required languages, see [`@iobroker/adapter-dev`](https://github.com/ioBroker/adapter-dev#manage-translations) for more details. |
-| `release` | Creates a new release, see [`@alcalzone/release-script`](https://github.com/AlCalzone/release-script#usage) for more details. |
+The protocol is a trademark from: 
+**Copyrights © Japan Business Machine and Information System Industries Association. All Rights Reserved,**
+[PJLink Homepage](https://pjlink.jbmia.or.jp/english/)
 
-### Configuring the compilation
-The adapter template uses [esbuild](https://esbuild.github.io/) to compile TypeScript and/or React code. You can configure many compilation settings 
-either in `tsconfig.json` or by changing options for the build tasks. These options are described in detail in the
-[`@iobroker/adapter-dev` documentation](https://github.com/ioBroker/adapter-dev#compile-adapter-files).
+This work is based on the nodejs module with pjlink implementation from **sy1vain**:
+[https://github.com/sy1vain/node-pjlink](https://github.com/sy1vain/node-pjlink)
 
-### Writing tests
-When done right, testing code is invaluable, because it gives you the 
-confidence to change your code while knowing exactly if and when 
-something breaks. A good read on the topic of test-driven development 
-is https://hackernoon.com/introduction-to-test-driven-development-tdd-61a13bc92d92. 
-Although writing tests before the code might seem strange at first, but it has very 
-clear upsides.
+## ToDo
+* support the node-pjlink project to implement class 2
+* the INST query returns more information as only the availabel inputs. Additional information is added by the node-pjlink module. For now it is brought as stringified object to the database. May be changed to a "folder" with all inputs with their names etc.
+* include class 2 to this iobroker adapter
 
-The template provides you with basic tests for the adapter startup and package files.
-It is recommended that you add your own tests into the mix.
+## How the adapter works
+For now only class 1 is supported. This means the adapter can only poll the status.
+Active sending from status information from the device to the adapter can be
+added as soon as class 2 is supported.
 
-### Publishing the adapter
-Using GitHub Actions, you can enable automatic releases on npm whenever you push a new git tag that matches the form 
-`v<major>.<minor>.<patch>`. We **strongly recommend** that you do. The necessary steps are described in `.github/workflows/test-and-release.yml`.
+#### PJLink Class 1 inputs
 
-Since you installed the release script, you can create a new
-release simply by calling:
-```bash
-npm run release
-```
-Additional command line options for the release script are explained in the
-[release-script documentation](https://github.com/AlCalzone/release-script#command-line).
+* The inputs must be set as 2-digit numbers. The first digit describes the input type
 
-To get your adapter released in ioBroker, please refer to the documentation 
-of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
+| Type    | Number | possible Inputs |
+| ------- | ------ | --------------- |
+| RGB     | 1      | 1 - 9 |
+| VIDEO   | 2      | 1 - 9 |
+| DIGITAL | 3      | 1 - 9 |
+| STORAGE | 4      | 1 - 9 |
+| NETWORK | 5      | 1 - 9 |
 
-### Test the adapter manually on a local ioBroker installation
-In order to install the adapter locally without publishing, the following steps are recommended:
-1. Create a tarball from your dev directory:  
-    ```bash
-    npm pack
-    ```
-1. Upload the resulting file to your ioBroker host
-1. Install it locally (The paths are different on Windows):
-    ```bash
-    cd /opt/iobroker
-    npm i /path/to/tarball.tgz
-    ```
+The possible inputs can be found in the database after the adapter has been started under
+>pjlink.\<instance\>.deviceInfo.availableInputs
 
-For later updates, the above procedure is not necessary. Just do the following:
-1. Overwrite the changed files in the adapter directory (`/opt/iobroker/node_modules/iobroker.pjlink`)
-1. Execute `iobroker upload pjlink` on the ioBroker host
+### Power Switch
+With the state (set to **true**)
+
+>pjlink.\<instance\>.power
+
+the projector can be switched on **and** off depending on the current power state.
+
+>pjlink.\<instance\>.powerStatus
+
+The power switch will automatically return to **false**.
+
+#### Lamp status
+Only one lamp ist predefined in the database. If the lamp query returns more than one lamp,
+the other lamps will be added dynamically.
 
 ## Changelog
 <!--
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.0.1 (2022-10-13)
 * (Bannsaenger) initial release
 
 ## License

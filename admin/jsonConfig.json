@@ -1,0 +1,107 @@
+{
+    "i18n": true,
+    "type": "tabs",
+    "items": {
+        "_options": {
+            "type": "panel",
+            "label": "options",
+            "items": {
+                "host": {
+                    "type": "text",
+                    "maxLength": 255,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "label": "Host",
+                    "help": "IP address or FQDN from the device"
+                },
+                "port": {
+                    "type": "number",
+                    "min": 1,
+                    "max": 65565,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "label": "Port",
+                    "help": "TCP port (default: 4352, some older devices have: 10000)"
+                },
+                "password": {
+                    "type": "password",
+                    "maxLength": 32,
+                    "visible": false,
+                    "repeat": false,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "label": "Password",
+                    "help": "maximum 32 ASCII Characters (could be left empty if projector security is set to OFF)",
+                    "newLine": true
+                },
+                "class": {
+                    "type": "select",
+                    "options": [
+                        {
+                            "label": "Class 1",
+                            "value": 1
+                        },
+                        {
+                            "label": "Class 1 & 2",
+                            "value": 2
+                        }
+                    ],
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "label": "Class",
+                    "help": "select the maximum supported class from the projector",
+                    "disabled": "true"
+                },
+                "socketTimeout": {
+                    "type": "number",
+                    "min": 0,
+                    "max": 10000,
+                    "step": 10,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "label": "Socket timeout",
+                    "help": "sets the socket to timeout after timeout milliseconds of inactivity on the socket. Default: 800"
+                },
+                "reconnectDelay": {
+                    "type": "number",
+                    "min": 10000,
+                    "max": 3600000,
+                    "step": 1000,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "label": "Reconnect timeout",
+                    "help": "time to recheck the projector connection after a connection failure. Default: 10000 ms (10 Seconds)"
+                },
+                "statusDelay": {
+                    "type": "number",
+                    "min": 100,
+                    "max": 60000,
+                    "step": 10,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "label": "Status poll interval",
+                    "help": "interval to refresh the power status, input switch and mute status (in ms)",
+                    "newLine": true
+                },
+                "informationDelay": {
+                    "type": "number",
+                    "min": 1000,
+                    "max": 36000000,
+                    "step": 1000,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "label": "Information poll interval",
+                    "help": "interval to refresh the whole projector status, default 60000 ms (1 minute)"
+                }
+            }
+        }
+    }
+}

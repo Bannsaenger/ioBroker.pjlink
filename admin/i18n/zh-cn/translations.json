@@ -1,0 +1,19 @@
+{
+    "options": "选项",
+    "Host": "主持人",
+    "IP address or FQDN from the device": "设备的 IP 地址或 FQDN",
+    "Port": "港口",
+    "TCP port (default: 4352, some older devices have: 10000)": "TCP 端口（默认：4352，一些旧设备有：10000）",
+    "Password": "密码",
+    "maximum 32 ASCII Characters (could be left empty if projector security is set to OFF)": "最多 32 个 ASCII 字符（如果投影仪安全设置为关闭，则可以留空）",
+    "Class": "班级",
+    "select the maximum supported class from the projector": "从投影仪中选择最大支持的类别",
+    "Socket timeout": "套接字超时",
+    "sets the socket to timeout after timeout milliseconds of inactivity on the socket. Default: 800": "在套接字上的非活动超时毫秒后将套接字设置为超时。默认值：800",
+    "Status poll interval": "状态轮询间隔",
+    "interval to refresh the power status, input switch and mute status": "刷新电源状态、输入开关和静音状态的时间间隔（毫秒）",
+    "Information poll interval": "信息轮询间隔",
+    "interval to refresh the whole projector status, default 60000 ms (1 minute)": "刷新整个投影机状态的间隔，默认 60000 毫秒（1 分钟）",
+    "Reconnect timeout": "重新连接超时",
+    "time to recheck the projector connection after a connection failure. Default: 10000 ms (10 Seconds)": "连接失败后重新检查投影机连接的时间。默认值：10000 毫秒（10 秒）"
+}
