@@ -86,7 +86,7 @@
   "native": {
     "host": "127.0.0.1",
     "port": 4352,
-    "password": "JBMIAProjectorLink",
+    "password": "",
     "class": 1,
     "socketTimeout": 800,
     "statusDelay": 2000,
