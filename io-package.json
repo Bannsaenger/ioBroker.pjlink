@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pjlink",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "news": {
+      "0.0.3": {
+        "en": "updated react dependency",
+        "de": "aktualisierte reaktionsabhängigkeit",
+        "ru": "обновленная зависимость от реакции",
+        "pt": "dependência de reação atualizada",
+        "nl": "vertaling:",
+        "fr": "mise à jour de la dépendance",
+        "it": "la dipendenza da reagire aggiornata",
+        "es": "dependencia actualizada",
+        "pl": "reagować",
+        "uk": "оновлена залежність реактивності",
+        "zh-cn": "最新反应"
+      },
       "0.0.2": {
         "en": "changed some info logs to debug. Fixed one power state issue.\nredesign of timer and error handling",
         "de": "einige Info-Logs zum Debug geändert. Ein Power State Problem behoben.\nneugestaltung von timer und fehlerbehandlung",

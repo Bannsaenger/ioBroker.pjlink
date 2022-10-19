@@ -80,6 +80,9 @@ the other lamps will be added dynamically.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### 0.0.3 (2022-10-19)
+* (Bannsaenger) updated react dependency
+
 ### 0.0.2 (2022-10-19)
 * (Bannsaenger) changed some info logs to debug. Fixed one power state issue.
 * (Bannsaenger) redesign of timer and error handling
