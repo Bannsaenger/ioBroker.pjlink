@@ -59,7 +59,7 @@ class Pjlink extends utils.Adapter {
                 'host': this.config.host || '127.0.0.1',
                 'port': this.config.port || 4352,
                 'password': this.config.password || null,
-                'timeout': this.config.socketTimeout || 100
+                'timeout': this.config.socketTimeout || 0
             };
 
             // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.

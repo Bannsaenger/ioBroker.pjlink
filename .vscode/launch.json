@@ -4,13 +4,14 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
        {
            "name": "(PJLink) main.js --force starten",
             "type": "node",
             "request": "launch",
             "program": "${workspaceRoot}/main.js",
             "cwd": "${workspaceRoot}",
-            "runtimeExecutable": "${workspaceRoot}/../nodejs/node",
+            "runtimeExecutable": "/usr/bin/node",
             "args": [
                 "--force"
             ],
@@ -22,7 +23,7 @@
             "request": "attach",
             "name": "An den Port anfügen",
             "address": "localhost",
-            "port": 5858
+            "port": 9229
         }
     ]
 }
