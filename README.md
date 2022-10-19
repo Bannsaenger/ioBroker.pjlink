@@ -82,7 +82,7 @@ the other lamps will be added dynamically.
 -->
 ### **WORK IN PROGRESS**
 * (Bannsaenger) changed some info logs to debug. Fixed one power state issue.
-* (Bannsaenger) redesign timer handling
+* (Bannsaenger) redesign of timer and error handling
 
 ### 0.0.1 (2022-10-13)
 * (Bannsaenger) initial release

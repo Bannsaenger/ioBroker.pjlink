@@ -65,8 +65,7 @@ class Pjlink extends utils.Adapter {
             // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
             this.subscribeStates('power');
             this.subscribeStates('input');
-            this.subscribeStates('videoMuteStatus');
-            this.subscribeStates('audioMuteStatus');
+            this.subscribeStates('setMute');
 
             this.log.info(`PJLink connecting to host: ${this.conOptions.host}:${this.conOptions.port} (timeout: ${this.conOptions.timeout} ms), ${this.conOptions.password ? 'with password set' : 'with security disabled'}`);
 
@@ -89,6 +88,8 @@ class Pjlink extends utils.Adapter {
             this.log.info(`PJLink trying to (re)connect to projector`);
             // only the getPowerState for now
             this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
+            // and set the reconnect delay in advance, but only if not running
+            if (!this.timers.reconnectDelay) this.timers.reconnectDelay = setInterval(this.reconnectProjector.bind(this), this.config.reconnectDelay);
         } catch (err) {
             this.errorHandler(err, 'reconnectProjector');
         }
@@ -103,12 +104,6 @@ class Pjlink extends utils.Adapter {
             this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
             this.projector.getInput(this.pjlinkAnswerHandler.bind(this, 'GETINPUT'));
             this.projector.getMute(this.pjlinkAnswerHandler.bind(this, 'GETMUTE'));
-            if (this.timers.statusDelay) {
-                this.timers.statusDelay.refresh();
-                this.log.debug(`PJLink refreshing statusDelay`);
-            } else {
-                this.log.debug(`PJLink unable to refresh statusDelay`);
-            }
         } catch (err) {
             this.errorHandler(err, 'getProjectorStatus');
         }
@@ -131,12 +126,6 @@ class Pjlink extends utils.Adapter {
             this.projector.getModel(this.pjlinkAnswerHandler.bind(this, 'GETMODEL'));
             this.projector.getInfo(this.pjlinkAnswerHandler.bind(this, 'GETINFO'));
             this.projector.getClass(this.pjlinkAnswerHandler.bind(this, 'GETCLASS'));
-            if (this.timers.informationDelay) {
-                this.timers.informationDelay.refresh();
-                this.log.debug(`PJLink refreshing informationDelay`);
-            } else {
-                this.log.debug(`PJLink unable to refresh informationDelay`);
-            }
         } catch (err) {
             this.errorHandler(err, 'getProjectorInformation');
         }
@@ -182,30 +171,12 @@ class Pjlink extends utils.Adapter {
 
     /**
      * Called to set the mute status
-     * @param {string} type
-     * @param {boolean} status
+     * @param {number} status
 	 */
-    async setMute(type, status) {
+    async setMute(status) {
         try {
-            this.log.info(`PJLink mute status changed for type: ${type} to ${status}`);
-
-            // first get the current mute status
-            let state = await this.getStateAsync('videoMuteStatus');
-            // @ts-ignore
-            const videoMuteStatus = state.val || false;
-            state = await this.getStateAsync('audioMuteStatus');
-            // @ts-ignore
-            const audioMuteStatus = state.val || false;
-
-            if (type === 'VIDEO') {
-                this.log.info(`PJLink trying to set projectors video mute to ${status}`);
-                this.projector.setMute({'video': status, 'audio': audioMuteStatus}, this.pjlinkAnswerHandler.bind(this, 'ERROR'));
-            } else if (type === 'AUDIO') {
-                this.log.info(`PJLink trying to set projectors audio mute to ${status}`);
-                this.projector.setMute({'video': videoMuteStatus, 'audio': status}, this.pjlinkAnswerHandler.bind(this, 'ERROR'));
-            } else {
-                this.log.error(`PJLink setMute called with unknown type ${type}`);
-            }
+            this.log.info(`PJLink mute status changed to: ${status}`);
+            this.projector.setMute(status, this.pjlinkAnswerHandler.bind(this, 'ERROR'));
 
         } catch (err) {
             this.errorHandler(err, 'setMute');
@@ -224,24 +195,28 @@ class Pjlink extends utils.Adapter {
             let state = '';
 
             if (error) {
-                this.errorHandler(error, `pjlinkAnswerHandler (command: ${command})`);
+                switch (error.message) {
+                    case 'Undefined command':
+                    case 'Out of parameter':
+                    case 'Unavailable time':
+                    case 'Authorization failed':
+                    case 'Command reply mismatch':
+                    case 'Not connected':
+                        this.log.error(`pjlinkAnswerHandler (command: ${command}), Projector send error: ${error.message}`);
+                        break;
 
-                // reset connection state
-                this.setState('info.connection', false, true);
-
-                // stop/restart timers
-                if (this.timers.statusDelay) {
-                    clearTimeout(this.timers.statusDelay);
-                    this.timers.statusDelay = undefined;
-                }
-                if (this.timers.informationDelay) {
-                    clearTimeout(this.timers.informationDelay);
-                    this.timers.informationDelay = undefined;
-                }
-                if (this.timers.reconnectDelay) {
-                    this.timers.reconnectDelay.refresh();
-                } else {
-                    this.timers.reconnectDelay = setTimeout(this.reconnectProjector.bind(this), this.config.reconnectDelay);
+                    case 'Projector/Display failure':
+                    default:
+                        this.errorHandler(error, `pjlinkAnswerHandler (command: ${command})`);
+                        // reset connection state
+                        this.setState('info.connection', false, true);
+                        // stop/restart timers
+                        clearInterval(this.timers.statusDelay);
+                        clearInterval(this.timers.informationDelay);
+                        if (!this.timers.reconnectDelay) {
+                            // Start reconnection only once
+                            this.timers.reconnectDelay = setInterval(this.reconnectProjector.bind(this), this.config.reconnectDelay);
+                        }
                 }
                 return;
             }
@@ -250,31 +225,17 @@ class Pjlink extends utils.Adapter {
                 state = pjlinkValues[1];
                 this.log.debug(`PJLink got answer from command: '${command}', value '${JSON.stringify(state)}'`);
 
-                // only if the connection was not established before
-                const connectionState = await this.getStateAsync('info.connection');
+                // only if the reconnect timer is not cleared, this means, that the connection has been freshley established
+                if (this.timers.reconnectDelay) {
+                    this.log.info(`PJLink established connection to the projector`);
 
-                // @ts-ignore
-                if (connectionState.val === false) {
-                    // stop/restart timers
-                    if (this.timers.statusDelay) {
-                        this.timers.statusDelay.refresh();
-                        this.log.debug(`PJLink refreshing statusDelay`);
-                    } else {
-                        this.timers.statusDelay = setTimeout(this.getProjectorStatus.bind(this), this.config.statusDelay);
-                        this.log.debug(`PJLink setTimeout for statusDelay`);
-                    }
-                    if (this.timers.informationDelay) {
-                        this.timers.informationDelay.refresh();
-                        this.log.debug(`PJLink refreshing informationDelay`);
-                    } else {
-                        this.timers.informationDelay = setTimeout(this.getProjectorInformation.bind(this), this.config.informationDelay);
-                        this.log.debug(`PJLink setTimeout for informationDelay`);
-                    }
-                    if (this.timers.reconnectDelay) {
-                        clearTimeout(this.timers.reconnectDelay);
-                        this.timers.reconnectDelay = undefined;
-                        this.log.debug(`PJLink stopping timer reconnectDelay`);
-                    }
+                    // clear the reconnect mechanism
+                    this.clearInterval(this.timers.reconnectDelay);
+                    this.timers.reconnectDelay = undefined;
+
+                    // start timer for status and information update
+                    this.timers.statusDelay = setInterval(this.getProjectorStatus.bind(this), this.config.statusDelay);
+                    this.timers.informationDelay = setInterval(this.getProjectorInformation.bind(this), this.config.informationDelay);
 
                     // set connection state
                     this.setState('info.connection', true, true);
@@ -309,6 +270,8 @@ class Pjlink extends utils.Adapter {
                         this.setState('videoMuteStatus', state.video, true);
                         // @ts-ignore
                         this.setState('audioMuteStatus', state.audio, true);
+                        // @ts-ignore
+                        this.setState('setMute', state.status, true);   // new extended mute status
                         break;
 
                     case 'GETERRORS':
@@ -456,8 +419,9 @@ class Pjlink extends utils.Adapter {
             this.projector.disconnect();
 
             // Here you must clear all timeouts or intervals that may still be active
-            if (this.timers.statusDelay) clearTimeout(this.timers.statusDelay);
-            if (this.timers.informationDelay) clearTimeout(this.timers.informationDelay);
+            clearInterval(this.timers.statusDelay);
+            clearInterval(this.timers.informationDelay);
+            clearInterval(this.timers.reconnectDelay);
 
             // Reset the connection indicator
             this.setState('info.connection', false, true);
@@ -494,11 +458,9 @@ class Pjlink extends utils.Adapter {
                             // @ts-ignore
                             this.projector.setInput(state.val.toString());
                             break;
-                        case 'videoMuteStatus':
-                            this.setMute('VIDEO', state.val ? true : false);
-                            break;
-                        case 'audioMuteStatus':
-                            this.setMute('AUDIO', state.val ? true : false);
+                        case 'setMute':
+                            // @ts-ignore
+                            this.setMute(parseInt(state.val));
                             break;
                     }
                 }
