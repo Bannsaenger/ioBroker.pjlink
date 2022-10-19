@@ -222,29 +222,62 @@
       "native": {}
     },
     {
+      "_id": "setMute",
+      "type": "state",
+      "common": {
+        "role": "info.status",
+        "name": {
+            "en": "Set mute",
+            "de": "Mute einstellen",
+            "ru": "Установить милю",
+            "pt": "Definir mudo",
+            "nl": "Set mute",
+            "fr": "Set mute",
+            "it": "Set mute",
+            "es": "Set mute",
+            "pl": "Set mute",
+            "uk": "Комплект мута",
+            "zh-cn": "固定弹"
+        },
+        "type": "number",
+        "states": {
+            "11": "VIDEO mute ON",
+            "10": "VIDEO mute OFF",
+            "21": "AUDIO mute ON",
+            "20": "AUDIO mute OFF",
+            "31": "VIDEO & AUDIO mute ON",
+            "30": "VIDEO & AUDIO mute OFF"
+        },
+        "read": true,
+        "write": true,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
       "_id": "videoMuteStatus",
       "type": "state",
       "common": {
         "role": "info.status",
         "name": {
-          "en": "Video mute status",
-          "de": "Video-Muting-Status",
-          "ru": "Статус видео мили",
-          "pt": "Status de mudo de vídeo",
-          "nl": "Video mute status",
-          "fr": "État du muet vidéo",
-          "it": "Situazione video mute",
-          "es": "Estado mudo de vídeo",
-          "pl": "Video mute status",
-          "uk": "Статус на сервери",
-          "zh-cn": "武断地位"
+            "en": "Video mute status",
+            "de": "Video-Muting-Status",
+            "ru": "Статус видео мили",
+            "pt": "Status de mudo de vídeo",
+            "nl": "Video mute status",
+            "fr": "État du muet vidéo",
+            "it": "Situazione video mute",
+            "es": "Estado mudo de vídeo",
+            "pl": "Video mute status",
+            "uk": "Статус на сервери",
+            "zh-cn": "武断地位"
         },
         "type": "boolean",
         "read": true,
-        "write": true,
+        "write": false,
         "def": false
-      },
-      "native": {}
+        },
+        "native": {}
     },
     {
       "_id": "audioMuteStatus",
@@ -266,10 +299,10 @@
         },
         "type": "boolean",
         "read": true,
-        "write": true,
+        "write": false,
         "def": false
-      },
-      "native": {}
+        },
+        "native": {}
     },
     {
       "_id": "deviceInfo",

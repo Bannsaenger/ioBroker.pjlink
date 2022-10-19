@@ -82,6 +82,7 @@ the other lamps will be added dynamically.
 -->
 ### **WORK IN PROGRESS**
 * (Bannsaenger) changed some info logs to debug. Fixed one power state issue.
+* (Bannsaenger) redo of mute status handling. Needs my fork of node-pjlink for now.
 
 ### 0.0.1 (2022-10-13)
 * (Bannsaenger) initial release

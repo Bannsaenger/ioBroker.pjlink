@@ -11,7 +11,7 @@
  */
 
 const utils = require('@iobroker/adapter-core');
-const pjlink = require('pjlink');
+const pjlink = require('node-pjlink');
 
 /** Projector status constants
     Four possible power states:
@@ -86,7 +86,7 @@ class Pjlink extends utils.Adapter {
 	 */
     reconnectProjector() {
         try {
-            this.log.info(`PJLink trying to reconnect to projector`);
+            this.log.info(`PJLink trying to (re)connect to projector`);
             // only the getPowerState for now
             this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
         } catch (err) {
@@ -192,17 +192,17 @@ class Pjlink extends utils.Adapter {
             // first get the current mute status
             let state = await this.getStateAsync('videoMuteStatus');
             // @ts-ignore
-            const videoMuteStatus = state.val | false;
+            const videoMuteStatus = state.val || false;
             state = await this.getStateAsync('audioMuteStatus');
             // @ts-ignore
-            const audioMuteStatus = state.val | false;
+            const audioMuteStatus = state.val || false;
 
             if (type === 'VIDEO') {
                 this.log.info(`PJLink trying to set projectors video mute to ${status}`);
-                this.projector.setMute({'video': status, 'audio': audioMuteStatus});
+                this.projector.setMute({'video': status, 'audio': audioMuteStatus}, this.pjlinkAnswerHandler.bind(this, 'ERROR'));
             } else if (type === 'AUDIO') {
                 this.log.info(`PJLink trying to set projectors audio mute to ${status}`);
-                this.projector.setMute({'video': videoMuteStatus, 'audio': status});
+                this.projector.setMute({'video': videoMuteStatus, 'audio': status}, this.pjlinkAnswerHandler.bind(this, 'ERROR'));
             } else {
                 this.log.error(`PJLink setMute called with unknown type ${type}`);
             }
@@ -291,6 +291,10 @@ class Pjlink extends utils.Adapter {
                 let filter = 0;
                 let other = 0;
                 switch (command) {
+                    case 'ERROR':
+                        // only for error handling in callback.
+                        break;
+
                     case 'GETPOWERSTATE':
                         this.setState('powerStatus', parseInt(state), true);
                         break;
@@ -478,7 +482,7 @@ class Pjlink extends utils.Adapter {
                     this.log.info(`PJLink state ${id} changed: ${state.val} (ack = ${state.ack})`);
                 }
                 // The state was changed
-                if (!state.ack && state.val) {           // only if the state is set manually
+                if (!state.ack) {           // only if the state is set manually
                     const onlyId = id.replace(this.namespace + '.', '');
                     switch (onlyId) {
                         case 'power':
@@ -487,6 +491,7 @@ class Pjlink extends utils.Adapter {
                         case 'input':
                             // the string value is parsed by the pjlink.inputCommand.
                             // For the future and Class 2 it is the preferred format because of e.g. input 3B
+                            // @ts-ignore
                             this.projector.setInput(state.val.toString());
                             break;
                         case 'videoMuteStatus':

@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.6",
-    "pjlink": "^0.2.8"
+    "pjlink": "https://github.com/Bannsaenger/node-pjlink"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.5.9",
@@ -61,7 +61,6 @@
   "scripts": {
     "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
     "test:package": "mocha test/package --exit",
-    "check": "tsc --noEmit -p tsconfig.check.json",
     "lint": "eslint --ext .js,.jsx",
     "test:unit": "mocha test/unit --exit",
     "test:integration": "mocha test/integration --exit",
