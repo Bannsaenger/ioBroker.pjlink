@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pjlink",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "news": {
+      "0.0.2": {
+        "en": "changed some info logs to debug. Fixed one power state issue.\nredesign of timer and error handling",
+        "de": "einige Info-Logs zum Debug geändert. Ein Power State Problem behoben.\nneugestaltung von timer und fehlerbehandlung",
+        "ru": "изменил некоторые журналы для отладки. Исправлена одна проблема состояния власти.\nредизайн таймера и обработка ошибок",
+        "pt": "mudou alguns logs de informações para depurar. Corrigido um problema de estado de energia.\nredesenho de temporizador e manipulação de erros",
+        "nl": "veranderde infologs om te debuggen. Ik heb een machtsaandoening opgelost.\nvertaling:",
+        "fr": "j'ai changé quelques infos pour déboguer. Une seule question d'état de pouvoir.\nla refonte du timer et la manipulation des erreurs",
+        "it": "ha cambiato alcuni registri delle informazioni per debug. Risolto un problema di stato di potere.\nriprogettazione del timer e della gestione degli errori",
+        "es": "cambió algunos registros de información para depurar. Arreglado un problema de estado de poder.\nrediseño de tiempo y manejo de errores",
+        "pl": "zmienił niektóre logi informacyjne do debugowania. Wniosek jedno państwo.\nprzeprojektowanie czasu i obsługi błędów",
+        "uk": "змінено деякі інформаційні журнали для видалення. Виправлено одну державну проблему.\nредизайн таймера та обробки помилок",
+        "zh-cn": "某些泡沫被改装。 混合一个权力国问题。.\n重新设计时间和错误处理"
+      },
       "0.0.1": {
         "en": "initial release",
         "de": "erstausstrahlung",
@@ -227,26 +240,26 @@
       "common": {
         "role": "info.status",
         "name": {
-            "en": "Set mute",
-            "de": "Mute einstellen",
-            "ru": "Установить милю",
-            "pt": "Definir mudo",
-            "nl": "Set mute",
-            "fr": "Set mute",
-            "it": "Set mute",
-            "es": "Set mute",
-            "pl": "Set mute",
-            "uk": "Комплект мута",
-            "zh-cn": "固定弹"
+          "en": "Set mute",
+          "de": "Mute einstellen",
+          "ru": "Установить милю",
+          "pt": "Definir mudo",
+          "nl": "Set mute",
+          "fr": "Set mute",
+          "it": "Set mute",
+          "es": "Set mute",
+          "pl": "Set mute",
+          "uk": "Комплект мута",
+          "zh-cn": "固定弹"
         },
         "type": "number",
         "states": {
-            "11": "VIDEO mute ON",
-            "10": "VIDEO mute OFF",
-            "21": "AUDIO mute ON",
-            "20": "AUDIO mute OFF",
-            "31": "VIDEO & AUDIO mute ON",
-            "30": "VIDEO & AUDIO mute OFF"
+          "10": "VIDEO mute OFF",
+          "11": "VIDEO mute ON",
+          "20": "AUDIO mute OFF",
+          "21": "AUDIO mute ON",
+          "30": "VIDEO & AUDIO mute OFF",
+          "31": "VIDEO & AUDIO mute ON"
         },
         "read": true,
         "write": true,
@@ -260,24 +273,24 @@
       "common": {
         "role": "info.status",
         "name": {
-            "en": "Video mute status",
-            "de": "Video-Muting-Status",
-            "ru": "Статус видео мили",
-            "pt": "Status de mudo de vídeo",
-            "nl": "Video mute status",
-            "fr": "État du muet vidéo",
-            "it": "Situazione video mute",
-            "es": "Estado mudo de vídeo",
-            "pl": "Video mute status",
-            "uk": "Статус на сервери",
-            "zh-cn": "武断地位"
+          "en": "Video mute status",
+          "de": "Video-Muting-Status",
+          "ru": "Статус видео мили",
+          "pt": "Status de mudo de vídeo",
+          "nl": "Video mute status",
+          "fr": "État du muet vidéo",
+          "it": "Situazione video mute",
+          "es": "Estado mudo de vídeo",
+          "pl": "Video mute status",
+          "uk": "Статус на сервери",
+          "zh-cn": "武断地位"
         },
         "type": "boolean",
         "read": true,
         "write": false,
         "def": false
-        },
-        "native": {}
+      },
+      "native": {}
     },
     {
       "_id": "audioMuteStatus",
@@ -301,8 +314,8 @@
         "read": true,
         "write": false,
         "def": false
-        },
-        "native": {}
+      },
+      "native": {}
     },
     {
       "_id": "deviceInfo",
