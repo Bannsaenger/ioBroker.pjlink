@@ -35,6 +35,7 @@ class Pjlink extends utils.Adapter {
         // register callback functions
         this.on('ready', this.onReady.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
+        this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
 
         // prepare global instance variables
@@ -140,7 +141,7 @@ class Pjlink extends utils.Adapter {
             // first get the projector status
             const state = await this.getStateAsync('powerStatus');
             // @ts-ignore
-            const powerStatus = state.val | 0;
+            const powerStatus = state.val || 0;
 
             // reset power button status. Set as confirmed by hardware (ack = true)
             this.setState('power', false, true);
@@ -467,6 +468,79 @@ class Pjlink extends utils.Adapter {
             }
         } catch (err) {
             this.errorHandler(err, 'onStateChange');
+        }
+    }
+
+    /**
+     * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
+     * Using this method requires "common.messagebox" property to be set to true in io-package.json
+     * @param {ioBroker.Message} obj
+     */
+    async onMessage(obj) {
+        if (typeof obj === 'object') {
+            if (obj.command === 'updateInputs') {
+                this.log.debug(`updateInputs command gets: ${JSON.stringify(obj)}`);
+                const state = await this.getStateAsync('deviceInfo.inputsAvailable');
+                // @ts-ignore
+                const inputsAvailable = state.val || '';
+                this.log.info(`Set the following inputs in the native object "system.adapter.${this.namespace}": ${JSON.stringify(inputsAvailable)}`);
+                const instanceObject = await this.getForeignObjectAsync(`system.adapter.${this.namespace}`) || {};
+                try {
+                    // @ts-ignore
+                    instanceObject.native.inputInfo = JSON.parse(inputsAvailable);
+                } catch (err) {
+                    this.errorHandler(err, 'onMessage (parse inputsAvailable)');
+                }
+                // @ts-ignore
+                await this.setForeignObjectAsync(`system.adapter.${this.namespace}`, instanceObject);
+                if (obj.callback) {
+                    this.sendTo(obj.from, obj.command, 'done', obj.callback); // {'result': inputsAvailable}
+                }
+            }
+            if (obj.command === 'setInstanceInputs') {
+                if (obj.command === 'setInstanceInputs') {
+                    this.log.debug(`setInstanceInputs command gets: ${JSON.stringify(obj)}`);
+                    const inputObj = await this.getObjectAsync('input');
+                    // @ts-ignore
+                    if (inputObj.common.min) delete (inputObj.common.min);
+                    // @ts-ignore
+                    if (inputObj.common.max) delete (inputObj.common.max);
+                    // @ts-ignore
+                    inputObj.common.states = {};
+                    for (const i in this.config.inputInfo) {
+                        const inputCode = this.config.inputInfo[i].code;
+                        const inputName = this.config.inputInfo[i].name;
+                        // @ts-ignore
+                        Object.assign(inputObj.common.states, {[inputCode] : inputName});
+                    }
+                    // @ts-ignore
+                    this.log.info(`setInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`);
+                    // @ts-ignore
+                    await this.setObjectAsync('input', inputObj);
+                    if (obj.callback) {
+                        this.sendTo(obj.from, obj.command, 'done', obj.callback); // {'result': inputsAvailable}
+                    }
+                }
+            }
+            if (obj.command === 'resetInstanceInputs') {
+                if (obj.command === 'resetInstanceInputs') {
+                    this.log.debug(`resetInstanceInputs command gets: ${JSON.stringify(obj)}`);
+                    const inputObj = await this.getObjectAsync('input');
+                    // @ts-ignore
+                    if (inputObj.common.states) delete (inputObj.common.states);
+                    // @ts-ignore
+                    inputObj.common.min = 11;
+                    // @ts-ignore
+                    inputObj.common.max = 59;
+                    // @ts-ignore
+                    this.log.info(`resetInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`);
+                    // @ts-ignore
+                    await this.setObjectAsync('input', inputObj);
+                    if (obj.callback) {
+                        this.sendTo(obj.from, obj.command, 'done', obj.callback); // {'result': inputsAvailable}
+                    }
+                }
+            }
         }
     }
 }

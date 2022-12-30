@@ -5,15 +5,30 @@
     "version": "0.2.0",
     "configurations": [
 
-       {
-           "name": "(PJLink) main.js --force starten",
+        {
+            "name": "devserver (--noStart)",
+             "type": "node",
+             "request": "launch",
+             "program": "/home/bannsaenger/.npm-global/bin/dev-server",
+             "cwd": "${workspaceRoot}",
+             "runtimeExecutable": "/usr/bin/node",
+             "args": [
+                "watch",
+                "--noStart"
+             ],
+             "runtimeArgs": [
+             ]
+         },
+         {
+           "name": "(PJLink) main.js --debug 0 starten",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/main.js",
-            "cwd": "${workspaceRoot}",
-            "runtimeExecutable": "/usr/bin/node",
+            "program": "node_modules/iobroker.pjlink/main.js",
+            "skipFiles": ["<node_internals>/**"],
+            "cwd": "/home/bannsaenger/ioBroker.pjlink/.dev-server/default",
             "args": [
-                "--force"
+                "--debug",
+                "0"
             ],
             "runtimeArgs": [
             ]

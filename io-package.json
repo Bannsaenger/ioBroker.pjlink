@@ -53,7 +53,8 @@
             "it": "Discussione del proiettore PJLink",
             "es": "PJLink projector controll",
             "pl": "Projekt PJLink",
-            "zh-cn": "PJLink项目有限公司"
+            "zh-cn": "PJLink项目有限公司",
+            "uk": "Керування проектором PJLink"
         },
         "desc": {
             "en": "Control a projector via PJLink",
@@ -65,7 +66,8 @@
             "it": "Controlla un proiettore tramite PJLink",
             "es": "Controlar un proyector a través de PJLink",
             "pl": "Steruj projektorem przez PJLink",
-            "zh-cn": "通过 PJLink 控制投影仪"
+            "zh-cn": "通过 PJLink 控制投影仪",
+            "uk": "Керуйте проектором через PJLink"
         },
         "authors": [
             "Bannsaenger <bannsaenger@gmx.de>"
@@ -92,6 +94,7 @@
         "dataSource": "poll",
         "materialize": true,
         "eraseOnUpload": true,
+        "messagebox": true,
         "dependencies": [
             {
                 "js-controller": ">=4.0.15"
@@ -117,7 +120,28 @@
         "socketTimeout": 800,
         "statusDelay": 2000,
         "informationDelay": 60000,
-        "reconnectDelay": 10000
+        "reconnectDelay": 10000,
+        "inputInfo": [],
+        "queryTypeCLSS": 1,
+        "queryTypePOWR": 2,
+        "queryTypeINPT": 2,
+        "queryOnlyPwrINPT": false,
+        "queryTypeAVMT": 2,
+        "queryOnlyPwrAVMT": false,
+        "queryTypeERST": 3,
+        "queryOnlyPwrERST": false,
+        "queryTypeLAMP": 3,
+        "queryOnlyPwrLAMP": false,
+        "queryTypeINST": 1,
+        "queryOnlyPwrINST": false,
+        "queryTypeNAME": 1,
+        "queryOnlyPwrNAME": false,
+        "queryTypeINF1": 1,
+        "queryOnlyPwrINF1": false,
+        "queryTypeINF2": 1,
+        "queryOnlyPwrINF2": false,
+        "queryTypeINFO": 1,
+        "queryOnlyPwrINFO": false
     },
     "objects": [],
     "instanceObjects": [
@@ -183,7 +207,7 @@
                     "zh-cn": "权力转换"
                 },
                 "type": "boolean",
-                "read": false,
+                "read": true,
                 "write": true,
                 "def": false
             },
@@ -215,7 +239,7 @@
                     "3": "Warming up"
                 },
                 "read": true,
-                "write": true,
+                "write": false,
                 "def": 1
             },
             "native": {}
