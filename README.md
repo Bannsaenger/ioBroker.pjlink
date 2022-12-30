@@ -59,6 +59,9 @@ added as soon as class 2 is supported.
 The possible inputs can be found in the database after the adapter has been started under
 > pjlink.\<instance\>.deviceInfo.availableInputs
 
+You can edit the input object in the instance configuration. There you can edit the names of the inputs and
+let the database object validate your inputs.
+
 ### Power Switch
 With the state (set to **true**)
 
