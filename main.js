@@ -13,6 +13,9 @@
 const utils = require('@iobroker/adapter-core');
 const pjlink = require('pjlink');
 
+// possible query types
+const queries = ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO'];
+
 /** Projector status constants
     Four possible power states:
     * 0	/	pjlink.POWER.OFF
@@ -41,6 +44,17 @@ class Pjlink extends utils.Adapter {
         // prepare global instance variables
         this.projector = undefined;
         this.connectedState = false;        // true if connection to projector is established, will be reset on connection errors
+        this.poweredOn = false;             // true if the power state is 1 (Power ON), used for status queries for which power must be ON
+        this.firstRunDone = false;          // true if the first run (query status on adapter startup) is done
+        this.firstRunPowered = false;       // true if the first run (query status on adapter startup with power = ON) is done
+        this.statusQueryInfo = {            // a place to store the different query levels
+            'startup': [],
+            'startupPowered': [],
+            'long': [],
+            'longPowered': [],
+            'short': [],
+            'shortPowered': []
+        };
         this.timers = {};                   // a place to store timers
         this.timers.reconnectDelay = undefined;
         this.timers.statusDelay = undefined;
@@ -55,6 +69,8 @@ class Pjlink extends utils.Adapter {
             //const self = this;
             // Reset the connection indicator during startup
             this.setState('info.connection', false, true);
+
+            await this.buildStatusQueryInfo();
 
             this.conOptions = {
                 'host': this.config.host || '127.0.0.1',
@@ -82,6 +98,55 @@ class Pjlink extends utils.Adapter {
     }
 
     /**
+     * Called to build the status query array
+	 */
+    async buildStatusQueryInfo() {
+        try {
+            for (const query of queries) {
+                const queryType = `queryType${query}`;
+                const queryTypePwr = `queryOnlyPwr${query}`;
+                switch (this.config[queryType]) {
+                    case 1:             // startup
+                        if (this.config[queryTypePwr]) {
+                            // @ts-ignore
+                            this.statusQueryInfo.startupPowered.push(query);
+                        } else {
+                            // @ts-ignore
+                            this.statusQueryInfo.startup.push(query);
+                        }
+                        break;
+
+                    case 2:             // short
+                        if (this.config[queryTypePwr]) {
+                            // @ts-ignore
+                            this.statusQueryInfo.shortPowered.push(query);
+                        } else {
+                            // @ts-ignore
+                            this.statusQueryInfo.short.push(query);
+                        }
+                        break;
+
+                    case 3:             // long
+                        if (this.config[queryTypePwr]) {
+                            // @ts-ignore
+                            this.statusQueryInfo.longPowered.push(query);
+                        } else {
+                            // @ts-ignore
+                            this.statusQueryInfo.long.push(query);
+                        }
+                        break;
+
+                    default:            // never and other
+                        break;
+                }
+            }
+            this.log.debug(`Ready building statusQueryInfo: ${JSON.stringify(this.statusQueryInfo)}`);
+        } catch (err) {
+            this.errorHandler(err, 'buildStatusQueryInfo');
+        }
+    }
+
+    /**
      * Called to reconnect to the projector
 	 */
     reconnectProjector() {
@@ -97,14 +162,104 @@ class Pjlink extends utils.Adapter {
     }
 
     /**
+     * check which status query has to be done
+     * @param {string} interval 'startup', 'short' or 'long'
+	 */
+    doStatusQuery(interval) {
+        try {
+            this.log.debug(`PJLink requesting projector information for interval: '${interval}'`);
+            if (interval === 'startup') {   // only called on projector connected
+                if (!this.firstRunDone) {
+                    this.firstRunDone = true;
+                    this.doQuery(this.statusQueryInfo.startup);
+                }
+            }
+            if (interval === 'short') {
+                // try to do the startupPowered queries
+                if (!this.firstRunPowered && this.poweredOn) {
+                    this.firstRunPowered = true;
+                    this.doQuery(this.statusQueryInfo.startupPowered);
+                }
+                this.doQuery(this.statusQueryInfo.short);
+                if (this.poweredOn) this.doQuery(this.statusQueryInfo.shortPowered);
+            }
+            if (interval === 'long') {
+                this.doQuery(this.statusQueryInfo.long);
+                if (this.poweredOn) this.doQuery(this.statusQueryInfo.longPowered);
+            }
+        } catch (err) {
+            this.errorHandler(err, 'doStatusQuery');
+        }
+    }
+
+    /**
+     * check which status query has to be done
+     * @param {Object} queriesTodo a array with the queries which has to be done
+	 */
+    doQuery(queriesTodo) {
+        try {
+            for (const code of queriesTodo) {
+                // ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO']
+                switch (code) {
+                    case 'POWR':
+                        this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
+                        break;
+
+                    case 'INPT':
+                        this.projector.getInput(this.pjlinkAnswerHandler.bind(this, 'GETINPUT'));
+                        break;
+
+                    case 'CLSS':
+                        this.projector.getClass(this.pjlinkAnswerHandler.bind(this, 'GETCLASS'));
+                        break;
+
+                    case 'AVMT':
+                        this.projector.getMute(this.pjlinkAnswerHandler.bind(this, 'GETMUTE'));
+                        break;
+
+                    case 'ERST':
+                        this.projector.getErrors(this.pjlinkAnswerHandler.bind(this, 'GETERRORS'));
+                        break;
+
+                    case 'LAMP':
+                        this.projector.getLamps(this.pjlinkAnswerHandler.bind(this, 'GETLAMPS'));
+                        break;
+
+                    case 'INST':
+                        this.projector.getInputs(this.pjlinkAnswerHandler.bind(this, 'GETINPUTS'));
+                        break;
+
+                    case 'NAME':
+                        this.projector.getName(this.pjlinkAnswerHandler.bind(this, 'GETNAME'));
+                        break;
+
+                    case 'INF1':
+                        this.projector.getManufacturer(this.pjlinkAnswerHandler.bind(this, 'GETMANUFACTURER'));
+                        break;
+
+                    case 'INF2':
+                        this.projector.getModel(this.pjlinkAnswerHandler.bind(this, 'GETMODEL'));
+                        break;
+
+                    case 'INFO':
+                        this.projector.getInfo(this.pjlinkAnswerHandler.bind(this, 'GETINFO'));
+                        break;
+
+                    default:
+                        this.errorHandler(`Unknown query code '${code}'`, 'doStatusQuery');
+                }
+            }
+        } catch (err) {
+            this.errorHandler(err, 'doStatusQuery');
+        }
+    }
+
+    /**
      * Called to refresh the projector status (power, mute and input)
 	 */
     getProjectorStatus() {
         try {
-            this.log.debug(`PJLink requesting projector status`);
-            this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
-            this.projector.getInput(this.pjlinkAnswerHandler.bind(this, 'GETINPUT'));
-            this.projector.getMute(this.pjlinkAnswerHandler.bind(this, 'GETMUTE'));
+            this.doStatusQuery('short');
         } catch (err) {
             this.errorHandler(err, 'getProjectorStatus');
         }
@@ -115,18 +270,7 @@ class Pjlink extends utils.Adapter {
 	 */
     getProjectorInformation() {
         try {
-            this.log.debug(`PJLink requesting projector information`);
-            // first get all status states
-            this.getProjectorStatus();
-            // and then all additional information
-            this.projector.getErrors(this.pjlinkAnswerHandler.bind(this, 'GETERRORS'));
-            this.projector.getLamps(this.pjlinkAnswerHandler.bind(this, 'GETLAMPS'));
-            this.projector.getInputs(this.pjlinkAnswerHandler.bind(this, 'GETINPUTS'));
-            this.projector.getName(this.pjlinkAnswerHandler.bind(this, 'GETNAME'));
-            this.projector.getManufacturer(this.pjlinkAnswerHandler.bind(this, 'GETMANUFACTURER'));
-            this.projector.getModel(this.pjlinkAnswerHandler.bind(this, 'GETMODEL'));
-            this.projector.getInfo(this.pjlinkAnswerHandler.bind(this, 'GETINFO'));
-            this.projector.getClass(this.pjlinkAnswerHandler.bind(this, 'GETCLASS'));
+            this.doStatusQuery('long');
         } catch (err) {
             this.errorHandler(err, 'getProjectorInformation');
         }
@@ -230,6 +374,9 @@ class Pjlink extends utils.Adapter {
                 if (this.timers.reconnectDelay) {
                     this.log.info(`PJLink established connection to the projector`);
 
+                    // get the status info on startup
+                    this.doStatusQuery('startup');
+
                     // clear the reconnect mechanism
                     this.clearInterval(this.timers.reconnectDelay);
                     this.timers.reconnectDelay = undefined;
@@ -240,9 +387,6 @@ class Pjlink extends utils.Adapter {
 
                     // set connection state
                     this.setState('info.connection', true, true);
-
-                    // get the information at the communication start
-                    this.getProjectorInformation();
                 }
 
                 // now parse the return values
@@ -259,6 +403,11 @@ class Pjlink extends utils.Adapter {
 
                     case 'GETPOWERSTATE':
                         this.setState('powerStatus', parseInt(state), true);
+                        if (state == '1') {
+                            this.poweredOn = true;
+                        } else {
+                            this.poweredOn = false;
+                        }
                         break;
 
                     case 'GETINPUT':
@@ -494,7 +643,7 @@ class Pjlink extends utils.Adapter {
                 // @ts-ignore
                 await this.setForeignObjectAsync(`system.adapter.${this.namespace}`, instanceObject);
                 if (obj.callback) {
-                    this.sendTo(obj.from, obj.command, 'done', obj.callback); // {'result': inputsAvailable}
+                    this.sendTo(obj.from, obj.command, 'done', obj.callback);
                 }
             }
             if (obj.command === 'setInstanceInputs') {
@@ -508,7 +657,9 @@ class Pjlink extends utils.Adapter {
                     // @ts-ignore
                     inputObj.common.states = {};
                     for (const i in this.config.inputInfo) {
+                        // @ts-ignore
                         const inputCode = this.config.inputInfo[i].code;
+                        // @ts-ignore
                         const inputName = this.config.inputInfo[i].name;
                         // @ts-ignore
                         Object.assign(inputObj.common.states, {[inputCode] : inputName});
@@ -518,7 +669,7 @@ class Pjlink extends utils.Adapter {
                     // @ts-ignore
                     await this.setObjectAsync('input', inputObj);
                     if (obj.callback) {
-                        this.sendTo(obj.from, obj.command, 'done', obj.callback); // {'result': inputsAvailable}
+                        this.sendTo(obj.from, obj.command, 'done', obj.callback);
                     }
                 }
             }
@@ -537,7 +688,7 @@ class Pjlink extends utils.Adapter {
                     // @ts-ignore
                     await this.setObjectAsync('input', inputObj);
                     if (obj.callback) {
-                        this.sendTo(obj.from, obj.command, 'done', obj.callback); // {'result': inputsAvailable}
+                        this.sendTo(obj.from, obj.command, 'done', obj.callback);
                     }
                 }
             }

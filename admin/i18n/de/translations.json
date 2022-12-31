@@ -1,8 +1,8 @@
 {
     "options": "Optionen",
-    "Host": "Gastgeber",
+    "Host": "Host",
     "IP address or FQDN from the device": "IP-Adresse oder FQDN vom Gerät",
-    "Port": "Hafen",
+    "Port": "Port",
     "TCP port (default: 4352, some older devices have: 10000)": "TCP-Port (Standard: 4352, einige ältere Geräte haben: 10000)",
     "Password": "Passwort",
     "maximum 32 ASCII Characters (could be left empty if projector security is set to OFF)": "maximal 32 ASCII-Zeichen (können leer gelassen werden, wenn die Projektorsicherheit auf AUS eingestellt ist)",
