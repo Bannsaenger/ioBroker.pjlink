@@ -121,6 +121,7 @@
         "statusDelay": 2000,
         "informationDelay": 60000,
         "reconnectDelay": 10000,
+        "skippedCyclesAfterPowerOn": 5,
         "inputInfo": [],
         "queryTypeCLSS": 1,
         "queryTypePOWR": 2,

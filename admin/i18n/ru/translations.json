@@ -37,5 +37,7 @@
     "Set the instance input object to fit the upper edited inputs": "Установите объект ввода экземпляра, чтобы он соответствовал верхним отредактированным вводам",
     "Set the instance input object to default": "Установите объект ввода экземпляра по умолчанию",
     "Overwrite the existing input configuration": "Перезаписать существующую конфигурацию ввода?",
-    "Overwrite the existing input configuration with restart": "Перезаписать существующую конфигурацию ввода? Не забудьте перезапустить экземпляр после сохранения, чтобы перезагрузить объект конфигурации в экземпляр!"
+    "Overwrite the existing input configuration with restart": "Перезаписать существующую конфигурацию ввода? Не забудьте перезапустить экземпляр после сохранения, чтобы перезагрузить объект конфигурации в экземпляр!",
+    "Number of skipped short cycles after power ON event": "Количество пропущенных коротких циклов после включения питания",
+    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Установите количество пропущенных коротких циклов, в основном запросов питания, после включения питания, по умолчанию 5 (с 2000 мс, statusDelay соответствует 10-секундному негарантированному времени)"
 }

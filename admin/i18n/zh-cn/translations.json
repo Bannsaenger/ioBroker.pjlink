@@ -37,5 +37,7 @@
     "Set the instance input object to fit the upper edited inputs": "设置实例输入对象以适合上面编辑的输入",
     "Set the instance input object to default": "将实例输入对象设置为默认值",
     "Overwrite the existing input configuration": "覆盖现有的输入配置 ?",
-    "Overwrite the existing input configuration with restart": "覆盖现有的输入配置 ?保存后不要忘记重新启动实例以将配置对象重新加载到实例！"
+    "Overwrite the existing input configuration with restart": "覆盖现有的输入配置 ?保存后不要忘记重新启动实例以将配置对象重新加载到实例！",
+    "Number of skipped short cycles after power ON event": "上电事件后跳过的短周期数",
+    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "设置跳过短周期的次数，主要是power queries，power ON event后，默认5（有2000ms statusDelay对应10s非保时间）"
 }

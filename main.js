@@ -47,6 +47,7 @@ class Pjlink extends utils.Adapter {
         this.poweredOn = false;             // true if the power state is 1 (Power ON), used for status queries for which power must be ON
         this.firstRunDone = false;          // true if the first run (query status on adapter startup) is done
         this.firstRunPowered = false;       // true if the first run (query status on adapter startup with power = ON) is done
+        this.skippedShortCycles = -1;       // number of skipped short cycles after power ON event. Will be set to the config value and decremented. -1 is expired
         this.statusQueryInfo = {            // a place to store the different query levels
             'startup': [],
             'startupPowered': [],
@@ -175,6 +176,13 @@ class Pjlink extends utils.Adapter {
                 }
             }
             if (interval === 'short') {
+                // at first skip the cycles after power ON
+                if (this.skippedShortCycles > 0) {
+                    this.skippedShortCycles--;
+                    this.log.debug(`PJLink skipping 'short' cycle no: ${this.skippedShortCycles}`);
+                    return;
+                }
+                this.skippedShortCycles = -1;   // set to expired
                 // try to do the startupPowered queries
                 if (!this.firstRunPowered && this.poweredOn) {
                     this.firstRunPowered = true;
@@ -270,6 +278,10 @@ class Pjlink extends utils.Adapter {
 	 */
     getProjectorInformation() {
         try {
+            if (this.skippedShortCycles > 0) {
+                this.log.debug(`PJLink skipping 'long' cycle due to skippedShortCycles active`);
+                return;
+            }
             this.doStatusQuery('long');
         } catch (err) {
             this.errorHandler(err, 'getProjectorInformation');
@@ -293,6 +305,8 @@ class Pjlink extends utils.Adapter {
             if (powerStatus === 0) {
                 this.log.info(`PJLink Projector is currently off. Trying to switch projector on`);
                 this.projector.powerOn();
+                this.skippedShortCycles = this.config.skippedCyclesAfterPowerOn;
+                this.log.debug(`PJLink now skipping ${this.skippedShortCycles} times the 'short' query cycle`);
                 return;
             }
             if (powerStatus === 1) {
@@ -405,8 +419,10 @@ class Pjlink extends utils.Adapter {
                         this.setState('powerStatus', parseInt(state), true);
                         if (state == '1') {
                             this.poweredOn = true;
+                            if (this.skippedShortCycles != -1) this.skippedShortCycles = this.config.skippedCyclesAfterPowerOn;
                         } else {
                             this.poweredOn = false;
+                            this.skippedShortCycles = 0;    // reset expired
                         }
                         break;
 

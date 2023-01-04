@@ -84,7 +84,8 @@ the other lamps will be added dynamically.
 -->
 ### **WORK IN PROGRESS**
 * (Bannsaenger) extended configuration to let you choose the frequency and time for information retrieval
-* (Bannsaenger) added possibility to customize media.input by the **INST** query and edit the names in instance config
+* (Bannsaenger) add possibility to customize media.input by the **INST** query and edit the names in instance config
+* (Bannsaenger) add non-guaranteed time after power ON (number of skipped short cycles after power ON event)
 
 ### 0.0.3 (2022-10-19)
 * (Bannsaenger) updated react dependency

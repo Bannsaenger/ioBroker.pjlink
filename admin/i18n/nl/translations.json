@@ -37,5 +37,7 @@
     "Set the instance input object to fit the upper edited inputs": "Stel het instantie-invoerobject in zodat het past bij de bovenste bewerkte invoer",
     "Set the instance input object to default": "Stel het instantie-invoerobject in op standaard",
     "Overwrite the existing input configuration": "De bestaande ingangsconfiguratie overschrijven?",
-    "Overwrite the existing input configuration with restart": "De bestaande ingangsconfiguratie overschrijven? Vergeet niet de instantie opnieuw op te starten na het opslaan om het configuratieobject opnieuw naar de instantie te laden!"
+    "Overwrite the existing input configuration with restart": "De bestaande ingangsconfiguratie overschrijven? Vergeet niet de instantie opnieuw op te starten na het opslaan om het configuratieobject opnieuw naar de instantie te laden!",
+    "Number of skipped short cycles after power ON event": "Aantal overgeslagen korte cycli na stroom AAN-gebeurtenis",
+    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Stel het aantal overgeslagen korte cycli in, voornamelijk stroomvragen, na stroom AAN-gebeurtenis, standaard 5 (met 2000 ms statusDelay komt overeen met 10s niet-gegarandeerde tijd)"
 }

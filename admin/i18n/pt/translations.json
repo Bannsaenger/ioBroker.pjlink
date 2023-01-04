@@ -37,5 +37,7 @@
     "Set the instance input object to fit the upper edited inputs": "Defina o objeto de entrada da instância para caber nas entradas editadas superiores",
     "Set the instance input object to default": "Defina o objeto de entrada da instância como padrão",
     "Overwrite the existing input configuration": "Substituir a configuração de entrada existente?",
-    "Overwrite the existing input configuration with restart": "Substituir a configuração de entrada existente? Não se esqueça de reiniciar a instância depois de salvar para recarregar o objeto de configuração para a instância!"
+    "Overwrite the existing input configuration with restart": "Substituir a configuração de entrada existente? Não se esqueça de reiniciar a instância depois de salvar para recarregar o objeto de configuração para a instância!",
+    "Number of skipped short cycles after power ON event": "Número de ciclos curtos ignorados após o evento power ON",
+    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Defina o número de ciclos curtos ignorados, principalmente consultas de energia, após o evento de ativação, padrão 5 (com 2000 ms statusDelay corresponde a 10s de tempo não garantido)"
 }

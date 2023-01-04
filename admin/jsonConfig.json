@@ -100,6 +100,18 @@
                     "lg": 6,
                     "label": "Information poll interval",
                     "help": "interval to refresh the whole projector status, default 60000 ms (1 minute)"
+                },
+                "skippedCyclesAfterPowerOn": {
+                    "type": "number",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "label": "Number of skipped short cycles after power ON event",
+                    "help": "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)",
+                    "newLine": true
                 }
             }
         },
