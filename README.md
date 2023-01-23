@@ -82,7 +82,7 @@ the other lamps will be added dynamically.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.0 (2023-01-23)
 * (Bannsaenger) extended configuration to let you choose the frequency and time for information retrieval
 * (Bannsaenger) add possibility to customize media.input by the **INST** query and edit the names in instance config
 * (Bannsaenger) add non-guaranteed time after power ON (number of skipped short cycles after power ON event)

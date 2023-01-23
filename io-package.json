@@ -1,784 +1,797 @@
 {
-    "common": {
-        "name": "pjlink",
-        "version": "0.0.3",
-        "news": {
-            "0.0.3": {
-                "en": "updated react dependency",
-                "de": "aktualisierte reaktionsabhängigkeit",
-                "ru": "обновленная зависимость от реакции",
-                "pt": "dependência de reação atualizada",
-                "nl": "vertaling:",
-                "fr": "mise à jour de la dépendance",
-                "it": "la dipendenza da reagire aggiornata",
-                "es": "dependencia actualizada",
-                "pl": "reagować",
-                "uk": "оновлена залежність реактивності",
-                "zh-cn": "最新反应"
-            },
-            "0.0.2": {
-                "en": "changed some info logs to debug. Fixed one power state issue.\nredesign of timer and error handling",
-                "de": "einige Info-Logs zum Debug geändert. Ein Power State Problem behoben.\nneugestaltung von timer und fehlerbehandlung",
-                "ru": "изменил некоторые журналы для отладки. Исправлена одна проблема состояния власти.\nредизайн таймера и обработка ошибок",
-                "pt": "mudou alguns logs de informações para depurar. Corrigido um problema de estado de energia.\nredesenho de temporizador e manipulação de erros",
-                "nl": "veranderde infologs om te debuggen. Ik heb een machtsaandoening opgelost.\nvertaling:",
-                "fr": "j'ai changé quelques infos pour déboguer. Une seule question d'état de pouvoir.\nla refonte du timer et la manipulation des erreurs",
-                "it": "ha cambiato alcuni registri delle informazioni per debug. Risolto un problema di stato di potere.\nriprogettazione del timer e della gestione degli errori",
-                "es": "cambió algunos registros de información para depurar. Arreglado un problema de estado de poder.\nrediseño de tiempo y manejo de errores",
-                "pl": "zmienił niektóre logi informacyjne do debugowania. Wniosek jedno państwo.\nprzeprojektowanie czasu i obsługi błędów",
-                "uk": "змінено деякі інформаційні журнали для видалення. Виправлено одну державну проблему.\nредизайн таймера та обробки помилок",
-                "zh-cn": "某些泡沫被改装。 混合一个权力国问题。.\n重新设计时间和错误处理"
-            },
-            "0.0.1": {
-                "en": "initial release",
-                "de": "erstausstrahlung",
-                "ru": "начальный выпуск",
-                "pt": "lançamento inicial",
-                "nl": "niet",
-                "fr": "initial release",
-                "it": "rilascio iniziale",
-                "es": "liberación inicial",
-                "pl": "pierwsze wydanie",
-                "uk": "початковий реліз",
-                "zh-cn": "初步释放"
-            }
-        },
-        "titleLang": {
-            "en": "PJLink projector controll",
-            "de": "PJLink Projektor Steuerung",
-            "ru": "PJLink проектор controll",
-            "pt": "Controle de projetor PJLink",
-            "nl": "PJLink projector controle",
-            "fr": "PJLink projecteur controll",
-            "it": "Discussione del proiettore PJLink",
-            "es": "PJLink projector controll",
-            "pl": "Projekt PJLink",
-            "zh-cn": "PJLink项目有限公司",
-            "uk": "Керування проектором PJLink"
-        },
-        "desc": {
-            "en": "Control a projector via PJLink",
-            "de": "Steuern Sie einen Projektor über PJLink",
-            "ru": "Управление проектором через PJLink",
-            "pt": "Controle um projetor via PJLink",
-            "nl": "Bedien een projector via PJLink",
-            "fr": "Contrôler un projecteur via PJLink",
-            "it": "Controlla un proiettore tramite PJLink",
-            "es": "Controlar un proyector a través de PJLink",
-            "pl": "Steruj projektorem przez PJLink",
-            "zh-cn": "通过 PJLink 控制投影仪",
-            "uk": "Керуйте проектором через PJLink"
-        },
-        "authors": [
-            "Bannsaenger <bannsaenger@gmx.de>"
-        ],
-        "keywords": [
-            "pjlink",
-            "projector"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "pjlink.png",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/Bannsaenger/ioBroker.pjlink/main/admin/pjlink.png",
-        "readme": "https://github.com/Bannsaenger/ioBroker.pjlink/blob/main/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "multimedia",
-        "compact": true,
-        "adminUI": {
-            "config": "json"
-        },
-        "connectionType": "local",
-        "dataSource": "poll",
-        "materialize": true,
-        "eraseOnUpload": true,
-        "messagebox": true,
-        "dependencies": [
-            {
-                "js-controller": ">=4.0.15"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=5.3.2"
-            }
-        ],
-        "protectedNative": [
-            "password"
-        ],
-        "encryptedNative": [
-            "password"
-        ]
+  "common": {
+    "name": "pjlink",
+    "version": "0.1.0",
+    "news": {
+      "0.1.0": {
+        "en": "extended configuration to let you choose the frequency and time for information retrieval\nadd possibility to customize media.input by the **INST** query and edit the names in instance config\nadd non-guaranteed time after power ON (number of skipped short cycles after power ON event)\nmoved all status queries to one timer due to authentification issues when queries are executed at the same time\ntreat error \"unavailabe time\" only as warning and log it only once",
+        "de": "erweiterte konfiguration, um ihnen die frequenz und zeit für die informationsabruf\nhinzufügen der Möglichkeit, media.input durch die INST-Abfrage zu anpassen und die Namen in Beispiel config zu bearbeiten\nfügen Sie nicht garantierte Zeit nach dem Power ON (Anzahl der übersprungen kurzen Zyklen nach dem Power ON Event)\nalle statusabfragen aufgrund von authentifikationsproblemen auf einen timer verschoben, wenn abfragen gleichzeitig ausgeführt werden\nfehler \"unavailabe time\" nur als warnung behandeln und nur einmal protokollieren",
+        "ru": "расширенная конфигурация, чтобы позволить вам выбрать частоту и время для восстановления информации\nдобавить возможность настроить media.input по запросу INST и редактировать имена в примере config\nдобавьте негарантированное время после силы НА (количество сканированных коротких циклов после силы НА событии)\nпереместил все запросы статуса на один таймер в связи с проблемами аутентификации, когда запросы выполняются одновременно\nобработать ошибку \"unavailabe time\" только как предупреждение и войти только один раз",
+        "pt": "configuração estendida para permitir que você escolha a frequência e o tempo para a recuperação de informações\nadicionar possibilidade de personalizar media.input pela consulta do INST e editar os nomes na configuração de instância\nadicionar tempo não garantido após o poder ON (número de ciclos curtos ignorados após o evento ON do poder)\nmovido todas as consultas de status para um temporizador devido a problemas de autenticação quando as consultas são executadas ao mesmo tempo\ntratar erro \"tempo inválido\" apenas como aviso e logá-lo apenas uma vez",
+        "nl": "vermogen om je de frequentie en tijd te laten kiezen voor informatie\nvoeg de mogelijkheid toe om de media te gebruiken. Input door de instituut nieuwsgierigheid en de namen in geval van configuratie\nvoeg de niet-gegarandeerde tijd na de macht op..\nverhuisde alle status zoektochten naar een timer door authentificatie kwesties tegelijkertijd\nbehandel fout \"unavailabe tijd\" als waarschuwing en logeer het maar één keer",
+        "fr": "configuration étendue pour vous permettre de choisir la fréquence et le temps de récupération de l'information\najouter la possibilité de personnaliser media.input par la requête de l'Institut et modifier les noms en instance config\najouter le temps non garanti après la puissance ON (nombre de cycles courts sautés après la puissance ON événement)\ndéplacer toutes les requêtes de statut à un minuteur en raison de questions d'authentification lorsque les requêtes sont exécutées en même temps\ntraiter l'erreur \"unavailabe time\" seulement comme avertissement et l'enregistrer seulement une fois",
+        "it": "configurazione estesa per consentire di scegliere la frequenza e il tempo per il recupero delle informazioni\naggiungere la possibilità di personalizzare media.input dalla query INST e modificare i nomi in caso di configurazione\naggiungere il tempo non garantito dopo la potenza ON (numero di cicli brevi saltati dopo la potenza ON evento)\nha spostato tutte le query di stato a un timer a causa di problemi di autenticazione quando le domande vengono eseguite allo stesso tempo\ntrattare l'errore \"unavailabe time\" solo come avviso e registrarlo solo una volta",
+        "es": "configuración ampliada para permitirle elegir la frecuencia y el tiempo para la recuperación de información\nañadir la posibilidad de personalizar media.input by the INST query y editar los nombres en instance config\nañadir tiempo no garantizado después de la potencia ON (número de ciclos cortos saltados después de la potencia ON evento)\nmovió todas las consultas de estado a un temporizador debido a problemas de autentificación cuando las consultas se ejecutan al mismo tiempo\ntratar el error \"tiempo de availabe\" sólo como advertencia y registrarlo una vez",
+        "pl": "rozbudowana konfiguracja pozwalasz wybrać częstotliwość i czas na wyszukiwanie informacji\ndodaje możliwość dostosowania mediów.input przez zapytanie INST i edytowania imion w przykładzie konfigui\ndodaje czas nieoceniony po mocy ON (liczba krótkich cykli po zdarzeniu ON)\nprzesunięcie wszystkich zapytań do jednego czasu ze względu na problemy autentyfikacyjne, gdy zapytania są wykonywane w tym samym czasie\nokreślenie błędu „niezbyt czas” tylko jako ostrzeżenie i odczytanie go tylko raz",
+        "uk": "розширена конфігурація для вибору частоти та часу для відновлення інформації\nдодати можливість налаштувати медіа.input від INST запиту та редагувати імена в налаштуваннях екземпляра\nдодати негарантований час після живлення ON (номер скорочених коротких циклів після проведення заходу)\nперемістили всі запити про стан в одному таймері, пов'язані з усуненням питань, коли запити виконуються одночасно\nповідомляємо про те, що у вас є питання про те, що ви не погоджуєтесь з цим",
+        "zh-cn": "扩大配置,让你选择信息检索频率和时间\n增加可能使媒体习惯化。\n在发电后增加无担保时间(电报活动后短周期的数目)\n在询问同时执行时,对一名时间提出所有情况询问。\n只将错误“无时间”视为警告和逻辑,只是一劳永逸地处理。"
+      },
+      "0.0.3": {
+        "en": "updated react dependency",
+        "de": "aktualisierte reaktionsabhängigkeit",
+        "ru": "обновленная зависимость от реакции",
+        "pt": "dependência de reação atualizada",
+        "nl": "vertaling:",
+        "fr": "mise à jour de la dépendance",
+        "it": "la dipendenza da reagire aggiornata",
+        "es": "dependencia actualizada",
+        "pl": "reagować",
+        "uk": "оновлена залежність реактивності",
+        "zh-cn": "最新反应"
+      },
+      "0.0.2": {
+        "en": "changed some info logs to debug. Fixed one power state issue.\nredesign of timer and error handling",
+        "de": "einige Info-Logs zum Debug geändert. Ein Power State Problem behoben.\nneugestaltung von timer und fehlerbehandlung",
+        "ru": "изменил некоторые журналы для отладки. Исправлена одна проблема состояния власти.\nредизайн таймера и обработка ошибок",
+        "pt": "mudou alguns logs de informações para depurar. Corrigido um problema de estado de energia.\nredesenho de temporizador e manipulação de erros",
+        "nl": "veranderde infologs om te debuggen. Ik heb een machtsaandoening opgelost.\nvertaling:",
+        "fr": "j'ai changé quelques infos pour déboguer. Une seule question d'état de pouvoir.\nla refonte du timer et la manipulation des erreurs",
+        "it": "ha cambiato alcuni registri delle informazioni per debug. Risolto un problema di stato di potere.\nriprogettazione del timer e della gestione degli errori",
+        "es": "cambió algunos registros de información para depurar. Arreglado un problema de estado de poder.\nrediseño de tiempo y manejo de errores",
+        "pl": "zmienił niektóre logi informacyjne do debugowania. Wniosek jedno państwo.\nprzeprojektowanie czasu i obsługi błędów",
+        "uk": "змінено деякі інформаційні журнали для видалення. Виправлено одну державну проблему.\nредизайн таймера та обробки помилок",
+        "zh-cn": "某些泡沫被改装。 混合一个权力国问题。.\n重新设计时间和错误处理"
+      },
+      "0.0.1": {
+        "en": "initial release",
+        "de": "erstausstrahlung",
+        "ru": "начальный выпуск",
+        "pt": "lançamento inicial",
+        "nl": "niet",
+        "fr": "initial release",
+        "it": "rilascio iniziale",
+        "es": "liberación inicial",
+        "pl": "pierwsze wydanie",
+        "uk": "початковий реліз",
+        "zh-cn": "初步释放"
+      }
     },
-    "native": {
-        "host": "127.0.0.1",
-        "port": 4352,
-        "password": "",
-        "class": 1,
-        "socketTimeout": 800,
-        "statusDelay": 2000,
-        "informationDelay": 60000,
-        "reconnectDelay": 10000,
-        "skippedCyclesAfterPowerOn": 5,
-        "inputInfo": [],
-        "queryTypeCLSS": 1,
-        "queryTypePOWR": 2,
-        "queryTypeINPT": 2,
-        "queryOnlyPwrINPT": false,
-        "queryTypeAVMT": 2,
-        "queryOnlyPwrAVMT": false,
-        "queryTypeERST": 3,
-        "queryOnlyPwrERST": false,
-        "queryTypeLAMP": 3,
-        "queryOnlyPwrLAMP": false,
-        "queryTypeINST": 1,
-        "queryOnlyPwrINST": false,
-        "queryTypeNAME": 1,
-        "queryOnlyPwrNAME": false,
-        "queryTypeINF1": 1,
-        "queryOnlyPwrINF1": false,
-        "queryTypeINF2": 1,
-        "queryOnlyPwrINF2": false,
-        "queryTypeINFO": 1,
-        "queryOnlyPwrINFO": false
+    "titleLang": {
+      "en": "PJLink projector controll",
+      "de": "PJLink Projektor Steuerung",
+      "ru": "PJLink проектор controll",
+      "pt": "Controle de projetor PJLink",
+      "nl": "PJLink projector controle",
+      "fr": "PJLink projecteur controll",
+      "it": "Discussione del proiettore PJLink",
+      "es": "PJLink projector controll",
+      "pl": "Projekt PJLink",
+      "zh-cn": "PJLink项目有限公司",
+      "uk": "Керування проектором PJLink"
     },
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": {
-                    "en": "Information",
-                    "de": "Informationen",
-                    "ru": "Информация",
-                    "pt": "Informação",
-                    "nl": "Informatie",
-                    "fr": "Information",
-                    "it": "Informazioni",
-                    "es": "Información",
-                    "pl": "Informacja",
-                    "zh-cn": "信息"
-                }
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": {
-                    "en": "PJLink compatible projector connected",
-                    "de": "PJLink kompatibler Projektor verbunden",
-                    "ru": "PJLink совместимый проектор подключен",
-                    "pt": "Projetor compatível PJLink conectado",
-                    "nl": "PJLink compatible projector",
-                    "fr": "Projecteur compatible PJLink connecté",
-                    "it": "Videoproiettore compatibile PJLink collegato",
-                    "es": "Proyector compatible PJLink conectado",
-                    "pl": "PJLink kompatybilny projektor spójny",
-                    "zh-cn": "PJLink兼容的项目"
-                },
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "power",
-            "type": "state",
-            "common": {
-                "role": "button",
-                "name": {
-                    "en": "Power switch",
-                    "de": "Netzschalter",
-                    "ru": "Power переключатель",
-                    "pt": "Interruptor de alimentação",
-                    "nl": "Power",
-                    "fr": "Interrupteur de puissance",
-                    "it": "Interruttore di potenza",
-                    "es": "Interruptor de potencia",
-                    "pl": "Power switch",
-                    "uk": "Потужність перемикача",
-                    "zh-cn": "权力转换"
-                },
-                "type": "boolean",
-                "read": true,
-                "write": true,
-                "def": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "powerStatus",
-            "type": "state",
-            "common": {
-                "role": "info.status",
-                "name": {
-                    "en": "Power status",
-                    "de": "Power Status",
-                    "ru": "Статус мощности",
-                    "pt": "Estado de potência",
-                    "nl": "Power",
-                    "fr": "État de la puissance",
-                    "it": "Stato di potenza",
-                    "es": "Situación de la energía",
-                    "pl": "Status bezpieczeństwa",
-                    "uk": "Статус на сервери",
-                    "zh-cn": "权力地位"
-                },
-                "type": "number",
-                "states": {
-                    "0": "Power Off",
-                    "1": "Power On",
-                    "2": "Cooling down",
-                    "3": "Warming up"
-                },
-                "read": true,
-                "write": false,
-                "def": 1
-            },
-            "native": {}
-        },
-        {
-            "_id": "input",
-            "type": "state",
-            "common": {
-                "role": "media.input",
-                "name": {
-                    "en": "Media input",
-                    "de": "Medieneingang",
-                    "ru": "Медиа вход",
-                    "pt": "Entrada de mídia",
-                    "nl": "Media input",
-                    "fr": "Media input",
-                    "it": "Ingresso dei media",
-                    "es": "Media input",
-                    "pl": "Media",
-                    "uk": "Вхід",
-                    "zh-cn": "媒体投入"
-                },
-                "type": "number",
-                "min": 11,
-                "max": 59,
-                "read": true,
-                "write": true,
-                "def": 11
-            },
-            "native": {}
-        },
-        {
-            "_id": "setMute",
-            "type": "state",
-            "common": {
-                "role": "info.status",
-                "name": {
-                    "en": "Set mute",
-                    "de": "Mute einstellen",
-                    "ru": "Установить милю",
-                    "pt": "Definir mudo",
-                    "nl": "Set mute",
-                    "fr": "Set mute",
-                    "it": "Set mute",
-                    "es": "Set mute",
-                    "pl": "Set mute",
-                    "uk": "Комплект мута",
-                    "zh-cn": "固定弹"
-                },
-                "type": "number",
-                "states": {
-                    "10": "VIDEO mute OFF",
-                    "11": "VIDEO mute ON",
-                    "20": "AUDIO mute OFF",
-                    "21": "AUDIO mute ON",
-                    "30": "VIDEO & AUDIO mute OFF",
-                    "31": "VIDEO & AUDIO mute ON"
-                },
-                "read": true,
-                "write": true,
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "videoMuteStatus",
-            "type": "state",
-            "common": {
-                "role": "info.status",
-                "name": {
-                    "en": "Video mute status",
-                    "de": "Video-Muting-Status",
-                    "ru": "Статус видео мили",
-                    "pt": "Status de mudo de vídeo",
-                    "nl": "Video mute status",
-                    "fr": "État du muet vidéo",
-                    "it": "Situazione video mute",
-                    "es": "Estado mudo de vídeo",
-                    "pl": "Video mute status",
-                    "uk": "Статус на сервери",
-                    "zh-cn": "武断地位"
-                },
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "audioMuteStatus",
-            "type": "state",
-            "common": {
-                "role": "info.status",
-                "name": {
-                    "en": "Audio mute status",
-                    "de": "Audio-Muting-Status",
-                    "ru": "Audio mute статус",
-                    "pt": "Estado mudo de áudio",
-                    "nl": "Audio mute status",
-                    "fr": "État du muet audio",
-                    "it": "Stato audio muto",
-                    "es": "Estado mudo de audio",
-                    "pl": "Audio mute status",
-                    "uk": "Статус на сервери",
-                    "zh-cn": "Audio Milte地位"
-                },
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo",
-            "type": "channel",
-            "common": {
-                "name": {
-                    "en": "Device information",
-                    "de": "Informationen zum Gerät",
-                    "ru": "Информация об устройстве",
-                    "pt": "InformaÃ§Ãμes do dispositivo",
-                    "nl": "Vernietig informatie",
-                    "fr": "Information sur les dispositifs",
-                    "it": "Informazioni sul dispositivo",
-                    "es": "Información sobre dispositivos",
-                    "pl": "Data dostępu",
-                    "zh-cn": "证人信息"
-                }
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.fanErrorStatus",
-            "type": "state",
-            "common": {
-                "role": "indicator.maintenance",
-                "name": {
-                    "en": "Fan error status",
-                    "de": "Lüfter Fehlerstatus",
-                    "ru": "Статус ошибки",
-                    "pt": "Status do erro do ventilador",
-                    "nl": "Fan Error status",
-                    "fr": "État d'erreur",
-                    "it": "Stato di errore del ventilatore",
-                    "es": "Estado de error de ventilador",
-                    "pl": "Fan Error (ang.)",
-                    "uk": "Статус на сервери",
-                    "zh-cn": "Fan Error地位"
-                },
-                "type": "number",
-                "states": {
-                    "0": "No Error",
-                    "1": "Warning",
-                    "2": "Error"
-                },
-                "read": true,
-                "write": false,
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.lampErrorStatus",
-            "type": "state",
-            "common": {
-                "role": "indicator.maintenance",
-                "name": {
-                    "en": "Lamp error status",
-                    "de": "Fehlerstatus der Lampe",
-                    "ru": "Статус ошибки лампы",
-                    "pt": "Estado de erro da lâmpada",
-                    "nl": "Lampfout status",
-                    "fr": "État d'erreur de la lampe",
-                    "it": "Stato di errore della lampada",
-                    "es": "Estado de error de la lámpara",
-                    "pl": "Status błędu",
-                    "uk": "Статус на сервери",
-                    "zh-cn": "错误地位"
-                },
-                "type": "number",
-                "states": {
-                    "0": "No Error",
-                    "1": "Warning",
-                    "2": "Error"
-                },
-                "read": true,
-                "write": false,
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.temperatureErrorStatus",
-            "type": "state",
-            "common": {
-                "role": "indicator.maintenance",
-                "name": {
-                    "en": "Temperature error status",
-                    "de": "Temperaturfehlerstatus",
-                    "ru": "Статус ошибки температуры",
-                    "pt": "Estado de erro de temperatura",
-                    "nl": "Tijdelijke fout",
-                    "fr": "État d'erreur de température",
-                    "it": "Stato di errore di temperatura",
-                    "es": "Estado de error de temperatura",
-                    "pl": "Temperatura błędów",
-                    "uk": "Статус на сервери",
-                    "zh-cn": "事实错误状况"
-                },
-                "type": "number",
-                "states": {
-                    "0": "No Error",
-                    "1": "Warning",
-                    "2": "Error"
-                },
-                "read": true,
-                "write": false,
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.coverOpenStatus",
-            "type": "state",
-            "common": {
-                "role": "indicator.maintenance",
-                "name": {
-                    "en": "Cover open status",
-                    "de": "Gehäuse offen Status",
-                    "ru": "Обложка открытого статуса",
-                    "pt": "Cubra o status aberto",
-                    "nl": "Dek de open status",
-                    "fr": "Couverture ouverte",
-                    "it": "Copertura dello stato aperto",
-                    "es": "Cubrir el estado abierto",
-                    "pl": "Strona internetowa",
-                    "uk": "Відкритий статус",
-                    "zh-cn": "开放地位"
-                },
-                "type": "number",
-                "states": {
-                    "0": "Closed",
-                    "1": "Warning",
-                    "2": "Error"
-                },
-                "read": true,
-                "write": false,
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.filterErrorStatus",
-            "type": "state",
-            "common": {
-                "role": "indicator.maintenance",
-                "name": {
-                    "en": "Filter error status",
-                    "de": "Status der Filter",
-                    "ru": "Статус ошибки фильтра",
-                    "pt": "Estado de erro do filtro",
-                    "nl": "Filter fout",
-                    "fr": "État d'erreur",
-                    "it": "Stato di errore filtro",
-                    "es": "Estado del error de filtro",
-                    "pl": "Status błędu",
-                    "uk": "Статус на сервери",
-                    "zh-cn": "错误地位"
-                },
-                "type": "number",
-                "states": {
-                    "0": "No Error",
-                    "1": "Warning",
-                    "2": "Error"
-                },
-                "read": true,
-                "write": false,
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.otherErrorStatus",
-            "type": "state",
-            "common": {
-                "role": "indicator.maintenance",
-                "name": {
-                    "en": "Other error status",
-                    "de": "Sonstige Fehler",
-                    "ru": "Другой статус ошибки",
-                    "pt": "Outro estado de erro",
-                    "nl": "Andere foute status",
-                    "fr": "Statut d'erreur",
-                    "it": "Altri errori di stato",
-                    "es": "Otro estado de error",
-                    "pl": "Inny status błędu",
-                    "uk": "Статус на сервери",
-                    "zh-cn": "其他错误地位"
-                },
-                "type": "number",
-                "states": {
-                    "0": "No Error",
-                    "1": "Warning",
-                    "2": "Error"
-                },
-                "read": true,
-                "write": false,
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.lamps",
-            "type": "channel",
-            "common": {
-                "name": {
-                    "en": "Information about the lamps",
-                    "de": "Informationen der Lampen",
-                    "ru": "Информация о лампах",
-                    "pt": "InformaÃ§Ãμes sobre as lâmpadas",
-                    "nl": "Informatie over de lampen",
-                    "fr": "Informations sur les feux",
-                    "it": "Informazioni sulle lampade",
-                    "es": "Información sobre las lámparas",
-                    "pl": "Informacja o lampach",
-                    "uk": "Інформація про світильники",
-                    "zh-cn": "资料"
-                },
-                "native": {}
-            }
-        },
-        {
-            "_id": "deviceInfo.lamps.lamp1Status",
-            "type": "state",
-            "common": {
-                "role": "indicator.maintenance",
-                "name": {
-                    "en": "Status of lamp 1",
-                    "de": "Status der Lampe 1",
-                    "ru": "Статус лампы 1",
-                    "pt": "Estado da lâmpada 1",
-                    "nl": "Status van lamp 1",
-                    "fr": "État du feu 1",
-                    "it": "Stato della lampada 1",
-                    "es": "Estado de la lámpara 1",
-                    "pl": "Status lampy 1",
-                    "uk": "Статус лампи 1",
-                    "zh-cn": "口粮1"
-                },
-                "type": "number",
-                "states": {
-                    "0": "Off",
-                    "1": "On"
-                },
-                "read": true,
-                "write": false,
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.lamps.lamp1Hours",
-            "type": "state",
-            "common": {
-                "role": "value",
-                "name": {
-                    "en": "Lighting time of lamp 1",
-                    "de": "Leuchtdauer der Lampe 1",
-                    "ru": "Время освещения лампы 1",
-                    "pt": "Tempo de iluminação da lâmpada 1",
-                    "nl": "Verlichtingstijd van lamp 1",
-                    "fr": "Temps d'éclairage de la lampe 1",
-                    "it": "Tempo di illuminazione della lampada 1",
-                    "es": "Tiempo de iluminación de la lámpara 1",
-                    "pl": "Czas świetlny lampy 1",
-                    "uk": "Час освітлення лампи 1",
-                    "zh-cn": "A. 灯1"
-                },
-                "type": "number",
-                "min": 0,
-                "max": 99999,
-                "read": true,
-                "write": false,
-                "def": 0
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.inputsAvailable",
-            "type": "state",
-            "common": {
-                "role": "media.input",
-                "name": {
-                    "en": "Inputs available",
-                    "de": "Verfügbare Eingänge",
-                    "ru": "Входы доступны",
-                    "pt": "Entradas disponíveis",
-                    "nl": "Inputs beschikbaar",
-                    "fr": "Entrées disponibles",
-                    "it": "Ingressi disponibili",
-                    "es": "Entradas disponibles",
-                    "pl": "Inputy dostępne",
-                    "uk": "Вхід",
-                    "zh-cn": "现有投入"
-                },
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.projectorName",
-            "type": "state",
-            "common": {
-                "role": "info.name",
-                "name": {
-                    "en": "Projector/Display name",
-                    "de": "Projektor/Display Name",
-                    "ru": "Projector/Display имя",
-                    "pt": "Nome do projetor/Display",
-                    "nl": "Projector/Display naam",
-                    "fr": "Nom Projecteur/Affichage",
-                    "it": "Nome del proiettore/disco",
-                    "es": "Nombre del proyector/display",
-                    "pl": "Nazwa projektu/Display",
-                    "uk": "Ім'я проектора/Display",
-                    "zh-cn": "项目/主题名称"
-                },
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.projectorManufacturer",
-            "type": "state",
-            "common": {
-                "role": "info.hardware",
-                "name": {
-                    "en": "Manufacturer",
-                    "de": "Hersteller",
-                    "ru": "Производитель",
-                    "pt": "Fabricante",
-                    "nl": "Manufactur",
-                    "fr": "Fabricant",
-                    "it": "Produttore",
-                    "es": "Fabricantes",
-                    "pl": "Manufacturer",
-                    "uk": "Продукція",
-                    "zh-cn": "制造商"
-                },
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.productName",
-            "type": "state",
-            "common": {
-                "role": "info.hardware",
-                "name": {
-                    "en": "Product name",
-                    "de": "Produktname",
-                    "ru": "Наименование продукта",
-                    "pt": "Nome do produto",
-                    "nl": "Product naam",
-                    "fr": "Nom du produit",
-                    "it": "Nome del prodotto",
-                    "es": "Nombre del producto",
-                    "pl": "Nazwa produkcyjna",
-                    "uk": "Назва продукту",
-                    "zh-cn": "产品名称"
-                },
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.otherInfo",
-            "type": "state",
-            "common": {
-                "role": "info.name",
-                "name": {
-                    "en": "Other information",
-                    "de": "Sonstige Informationen",
-                    "ru": "Другая информация",
-                    "pt": "Outras informações",
-                    "nl": "Andere informatie",
-                    "fr": "Autres informations",
-                    "it": "Altre informazioni",
-                    "es": "Otras informaciones",
-                    "pl": "Inne informacje",
-                    "uk": "Інші відомості",
-                    "zh-cn": "其他资料"
-                },
-                "type": "string",
-                "read": true,
-                "write": false,
-                "def": ""
-            },
-            "native": {}
-        },
-        {
-            "_id": "deviceInfo.class",
-            "type": "state",
-            "common": {
-                "role": "state",
-                "name": {
-                    "en": "Supported PJLink class",
-                    "de": "Unterstützte PJLink-Klasse",
-                    "ru": "Поддерживаемый класс PJLink",
-                    "pt": "Classe PJLink suportada",
-                    "nl": "Vertaling:",
-                    "fr": "Classe PJLink supportée",
-                    "it": "Supportato classe PJLink",
-                    "es": "Clase PJLink apoyada",
-                    "pl": "Wsparcie dla klasy PJLink",
-                    "uk": "Підтримка PJLink класу",
-                    "zh-cn": "支持PJLink阶级"
-                },
-                "type": "number",
-                "read": true,
-                "write": false,
-                "def": 1
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Control a projector via PJLink",
+      "de": "Steuern Sie einen Projektor über PJLink",
+      "ru": "Управление проектором через PJLink",
+      "pt": "Controle um projetor via PJLink",
+      "nl": "Bedien een projector via PJLink",
+      "fr": "Contrôler un projecteur via PJLink",
+      "it": "Controlla un proiettore tramite PJLink",
+      "es": "Controlar un proyector a través de PJLink",
+      "pl": "Steruj projektorem przez PJLink",
+      "zh-cn": "通过 PJLink 控制投影仪",
+      "uk": "Керуйте проектором через PJLink"
+    },
+    "authors": [
+      "Bannsaenger <bannsaenger@gmx.de>"
+    ],
+    "keywords": [
+      "pjlink",
+      "projector"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "pjlink.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/Bannsaenger/ioBroker.pjlink/main/admin/pjlink.png",
+    "readme": "https://github.com/Bannsaenger/ioBroker.pjlink/blob/main/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "multimedia",
+    "compact": true,
+    "adminUI": {
+      "config": "json"
+    },
+    "connectionType": "local",
+    "dataSource": "poll",
+    "materialize": true,
+    "eraseOnUpload": true,
+    "messagebox": true,
+    "dependencies": [
+      {
+        "js-controller": ">=4.0.15"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=5.3.2"
+      }
+    ],
+    "protectedNative": [
+      "password"
+    ],
+    "encryptedNative": [
+      "password"
     ]
+  },
+  "native": {
+    "host": "127.0.0.1",
+    "port": 4352,
+    "password": "",
+    "class": 1,
+    "socketTimeout": 800,
+    "statusDelay": 2000,
+    "informationDelay": 60000,
+    "reconnectDelay": 10000,
+    "skippedCyclesAfterPowerOn": 5,
+    "inputInfo": [],
+    "queryTypeCLSS": 1,
+    "queryTypePOWR": 2,
+    "queryTypeINPT": 2,
+    "queryOnlyPwrINPT": false,
+    "queryTypeAVMT": 2,
+    "queryOnlyPwrAVMT": false,
+    "queryTypeERST": 3,
+    "queryOnlyPwrERST": false,
+    "queryTypeLAMP": 3,
+    "queryOnlyPwrLAMP": false,
+    "queryTypeINST": 1,
+    "queryOnlyPwrINST": false,
+    "queryTypeNAME": 1,
+    "queryOnlyPwrNAME": false,
+    "queryTypeINF1": 1,
+    "queryOnlyPwrINF1": false,
+    "queryTypeINF2": 1,
+    "queryOnlyPwrINF2": false,
+    "queryTypeINFO": 1,
+    "queryOnlyPwrINFO": false
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": {
+          "en": "Information",
+          "de": "Informationen",
+          "ru": "Информация",
+          "pt": "Informação",
+          "nl": "Informatie",
+          "fr": "Information",
+          "it": "Informazioni",
+          "es": "Información",
+          "pl": "Informacja",
+          "zh-cn": "信息"
+        }
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": {
+          "en": "PJLink compatible projector connected",
+          "de": "PJLink kompatibler Projektor verbunden",
+          "ru": "PJLink совместимый проектор подключен",
+          "pt": "Projetor compatível PJLink conectado",
+          "nl": "PJLink compatible projector",
+          "fr": "Projecteur compatible PJLink connecté",
+          "it": "Videoproiettore compatibile PJLink collegato",
+          "es": "Proyector compatible PJLink conectado",
+          "pl": "PJLink kompatybilny projektor spójny",
+          "zh-cn": "PJLink兼容的项目"
+        },
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "power",
+      "type": "state",
+      "common": {
+        "role": "button",
+        "name": {
+          "en": "Power switch",
+          "de": "Netzschalter",
+          "ru": "Power переключатель",
+          "pt": "Interruptor de alimentação",
+          "nl": "Power",
+          "fr": "Interrupteur de puissance",
+          "it": "Interruttore di potenza",
+          "es": "Interruptor de potencia",
+          "pl": "Power switch",
+          "uk": "Потужність перемикача",
+          "zh-cn": "权力转换"
+        },
+        "type": "boolean",
+        "read": true,
+        "write": true,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "powerStatus",
+      "type": "state",
+      "common": {
+        "role": "info.status",
+        "name": {
+          "en": "Power status",
+          "de": "Power Status",
+          "ru": "Статус мощности",
+          "pt": "Estado de potência",
+          "nl": "Power",
+          "fr": "État de la puissance",
+          "it": "Stato di potenza",
+          "es": "Situación de la energía",
+          "pl": "Status bezpieczeństwa",
+          "uk": "Статус на сервери",
+          "zh-cn": "权力地位"
+        },
+        "type": "number",
+        "states": {
+          "0": "Power Off",
+          "1": "Power On",
+          "2": "Cooling down",
+          "3": "Warming up"
+        },
+        "read": true,
+        "write": false,
+        "def": 1
+      },
+      "native": {}
+    },
+    {
+      "_id": "input",
+      "type": "state",
+      "common": {
+        "role": "media.input",
+        "name": {
+          "en": "Media input",
+          "de": "Medieneingang",
+          "ru": "Медиа вход",
+          "pt": "Entrada de mídia",
+          "nl": "Media input",
+          "fr": "Media input",
+          "it": "Ingresso dei media",
+          "es": "Media input",
+          "pl": "Media",
+          "uk": "Вхід",
+          "zh-cn": "媒体投入"
+        },
+        "type": "number",
+        "min": 11,
+        "max": 59,
+        "read": true,
+        "write": true,
+        "def": 11
+      },
+      "native": {}
+    },
+    {
+      "_id": "setMute",
+      "type": "state",
+      "common": {
+        "role": "info.status",
+        "name": {
+          "en": "Set mute",
+          "de": "Mute einstellen",
+          "ru": "Установить милю",
+          "pt": "Definir mudo",
+          "nl": "Set mute",
+          "fr": "Set mute",
+          "it": "Set mute",
+          "es": "Set mute",
+          "pl": "Set mute",
+          "uk": "Комплект мута",
+          "zh-cn": "固定弹"
+        },
+        "type": "number",
+        "states": {
+          "10": "VIDEO mute OFF",
+          "11": "VIDEO mute ON",
+          "20": "AUDIO mute OFF",
+          "21": "AUDIO mute ON",
+          "30": "VIDEO & AUDIO mute OFF",
+          "31": "VIDEO & AUDIO mute ON"
+        },
+        "read": true,
+        "write": true,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "videoMuteStatus",
+      "type": "state",
+      "common": {
+        "role": "info.status",
+        "name": {
+          "en": "Video mute status",
+          "de": "Video-Muting-Status",
+          "ru": "Статус видео мили",
+          "pt": "Status de mudo de vídeo",
+          "nl": "Video mute status",
+          "fr": "État du muet vidéo",
+          "it": "Situazione video mute",
+          "es": "Estado mudo de vídeo",
+          "pl": "Video mute status",
+          "uk": "Статус на сервери",
+          "zh-cn": "武断地位"
+        },
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "audioMuteStatus",
+      "type": "state",
+      "common": {
+        "role": "info.status",
+        "name": {
+          "en": "Audio mute status",
+          "de": "Audio-Muting-Status",
+          "ru": "Audio mute статус",
+          "pt": "Estado mudo de áudio",
+          "nl": "Audio mute status",
+          "fr": "État du muet audio",
+          "it": "Stato audio muto",
+          "es": "Estado mudo de audio",
+          "pl": "Audio mute status",
+          "uk": "Статус на сервери",
+          "zh-cn": "Audio Milte地位"
+        },
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo",
+      "type": "channel",
+      "common": {
+        "name": {
+          "en": "Device information",
+          "de": "Informationen zum Gerät",
+          "ru": "Информация об устройстве",
+          "pt": "InformaÃ§Ãμes do dispositivo",
+          "nl": "Vernietig informatie",
+          "fr": "Information sur les dispositifs",
+          "it": "Informazioni sul dispositivo",
+          "es": "Información sobre dispositivos",
+          "pl": "Data dostępu",
+          "zh-cn": "证人信息"
+        }
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.fanErrorStatus",
+      "type": "state",
+      "common": {
+        "role": "indicator.maintenance",
+        "name": {
+          "en": "Fan error status",
+          "de": "Lüfter Fehlerstatus",
+          "ru": "Статус ошибки",
+          "pt": "Status do erro do ventilador",
+          "nl": "Fan Error status",
+          "fr": "État d'erreur",
+          "it": "Stato di errore del ventilatore",
+          "es": "Estado de error de ventilador",
+          "pl": "Fan Error (ang.)",
+          "uk": "Статус на сервери",
+          "zh-cn": "Fan Error地位"
+        },
+        "type": "number",
+        "states": {
+          "0": "No Error",
+          "1": "Warning",
+          "2": "Error"
+        },
+        "read": true,
+        "write": false,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.lampErrorStatus",
+      "type": "state",
+      "common": {
+        "role": "indicator.maintenance",
+        "name": {
+          "en": "Lamp error status",
+          "de": "Fehlerstatus der Lampe",
+          "ru": "Статус ошибки лампы",
+          "pt": "Estado de erro da lâmpada",
+          "nl": "Lampfout status",
+          "fr": "État d'erreur de la lampe",
+          "it": "Stato di errore della lampada",
+          "es": "Estado de error de la lámpara",
+          "pl": "Status błędu",
+          "uk": "Статус на сервери",
+          "zh-cn": "错误地位"
+        },
+        "type": "number",
+        "states": {
+          "0": "No Error",
+          "1": "Warning",
+          "2": "Error"
+        },
+        "read": true,
+        "write": false,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.temperatureErrorStatus",
+      "type": "state",
+      "common": {
+        "role": "indicator.maintenance",
+        "name": {
+          "en": "Temperature error status",
+          "de": "Temperaturfehlerstatus",
+          "ru": "Статус ошибки температуры",
+          "pt": "Estado de erro de temperatura",
+          "nl": "Tijdelijke fout",
+          "fr": "État d'erreur de température",
+          "it": "Stato di errore di temperatura",
+          "es": "Estado de error de temperatura",
+          "pl": "Temperatura błędów",
+          "uk": "Статус на сервери",
+          "zh-cn": "事实错误状况"
+        },
+        "type": "number",
+        "states": {
+          "0": "No Error",
+          "1": "Warning",
+          "2": "Error"
+        },
+        "read": true,
+        "write": false,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.coverOpenStatus",
+      "type": "state",
+      "common": {
+        "role": "indicator.maintenance",
+        "name": {
+          "en": "Cover open status",
+          "de": "Gehäuse offen Status",
+          "ru": "Обложка открытого статуса",
+          "pt": "Cubra o status aberto",
+          "nl": "Dek de open status",
+          "fr": "Couverture ouverte",
+          "it": "Copertura dello stato aperto",
+          "es": "Cubrir el estado abierto",
+          "pl": "Strona internetowa",
+          "uk": "Відкритий статус",
+          "zh-cn": "开放地位"
+        },
+        "type": "number",
+        "states": {
+          "0": "Closed",
+          "1": "Warning",
+          "2": "Error"
+        },
+        "read": true,
+        "write": false,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.filterErrorStatus",
+      "type": "state",
+      "common": {
+        "role": "indicator.maintenance",
+        "name": {
+          "en": "Filter error status",
+          "de": "Status der Filter",
+          "ru": "Статус ошибки фильтра",
+          "pt": "Estado de erro do filtro",
+          "nl": "Filter fout",
+          "fr": "État d'erreur",
+          "it": "Stato di errore filtro",
+          "es": "Estado del error de filtro",
+          "pl": "Status błędu",
+          "uk": "Статус на сервери",
+          "zh-cn": "错误地位"
+        },
+        "type": "number",
+        "states": {
+          "0": "No Error",
+          "1": "Warning",
+          "2": "Error"
+        },
+        "read": true,
+        "write": false,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.otherErrorStatus",
+      "type": "state",
+      "common": {
+        "role": "indicator.maintenance",
+        "name": {
+          "en": "Other error status",
+          "de": "Sonstige Fehler",
+          "ru": "Другой статус ошибки",
+          "pt": "Outro estado de erro",
+          "nl": "Andere foute status",
+          "fr": "Statut d'erreur",
+          "it": "Altri errori di stato",
+          "es": "Otro estado de error",
+          "pl": "Inny status błędu",
+          "uk": "Статус на сервери",
+          "zh-cn": "其他错误地位"
+        },
+        "type": "number",
+        "states": {
+          "0": "No Error",
+          "1": "Warning",
+          "2": "Error"
+        },
+        "read": true,
+        "write": false,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.lamps",
+      "type": "channel",
+      "common": {
+        "name": {
+          "en": "Information about the lamps",
+          "de": "Informationen der Lampen",
+          "ru": "Информация о лампах",
+          "pt": "InformaÃ§Ãμes sobre as lâmpadas",
+          "nl": "Informatie over de lampen",
+          "fr": "Informations sur les feux",
+          "it": "Informazioni sulle lampade",
+          "es": "Información sobre las lámparas",
+          "pl": "Informacja o lampach",
+          "uk": "Інформація про світильники",
+          "zh-cn": "资料"
+        },
+        "native": {}
+      }
+    },
+    {
+      "_id": "deviceInfo.lamps.lamp1Status",
+      "type": "state",
+      "common": {
+        "role": "indicator.maintenance",
+        "name": {
+          "en": "Status of lamp 1",
+          "de": "Status der Lampe 1",
+          "ru": "Статус лампы 1",
+          "pt": "Estado da lâmpada 1",
+          "nl": "Status van lamp 1",
+          "fr": "État du feu 1",
+          "it": "Stato della lampada 1",
+          "es": "Estado de la lámpara 1",
+          "pl": "Status lampy 1",
+          "uk": "Статус лампи 1",
+          "zh-cn": "口粮1"
+        },
+        "type": "number",
+        "states": {
+          "0": "Off",
+          "1": "On"
+        },
+        "read": true,
+        "write": false,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.lamps.lamp1Hours",
+      "type": "state",
+      "common": {
+        "role": "value",
+        "name": {
+          "en": "Lighting time of lamp 1",
+          "de": "Leuchtdauer der Lampe 1",
+          "ru": "Время освещения лампы 1",
+          "pt": "Tempo de iluminação da lâmpada 1",
+          "nl": "Verlichtingstijd van lamp 1",
+          "fr": "Temps d'éclairage de la lampe 1",
+          "it": "Tempo di illuminazione della lampada 1",
+          "es": "Tiempo de iluminación de la lámpara 1",
+          "pl": "Czas świetlny lampy 1",
+          "uk": "Час освітлення лампи 1",
+          "zh-cn": "A. 灯1"
+        },
+        "type": "number",
+        "min": 0,
+        "max": 99999,
+        "read": true,
+        "write": false,
+        "def": 0
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.inputsAvailable",
+      "type": "state",
+      "common": {
+        "role": "media.input",
+        "name": {
+          "en": "Inputs available",
+          "de": "Verfügbare Eingänge",
+          "ru": "Входы доступны",
+          "pt": "Entradas disponíveis",
+          "nl": "Inputs beschikbaar",
+          "fr": "Entrées disponibles",
+          "it": "Ingressi disponibili",
+          "es": "Entradas disponibles",
+          "pl": "Inputy dostępne",
+          "uk": "Вхід",
+          "zh-cn": "现有投入"
+        },
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.projectorName",
+      "type": "state",
+      "common": {
+        "role": "info.name",
+        "name": {
+          "en": "Projector/Display name",
+          "de": "Projektor/Display Name",
+          "ru": "Projector/Display имя",
+          "pt": "Nome do projetor/Display",
+          "nl": "Projector/Display naam",
+          "fr": "Nom Projecteur/Affichage",
+          "it": "Nome del proiettore/disco",
+          "es": "Nombre del proyector/display",
+          "pl": "Nazwa projektu/Display",
+          "uk": "Ім'я проектора/Display",
+          "zh-cn": "项目/主题名称"
+        },
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.projectorManufacturer",
+      "type": "state",
+      "common": {
+        "role": "info.hardware",
+        "name": {
+          "en": "Manufacturer",
+          "de": "Hersteller",
+          "ru": "Производитель",
+          "pt": "Fabricante",
+          "nl": "Manufactur",
+          "fr": "Fabricant",
+          "it": "Produttore",
+          "es": "Fabricantes",
+          "pl": "Manufacturer",
+          "uk": "Продукція",
+          "zh-cn": "制造商"
+        },
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.productName",
+      "type": "state",
+      "common": {
+        "role": "info.hardware",
+        "name": {
+          "en": "Product name",
+          "de": "Produktname",
+          "ru": "Наименование продукта",
+          "pt": "Nome do produto",
+          "nl": "Product naam",
+          "fr": "Nom du produit",
+          "it": "Nome del prodotto",
+          "es": "Nombre del producto",
+          "pl": "Nazwa produkcyjna",
+          "uk": "Назва продукту",
+          "zh-cn": "产品名称"
+        },
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.otherInfo",
+      "type": "state",
+      "common": {
+        "role": "info.name",
+        "name": {
+          "en": "Other information",
+          "de": "Sonstige Informationen",
+          "ru": "Другая информация",
+          "pt": "Outras informações",
+          "nl": "Andere informatie",
+          "fr": "Autres informations",
+          "it": "Altre informazioni",
+          "es": "Otras informaciones",
+          "pl": "Inne informacje",
+          "uk": "Інші відомості",
+          "zh-cn": "其他资料"
+        },
+        "type": "string",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "deviceInfo.class",
+      "type": "state",
+      "common": {
+        "role": "state",
+        "name": {
+          "en": "Supported PJLink class",
+          "de": "Unterstützte PJLink-Klasse",
+          "ru": "Поддерживаемый класс PJLink",
+          "pt": "Classe PJLink suportada",
+          "nl": "Vertaling:",
+          "fr": "Classe PJLink supportée",
+          "it": "Supportato classe PJLink",
+          "es": "Clase PJLink apoyada",
+          "pl": "Wsparcie dla klasy PJLink",
+          "uk": "Підтримка PJLink класу",
+          "zh-cn": "支持PJLink阶级"
+        },
+        "type": "number",
+        "read": true,
+        "write": false,
+        "def": 1
+      },
+      "native": {}
+    }
+  ]
 }
