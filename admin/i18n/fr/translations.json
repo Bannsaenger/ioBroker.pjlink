@@ -39,5 +39,6 @@
     "Overwrite the existing input configuration": "Ecraser la configuration d'entrée existante ?",
     "Overwrite the existing input configuration with restart": "Ecraser la configuration d'entrée existante ? N'oubliez pas de redémarrer l'instance après l'enregistrement pour recharger l'objet de configuration dans l'instance !",
     "Number of skipped short cycles after power ON event": "Nombre de cycles courts sautés après l'événement de mise sous tension",
-    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Définissez le nombre de cycles courts ignorés, principalement les requêtes d'alimentation, après l'événement de mise sous tension, par défaut 5 (avec 2000 ms statusDelay correspond à 10 s de temps non garanti)"
+    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Définissez le nombre de cycles courts ignorés, principalement les requêtes d'alimentation, après l'événement de mise sous tension, par défaut 5 (avec 2000 ms statusDelay correspond à 10 s de temps non garanti)",
+    "has to be a multiple of the status poll interval": "doit être un multiple de l'intervalle d'interrogation d'état"
 }

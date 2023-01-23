@@ -39,5 +39,6 @@
     "Overwrite the existing input configuration": "Перезаписати існуючу конфігурацію введення?",
     "Overwrite the existing input configuration with restart": "Перезаписати існуючу конфігурацію введення? Не забудьте перезапустити екземпляр після збереження, щоб перезавантажити об’єкт конфігурації в екземпляр!",
     "Number of skipped short cycles after power ON event": "Кількість пропущених коротких циклів після увімкнення живлення",
-    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Установіть кількість пропущених коротких циклів, головним чином запитів живлення, після події увімкнення живлення, за замовчуванням 5 (із 2000 мс statusDelay відповідає 10 с негарантійному часу)"
+    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Установіть кількість пропущених коротких циклів, головним чином запитів живлення, після події увімкнення живлення, за замовчуванням 5 (із 2000 мс statusDelay відповідає 10 с негарантійному часу)",
+    "has to be a multiple of the status poll interval": "має бути кратним інтервалу опитування статусу"
 }

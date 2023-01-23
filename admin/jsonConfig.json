@@ -82,7 +82,7 @@
                     "type": "number",
                     "min": 100,
                     "max": 60000,
-                    "step": 10,
+                    "step": 100,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
@@ -94,12 +94,16 @@
                     "type": "number",
                     "min": 1000,
                     "max": 36000000,
-                    "step": 1000,
+                    "step": 100,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
                     "label": "Information poll interval",
-                    "help": "interval to refresh the whole projector status, default 60000 ms (1 minute)"
+                    "help": "interval to refresh the whole projector status, default 60000 ms (1 minute)",
+                    "tooltip": "has to be a multiple of the status poll interval",
+                    "validator": "(data.informationDelay % data.statusDelay) === 0",
+                    "validatorErrorText": "has to be a multiple of the status poll interval",
+                    "validatorNoSaveOnError": true
                 },
                 "skippedCyclesAfterPowerOn": {
                     "type": "number",
@@ -113,7 +117,7 @@
                     "help": "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)",
                     "newLine": true
                 }
-            }
+           }
         },
         "_exten": {
             "type": "panel",

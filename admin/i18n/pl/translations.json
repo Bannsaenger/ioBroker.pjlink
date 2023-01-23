@@ -39,5 +39,6 @@
     "Overwrite the existing input configuration": "Zastąpić istniejącą konfigurację wejściową?",
     "Overwrite the existing input configuration with restart": "Zastąpić istniejącą konfigurację wejściową? Nie zapomnij zrestartować instancji po zapisaniu, aby ponownie załadować obiekt konfiguracyjny do instancji!",
     "Number of skipped short cycles after power ON event": "Liczba pominiętych krótkich cykli po włączeniu zasilania",
-    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Ustaw liczbę pomijanych krótkich cykli, głównie zapytań o zasilanie, po zdarzeniu włączenia zasilania, domyślnie 5 (przy statusie 2000 msDelay odpowiada 10 s czasu poza gwarancją)"
+    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Ustaw liczbę pomijanych krótkich cykli, głównie zapytań o zasilanie, po zdarzeniu włączenia zasilania, domyślnie 5 (przy statusie 2000 msDelay odpowiada 10 s czasu poza gwarancją)",
+    "has to be a multiple of the status poll interval": "musi być wielokrotnością interwału odpytywania stanu"
 }

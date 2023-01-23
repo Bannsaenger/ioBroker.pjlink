@@ -39,5 +39,6 @@
     "Overwrite the existing input configuration": "Sovrascrivere la configurazione di input esistente?",
     "Overwrite the existing input configuration with restart": "Sovrascrivere la configurazione di input esistente? Non dimenticare di riavviare l'istanza dopo il salvataggio per ricaricare l'oggetto di configurazione nell'istanza!",
     "Number of skipped short cycles after power ON event": "Numero di cicli brevi saltati dopo l'evento di accensione",
-    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Impostare il numero di cicli brevi saltati, principalmente richieste di alimentazione, dopo l'evento di accensione, predefinito 5 (con 2000 ms statusDelay corrisponde a 10s tempo non garantito)"
+    "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)": "Impostare il numero di cicli brevi saltati, principalmente richieste di alimentazione, dopo l'evento di accensione, predefinito 5 (con 2000 ms statusDelay corrisponde a 10s tempo non garantito)",
+    "has to be a multiple of the status poll interval": "deve essere un multiplo dell'intervallo di polling dello stato"
 }

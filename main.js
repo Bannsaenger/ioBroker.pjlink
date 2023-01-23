@@ -2,7 +2,7 @@
  *
  *      iobroker pjlink Adapter
  *
- *      Copyright (c) 2022, Bannsaenger <bannsaenger@gmx.de>
+ *      Copyright (c) 2022-2023, Bannsaenger <bannsaenger@gmx.de>
  *
  *      MIT License
  *
@@ -56,10 +56,12 @@ class Pjlink extends utils.Adapter {
             'short': [],
             'shortPowered': []
         };
+        this.numStatusQryForInfo = 1;       // after this number of status query a information query will be processed
+        this.actStatusQryForInfo = 0;       // actual number of skipped status queries
+        this.unavailableTime = false;       // true if the projector send the error "unavailable time" for the first time
         this.timers = {};                   // a place to store timers
         this.timers.reconnectDelay = undefined;
         this.timers.statusDelay = undefined;
-        this.timers.informationDelay = undefined;
     }
 
     /**
@@ -70,6 +72,8 @@ class Pjlink extends utils.Adapter {
             //const self = this;
             // Reset the connection indicator during startup
             this.setState('info.connection', false, true);
+
+            this.numStatusQryForInfo = Math.floor(this.config.informationDelay / this.config.statusDelay);
 
             await this.buildStatusQueryInfo();
 
@@ -263,28 +267,19 @@ class Pjlink extends utils.Adapter {
     }
 
     /**
-     * Called to refresh the projector status (power, mute and input)
+     * Called to refresh the projector status, main timer routine
 	 */
     getProjectorStatus() {
         try {
             this.doStatusQuery('short');
+            // check wheter to do the long interval
+            this.actStatusQryForInfo++;
+            if (this.actStatusQryForInfo >= this.numStatusQryForInfo) {
+                this.actStatusQryForInfo = 0;
+                this.doStatusQuery('long');
+            }
         } catch (err) {
             this.errorHandler(err, 'getProjectorStatus');
-        }
-    }
-
-    /**
-     * Called to refresh the projector information (name, etc.)
-	 */
-    getProjectorInformation() {
-        try {
-            if (this.skippedShortCycles > 0) {
-                this.log.debug(`PJLink skipping 'long' cycle due to skippedShortCycles active`);
-                return;
-            }
-            this.doStatusQuery('long');
-        } catch (err) {
-            this.errorHandler(err, 'getProjectorInformation');
         }
     }
 
@@ -355,23 +350,30 @@ class Pjlink extends utils.Adapter {
 
             if (error) {
                 switch (error.message) {
+                    case 'Unavailable time':
+                        if (!this.unavailableTime) {
+                            this.unavailableTime = true;
+                            this.log.warn(`pjlinkAnswerHandler (command: ${command}), Projector is actualy unavailable. This is only logged once`);
+                        }
+                        break;
+
                     case 'Undefined command':
                     case 'Out of parameter':
-                    case 'Unavailable time':
                     case 'Authorization failed':
                     case 'Command reply mismatch':
                     case 'Not connected':
+                        this.unavailableTime = false;
                         this.log.error(`pjlinkAnswerHandler (command: ${command}), Projector send error: ${error.message}`);
                         break;
 
                     case 'Projector/Display failure':
                     default:
+                        this.unavailableTime = true;
                         this.errorHandler(error, `pjlinkAnswerHandler (command: ${command})`);
                         // reset connection state
                         this.setState('info.connection', false, true);
                         // stop/restart timers
                         clearInterval(this.timers.statusDelay);
-                        clearInterval(this.timers.informationDelay);
                         if (!this.timers.reconnectDelay) {
                             // Start reconnection only once
                             this.timers.reconnectDelay = setInterval(this.reconnectProjector.bind(this), this.config.reconnectDelay);
@@ -381,8 +383,12 @@ class Pjlink extends utils.Adapter {
             }
 
             if (pjlinkValues.length > 1) {
+
                 state = pjlinkValues[1];
                 this.log.debug(`PJLink got answer from command: '${command}', value '${JSON.stringify(state)}'`);
+
+                // reset unavailable time
+                this.unavailableTime = false;
 
                 // only if the reconnect timer is not cleared, this means, that the connection has been freshley established
                 if (this.timers.reconnectDelay) {
@@ -397,7 +403,6 @@ class Pjlink extends utils.Adapter {
 
                     // start timer for status and information update
                     this.timers.statusDelay = setInterval(this.getProjectorStatus.bind(this), this.config.statusDelay);
-                    this.timers.informationDelay = setInterval(this.getProjectorInformation.bind(this), this.config.informationDelay);
 
                     // set connection state
                     this.setState('info.connection', true, true);
@@ -586,7 +591,6 @@ class Pjlink extends utils.Adapter {
 
             // Here you must clear all timeouts or intervals that may still be active
             clearInterval(this.timers.statusDelay);
-            clearInterval(this.timers.informationDelay);
             clearInterval(this.timers.reconnectDelay);
 
             // Reset the connection indicator
