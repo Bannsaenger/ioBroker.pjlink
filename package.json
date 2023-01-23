@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.7",
-    "pjlink": "https://github.com/Bannsaenger/node-pjlink"
+    "pjlink": "Bannsaenger/node-pjlink"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.5.9",
