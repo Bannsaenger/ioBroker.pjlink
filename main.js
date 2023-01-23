@@ -11,7 +11,7 @@
  */
 
 const utils = require('@iobroker/adapter-core');
-const pjlink = require('pjlink');
+const pjlink = require('./lib/pjlink.js');
 
 // possible query types
 const queries = ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO'];
@@ -24,6 +24,14 @@ const queries = ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME',
     * 3 /	pjlink.POWER.WARMING_UP
  */
 
+/*
+ToDo: go back to pjlink library from github.
+package.json:
+,
+    "pjlink": "Bannsaenger/node-pjlink"
+
+
+*/
 
 class Pjlink extends utils.Adapter {
 
@@ -158,6 +166,7 @@ class Pjlink extends utils.Adapter {
         try {
             this.log.info(`PJLink trying to (re)connect to projector`);
             // only the getPowerState for now
+            // @ts-ignore
             this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
             // and set the reconnect delay in advance, but only if not running
             if (!this.timers.reconnectDelay) this.timers.reconnectDelay = setInterval(this.reconnectProjector.bind(this), this.config.reconnectDelay);
@@ -214,46 +223,57 @@ class Pjlink extends utils.Adapter {
                 // ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO']
                 switch (code) {
                     case 'POWR':
+                        // @ts-ignore
                         this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
                         break;
 
                     case 'INPT':
+                        // @ts-ignore
                         this.projector.getInput(this.pjlinkAnswerHandler.bind(this, 'GETINPUT'));
                         break;
 
                     case 'CLSS':
+                        // @ts-ignore
                         this.projector.getClass(this.pjlinkAnswerHandler.bind(this, 'GETCLASS'));
                         break;
 
                     case 'AVMT':
+                        // @ts-ignore
                         this.projector.getMute(this.pjlinkAnswerHandler.bind(this, 'GETMUTE'));
                         break;
 
                     case 'ERST':
+                        // @ts-ignore
                         this.projector.getErrors(this.pjlinkAnswerHandler.bind(this, 'GETERRORS'));
                         break;
 
                     case 'LAMP':
+                        // @ts-ignore
                         this.projector.getLamps(this.pjlinkAnswerHandler.bind(this, 'GETLAMPS'));
                         break;
 
                     case 'INST':
+                        // @ts-ignore
                         this.projector.getInputs(this.pjlinkAnswerHandler.bind(this, 'GETINPUTS'));
                         break;
 
                     case 'NAME':
+                        // @ts-ignore
                         this.projector.getName(this.pjlinkAnswerHandler.bind(this, 'GETNAME'));
                         break;
 
                     case 'INF1':
+                        // @ts-ignore
                         this.projector.getManufacturer(this.pjlinkAnswerHandler.bind(this, 'GETMANUFACTURER'));
                         break;
 
                     case 'INF2':
+                        // @ts-ignore
                         this.projector.getModel(this.pjlinkAnswerHandler.bind(this, 'GETMODEL'));
                         break;
 
                     case 'INFO':
+                        // @ts-ignore
                         this.projector.getInfo(this.pjlinkAnswerHandler.bind(this, 'GETINFO'));
                         break;
 
@@ -299,6 +319,7 @@ class Pjlink extends utils.Adapter {
 
             if (powerStatus === 0) {
                 this.log.info(`PJLink Projector is currently off. Trying to switch projector on`);
+                // @ts-ignore
                 this.projector.powerOn();
                 this.skippedShortCycles = this.config.skippedCyclesAfterPowerOn;
                 this.log.debug(`PJLink now skipping ${this.skippedShortCycles} times the 'short' query cycle`);
@@ -306,6 +327,7 @@ class Pjlink extends utils.Adapter {
             }
             if (powerStatus === 1) {
                 this.log.info(`PJLink Projector is currently on. Trying to switch projector off`);
+                // @ts-ignore
                 this.projector.powerOff();
                 return;
             }
@@ -330,6 +352,7 @@ class Pjlink extends utils.Adapter {
     async setMute(status) {
         try {
             this.log.info(`PJLink mute status changed to: ${status}`);
+            // @ts-ignore
             this.projector.setMute(status, this.pjlinkAnswerHandler.bind(this, 'ERROR'));
 
         } catch (err) {
@@ -587,6 +610,7 @@ class Pjlink extends utils.Adapter {
     onUnload(callback) {
         try {
             // End the PJLink connection
+            // @ts-ignore
             this.projector.disconnect();
 
             // Here you must clear all timeouts or intervals that may still be active

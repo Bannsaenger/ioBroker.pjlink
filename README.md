@@ -38,6 +38,7 @@ This work is based on the nodejs module with pjlink implementation from **sy1vai
 
 ## ToDo
 * support the node-pjlink project to implement class 2
+* go back to the pjlink library on github. For now the library is held localy because of an error in the rest script
 
 ## How the adapter works
 For now only class 1 is supported. This means the adapter can only poll the status.
@@ -82,6 +83,9 @@ the other lamps will be added dynamically.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (Bannsaenger) temporarily fix the test script error with local libraries
+
 ### 0.1.0 (2023-01-23)
 * (Bannsaenger) extended configuration to let you choose the frequency and time for information retrieval
 * (Bannsaenger) add possibility to customize media.input by the **INST** query and edit the names in instance config
