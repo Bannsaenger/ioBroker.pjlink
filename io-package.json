@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pjlink",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "news": {
+      "0.1.1": {
+        "en": "temporarily fix the test script error with local libraries",
+        "de": "vorübergehend den testskriptfehler mit lokalen bibliotheken beheben",
+        "ru": "временно исправить ошибку скрипта теста с местными библиотеками",
+        "pt": "corrigir temporariamente o erro do script de teste com bibliotecas locais",
+        "nl": "tijdelijk de test scriptfout repareren met lokale bibliotheken",
+        "fr": "réparer temporairement l'erreur de script de test avec les bibliothèques locales",
+        "it": "correggere temporaneamente l'errore di script di test con le librerie locali",
+        "es": "corregir temporalmente el error del script de prueba con las bibliotecas locales",
+        "pl": "okazjonalnie naprawia błąd z bibliotekami lokalnymi",
+        "uk": "тимчасово зафіксувати помилку тестового сценарію з локальними бібліотеками",
+        "zh-cn": "临时用当地图书馆确定试验说明错误"
+      },
       "0.1.0": {
         "en": "extended configuration to let you choose the frequency and time for information retrieval\nadd possibility to customize media.input by the **INST** query and edit the names in instance config\nadd non-guaranteed time after power ON (number of skipped short cycles after power ON event)\nmoved all status queries to one timer due to authentification issues when queries are executed at the same time\ntreat error \"unavailabe time\" only as warning and log it only once",
         "de": "erweiterte konfiguration, um ihnen die frequenz und zeit für die informationsabruf\nhinzufügen der Möglichkeit, media.input durch die INST-Abfrage zu anpassen und die Namen in Beispiel config zu bearbeiten\nfügen Sie nicht garantierte Zeit nach dem Power ON (Anzahl der übersprungen kurzen Zyklen nach dem Power ON Event)\nalle statusabfragen aufgrund von authentifikationsproblemen auf einen timer verschoben, wenn abfragen gleichzeitig ausgeführt werden\nfehler \"unavailabe time\" nur als warnung behandeln und nur einmal protokollieren",
