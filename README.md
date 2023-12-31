@@ -83,6 +83,9 @@ the other lamps will be added dynamically.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (Bannsaenger) update dependencies
+
 ### 0.1.1 (2023-01-24)
 * (Bannsaenger) temporarily fix the test script error with local libraries
 
