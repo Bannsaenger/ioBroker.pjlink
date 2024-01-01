@@ -64,12 +64,12 @@
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:js && npm run test:package",
     "translate": "translate-adapter",
-    "release": "release-script patch --all --verbose -p iobroker license",
-    "release-minor": "release-script minor --all --verbose -p iobroker license",
-    "release-major": "release-script major --all --verbose -p iobroker license changelog",
-    "release-dry": "release-script patch --all --dry --verbose -p iobroker license",
-    "release-minor-dry": "release-script minor --all --dry --verbose -p iobroker license",
-    "release-major-dry": "release-script major --all --dry --verbose -p iobroker license changelog"
+    "release": "release-script patch --all --verbose",
+    "release-minor": "release-script minor --all --verbose",
+    "release-major": "release-script major --all --verbose",
+    "release-dry": "release-script patch --all --dry --verbose",
+    "release-minor-dry": "release-script minor --all --dry --verbose",
+    "release-major-dry": "release-script major --all --dry --verbose"
   },
   "bugs": {
     "url": "https://github.com/Bannsaenger/ioBroker.pjlink/issues"
