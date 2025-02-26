@@ -21,7 +21,8 @@
     "node": ">=18.x"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.2.3"
+    "@iobroker/adapter-core": "^3.2.3",
+    "pjlink": "Bannsaenger/node-pjlink"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.8.0",

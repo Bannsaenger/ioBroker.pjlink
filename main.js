@@ -11,7 +11,7 @@
  */
 
 const utils = require('@iobroker/adapter-core');
-const pjlink = require('./lib/pjlink.js');
+const pjlink = require('pjlink');
 
 // possible query types
 const queries = ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO'];
