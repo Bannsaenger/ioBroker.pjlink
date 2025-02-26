@@ -16,12 +16,13 @@ const pjlink = require('./lib/pjlink.js');
 // possible query types
 const queries = ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO'];
 
-/** Projector status constants
-    Four possible power states:
-    * 0	/	pjlink.POWER.OFF
-    * 1 /	pjlink.POWER.ON
-    * 2 /	pjlink.POWER.COOLING_DOWN
-    * 3 /	pjlink.POWER.WARMING_UP
+/**
+ * Projector status constants
+ * Four possible power states:
+ * 0	/	pjlink.POWER.OFF
+ * 1 /	pjlink.POWER.ON
+ * 2 /	pjlink.POWER.COOLING_DOWN
+ * 3 /	pjlink.POWER.WARMING_UP
  */
 
 /*
@@ -34,9 +35,8 @@ package.json:
 */
 
 class Pjlink extends utils.Adapter {
-
     /**
-     * @param {Partial<utils.AdapterOptions>} [options={}]
+     * @param {Partial<utils.AdapterOptions>} [options] Options from js-controller
      */
     constructor(options) {
         super({
@@ -50,24 +50,23 @@ class Pjlink extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
 
         // prepare global instance variables
-        this.projector = undefined;
-        this.connectedState = false;        // true if connection to projector is established, will be reset on connection errors
-        this.poweredOn = false;             // true if the power state is 1 (Power ON), used for status queries for which power must be ON
-        this.firstRunDone = false;          // true if the first run (query status on adapter startup) is done
-        this.firstRunPowered = false;       // true if the first run (query status on adapter startup with power = ON) is done
-        this.skippedShortCycles = -1;       // number of skipped short cycles after power ON event. Will be set to the config value and decremented. -1 is expired
-        this.statusQueryInfo = {            // a place to store the different query levels
-            'startup': [],
-            'startupPowered': [],
-            'long': [],
-            'longPowered': [],
-            'short': [],
-            'shortPowered': []
-        };
-        this.numStatusQryForInfo = 1;       // after this number of status query a information query will be processed
-        this.actStatusQryForInfo = 0;       // actual number of skipped status queries
-        this.unavailableTime = false;       // true if the projector send the error "unavailable time" for the first time
-        this.timers = {};                   // a place to store timers
+        this.projector = {};
+        this.connectedState = false; // true if connection to projector is established, will be reset on connection errors
+        this.poweredOn = false; // true if the power state is 1 (Power ON), used for status queries for which power must be ON
+        this.firstRunDone = false; // true if the first run (query status on adapter startup) is done
+        this.firstRunPowered = false; // true if the first run (query status on adapter startup with power = ON) is done
+        this.skippedShortCycles = -1; // number of skipped short cycles after power ON event. Will be set to the config value and decremented. -1 is expired
+        this.statusQueryInfo = {};
+        this.statusQueryInfo.startupPowered = [];
+        this.statusQueryInfo.startup = [];
+        this.statusQueryInfo.long = [];
+        this.statusQueryInfo.longPowered = [];
+        this.statusQueryInfo.short = [];
+        this.statusQueryInfo.shortPowered = [];
+        this.numStatusQryForInfo = 1; // after this number of status query a information query will be processed
+        this.actStatusQryForInfo = 0; // actual number of skipped status queries
+        this.unavailableTime = false; // true if the projector send the error "unavailable time" for the first time
+        this.timers = {}; // a place to store timers
         this.timers.reconnectDelay = undefined;
         this.timers.statusDelay = undefined;
     }
@@ -86,10 +85,10 @@ class Pjlink extends utils.Adapter {
             await this.buildStatusQueryInfo();
 
             this.conOptions = {
-                'host': this.config.host || '127.0.0.1',
-                'port': this.config.port || 4352,
-                'password': this.config.password || null,
-                'timeout': this.config.socketTimeout || 800
+                host: this.config.host || '127.0.0.1',
+                port: this.config.port || 4352,
+                password: this.config.password || null,
+                timeout: this.config.socketTimeout || 800,
             };
 
             // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
@@ -97,14 +96,15 @@ class Pjlink extends utils.Adapter {
             this.subscribeStates('input');
             this.subscribeStates('setMute');
 
-            this.log.info(`PJLink connecting to host: ${this.conOptions.host}:${this.conOptions.port} (timeout: ${this.conOptions.timeout} ms), ${this.conOptions.password ? 'with password set' : 'with security disabled'}`);
+            this.log.info(
+                `PJLink connecting to host: ${this.conOptions.host}:${this.conOptions.port} (timeout: ${this.conOptions.timeout} ms), ${this.conOptions.password ? 'with password set' : 'with security disabled'}`,
+            );
 
             // instantiate connection object for the projector
             this.projector = new pjlink(this.conOptions);
 
             // try to communicate to the projector
             this.reconnectProjector();
-
         } catch (err) {
             this.errorHandler(err, 'onReady');
         }
@@ -112,44 +112,38 @@ class Pjlink extends utils.Adapter {
 
     /**
      * Called to build the status query array
-	 */
+     */
     async buildStatusQueryInfo() {
         try {
             for (const query of queries) {
                 const queryType = `queryType${query}`;
                 const queryTypePwr = `queryOnlyPwr${query}`;
                 switch (this.config[queryType]) {
-                    case 1:             // startup
+                    case 1: // startup
                         if (this.config[queryTypePwr]) {
-                            // @ts-ignore
                             this.statusQueryInfo.startupPowered.push(query);
                         } else {
-                            // @ts-ignore
                             this.statusQueryInfo.startup.push(query);
                         }
                         break;
 
-                    case 2:             // short
+                    case 2: // short
                         if (this.config[queryTypePwr]) {
-                            // @ts-ignore
                             this.statusQueryInfo.shortPowered.push(query);
                         } else {
-                            // @ts-ignore
                             this.statusQueryInfo.short.push(query);
                         }
                         break;
 
-                    case 3:             // long
+                    case 3: // long
                         if (this.config[queryTypePwr]) {
-                            // @ts-ignore
                             this.statusQueryInfo.longPowered.push(query);
                         } else {
-                            // @ts-ignore
                             this.statusQueryInfo.long.push(query);
                         }
                         break;
 
-                    default:            // never and other
+                    default: // never and other
                         break;
                 }
             }
@@ -161,15 +155,19 @@ class Pjlink extends utils.Adapter {
 
     /**
      * Called to reconnect to the projector
-	 */
+     */
     reconnectProjector() {
         try {
             this.log.info(`PJLink trying to (re)connect to projector`);
             // only the getPowerState for now
-            // @ts-ignore
             this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
             // and set the reconnect delay in advance, but only if not running
-            if (!this.timers.reconnectDelay) this.timers.reconnectDelay = setInterval(this.reconnectProjector.bind(this), this.config.reconnectDelay);
+            if (!this.timers.reconnectDelay) {
+                this.timers.reconnectDelay = setInterval(
+                    this.reconnectProjector.bind(this),
+                    this.config.reconnectDelay,
+                );
+            }
         } catch (err) {
             this.errorHandler(err, 'reconnectProjector');
         }
@@ -177,12 +175,14 @@ class Pjlink extends utils.Adapter {
 
     /**
      * check which status query has to be done
+     *
      * @param {string} interval 'startup', 'short' or 'long'
-	 */
+     */
     doStatusQuery(interval) {
         try {
             this.log.debug(`PJLink requesting projector information for interval: '${interval}'`);
-            if (interval === 'startup') {   // only called on projector connected
+            if (interval === 'startup') {
+                // only called on projector connected
                 if (!this.firstRunDone) {
                     this.firstRunDone = true;
                     this.doQuery(this.statusQueryInfo.startup);
@@ -195,18 +195,22 @@ class Pjlink extends utils.Adapter {
                     this.log.debug(`PJLink skipping 'short' cycle no: ${this.skippedShortCycles}`);
                     return;
                 }
-                this.skippedShortCycles = -1;   // set to expired
+                this.skippedShortCycles = -1; // set to expired
                 // try to do the startupPowered queries
                 if (!this.firstRunPowered && this.poweredOn) {
                     this.firstRunPowered = true;
                     this.doQuery(this.statusQueryInfo.startupPowered);
                 }
                 this.doQuery(this.statusQueryInfo.short);
-                if (this.poweredOn) this.doQuery(this.statusQueryInfo.shortPowered);
+                if (this.poweredOn) {
+                    this.doQuery(this.statusQueryInfo.shortPowered);
+                }
             }
             if (interval === 'long') {
                 this.doQuery(this.statusQueryInfo.long);
-                if (this.poweredOn) this.doQuery(this.statusQueryInfo.longPowered);
+                if (this.poweredOn) {
+                    this.doQuery(this.statusQueryInfo.longPowered);
+                }
             }
         } catch (err) {
             this.errorHandler(err, 'doStatusQuery');
@@ -215,65 +219,55 @@ class Pjlink extends utils.Adapter {
 
     /**
      * check which status query has to be done
-     * @param {Object} queriesTodo a array with the queries which has to be done
-	 */
+     *
+     * @param {object} queriesTodo a array with the queries which has to be done
+     */
     doQuery(queriesTodo) {
         try {
             for (const code of queriesTodo) {
                 // ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO']
                 switch (code) {
                     case 'POWR':
-                        // @ts-ignore
                         this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
                         break;
 
                     case 'INPT':
-                        // @ts-ignore
                         this.projector.getInput(this.pjlinkAnswerHandler.bind(this, 'GETINPUT'));
                         break;
 
                     case 'CLSS':
-                        // @ts-ignore
                         this.projector.getClass(this.pjlinkAnswerHandler.bind(this, 'GETCLASS'));
                         break;
 
                     case 'AVMT':
-                        // @ts-ignore
                         this.projector.getMute(this.pjlinkAnswerHandler.bind(this, 'GETMUTE'));
                         break;
 
                     case 'ERST':
-                        // @ts-ignore
                         this.projector.getErrors(this.pjlinkAnswerHandler.bind(this, 'GETERRORS'));
                         break;
 
                     case 'LAMP':
-                        // @ts-ignore
                         this.projector.getLamps(this.pjlinkAnswerHandler.bind(this, 'GETLAMPS'));
                         break;
 
                     case 'INST':
-                        // @ts-ignore
                         this.projector.getInputs(this.pjlinkAnswerHandler.bind(this, 'GETINPUTS'));
                         break;
 
                     case 'NAME':
-                        // @ts-ignore
                         this.projector.getName(this.pjlinkAnswerHandler.bind(this, 'GETNAME'));
                         break;
 
                     case 'INF1':
-                        // @ts-ignore
                         this.projector.getManufacturer(this.pjlinkAnswerHandler.bind(this, 'GETMANUFACTURER'));
                         break;
 
                     case 'INF2':
-                        // @ts-ignore
                         this.projector.getModel(this.pjlinkAnswerHandler.bind(this, 'GETMODEL'));
                         break;
 
                     case 'INFO':
-                        // @ts-ignore
                         this.projector.getInfo(this.pjlinkAnswerHandler.bind(this, 'GETINFO'));
                         break;
 
@@ -288,7 +282,7 @@ class Pjlink extends utils.Adapter {
 
     /**
      * Called to refresh the projector status, main timer routine
-	 */
+     */
     getProjectorStatus() {
         try {
             this.doStatusQuery('short');
@@ -305,13 +299,12 @@ class Pjlink extends utils.Adapter {
 
     /**
      * Called to turn the projector on or off depemding on its actual state
-	 */
+     */
     async projectorOnOff() {
         try {
             this.log.info(`PJLink power button pressed`);
             // first get the projector status
-            const state = await this.getStateAsync('powerStatus');
-            // @ts-ignore
+            const state = (await this.getStateAsync('powerStatus')) || { val: 0 };
             const powerStatus = state.val || 0;
 
             // reset power button status. Set as confirmed by hardware (ack = true)
@@ -319,7 +312,6 @@ class Pjlink extends utils.Adapter {
 
             if (powerStatus === 0) {
                 this.log.info(`PJLink Projector is currently off. Trying to switch projector on`);
-                // @ts-ignore
                 this.projector.powerOn();
                 this.skippedShortCycles = this.config.skippedCyclesAfterPowerOn;
                 this.log.debug(`PJLink now skipping ${this.skippedShortCycles} times the 'short' query cycle`);
@@ -327,7 +319,6 @@ class Pjlink extends utils.Adapter {
             }
             if (powerStatus === 1) {
                 this.log.info(`PJLink Projector is currently on. Trying to switch projector off`);
-                // @ts-ignore
                 this.projector.powerOff();
                 return;
             }
@@ -347,14 +338,13 @@ class Pjlink extends utils.Adapter {
 
     /**
      * Called to set the mute status
-     * @param {number} status
-	 */
+     *
+     * @param {number} status the mute status to set
+     */
     async setMute(status) {
         try {
             this.log.info(`PJLink mute status changed to: ${status}`);
-            // @ts-ignore
             this.projector.setMute(status, this.pjlinkAnswerHandler.bind(this, 'ERROR'));
-
         } catch (err) {
             this.errorHandler(err, 'setMute');
         }
@@ -362,21 +352,24 @@ class Pjlink extends utils.Adapter {
 
     /**
      * Called as answer function from pjlink functions
+     *
      * @param {string} command called commands from PJLink to separate the value handling
-	 * @param {any} pjlinkValues normaly the err and the state from the PJLink function call
-	 */
+     * @param {any} pjlinkValues normaly the err and the state from the PJLink function call
+     */
     async pjlinkAnswerHandler(command, ...pjlinkValues) {
         try {
             // first look at the error state
             const error = pjlinkValues[0];
-            let state = '';
+            let state;
 
             if (error) {
                 switch (error.message) {
                     case 'Unavailable time':
                         if (!this.unavailableTime) {
                             this.unavailableTime = true;
-                            this.log.warn(`pjlinkAnswerHandler (command: ${command}), Projector is actualy unavailable. This is only logged once`);
+                            this.log.warn(
+                                `pjlinkAnswerHandler (command: ${command}), Projector is actualy unavailable. This is only logged once`,
+                            );
                         }
                         break;
 
@@ -386,7 +379,9 @@ class Pjlink extends utils.Adapter {
                     case 'Command reply mismatch':
                     case 'Not connected':
                         this.unavailableTime = false;
-                        this.log.error(`pjlinkAnswerHandler (command: ${command}), Projector send error: ${error.message}`);
+                        this.log.error(
+                            `pjlinkAnswerHandler (command: ${command}), Projector send error: ${error.message}`,
+                        );
                         break;
 
                     case 'Projector/Display failure':
@@ -399,14 +394,16 @@ class Pjlink extends utils.Adapter {
                         clearInterval(this.timers.statusDelay);
                         if (!this.timers.reconnectDelay) {
                             // Start reconnection only once
-                            this.timers.reconnectDelay = setInterval(this.reconnectProjector.bind(this), this.config.reconnectDelay);
+                            this.timers.reconnectDelay = setInterval(
+                                this.reconnectProjector.bind(this),
+                                this.config.reconnectDelay,
+                            );
                         }
                 }
                 return;
             }
 
             if (pjlinkValues.length > 1) {
-
                 state = pjlinkValues[1];
                 this.log.debug(`PJLink got answer from command: '${command}', value '${JSON.stringify(state)}'`);
 
@@ -447,40 +444,32 @@ class Pjlink extends utils.Adapter {
                         this.setState('powerStatus', parseInt(state), true);
                         if (state == '1') {
                             this.poweredOn = true;
-                            if (this.skippedShortCycles != -1) this.skippedShortCycles = this.config.skippedCyclesAfterPowerOn;
+                            if (this.skippedShortCycles != -1) {
+                                this.skippedShortCycles = this.config.skippedCyclesAfterPowerOn;
+                            }
                         } else {
                             this.poweredOn = false;
-                            this.skippedShortCycles = 0;    // reset expired
+                            this.skippedShortCycles = 0; // reset expired
                         }
                         break;
 
                     case 'GETINPUT':
-                        // @ts-ignore
                         this.setState('input', parseInt(state.code), true);
                         break;
 
                     case 'GETMUTE':
-                        // @ts-ignore
                         this.setState('videoMuteStatus', state.video, true);
-                        // @ts-ignore
                         this.setState('audioMuteStatus', state.audio, true);
-                        // @ts-ignore
-                        this.setState('setMute', state.status, true);   // new extended mute status
+                        this.setState('setMute', state.status, true); // new extended mute status
                         break;
 
                     case 'GETERRORS':
                         if (state) {
-                            // @ts-ignore
                             fan = state.fan === 'warning' ? 1 : state.fan === 'error' ? 3 : 0;
-                            // @ts-ignore
                             lamp = state.lamp === 'warning' ? 1 : state.lamp === 'error' ? 3 : 0;
-                            // @ts-ignore
                             temperature = state.temperature === 'warning' ? 1 : state.temperature === 'error' ? 3 : 0;
-                            // @ts-ignore
                             cover = state.cover === 'warning' ? 1 : state.cover === 'error' ? 3 : 0;
-                            // @ts-ignore
                             filter = state.filter === 'warning' ? 1 : state.filter === 'error' ? 3 : 0;
-                            // @ts-ignore
                             other = state.other === 'warning' ? 1 : state.other === 'error' ? 3 : 0;
                         }
                         this.setState('deviceInfo.fanErrorStatus', fan, true);
@@ -492,71 +481,75 @@ class Pjlink extends utils.Adapter {
                         break;
 
                     case 'GETLAMPS':
-                        // @ts-ignore
-                        this.setState('deviceInfo.lamps.lamp1Status', parseInt(state[0].on === false ? 0 : 1), true);
-                        // @ts-ignore
+                        this.setState(
+                            'deviceInfo.lamps.lamp1Status',
+                            parseInt(state[0].on === false ? '0' : '1'),
+                            true,
+                        );
                         this.setState('deviceInfo.lamps.lamp1Hours', parseInt(state[0].hours), true);
 
                         for (let lamps = 1; lamps < state.length; lamps++) {
                             const index = lamps + 1;
                             await this.setObjectNotExistsAsync(`deviceInfo.lamps.lamp${index}Status`, {
-                                'type': 'state',
-                                'common': {
-                                    'role': 'indicator.maintenance',
-                                    'name': {
-                                        'en': 'Status of lamp ' + index,
-                                        'de': 'Status der Lampe ' + index,
-                                        'ru': 'Статус лампы ' + index,
-                                        'pt': 'Estado da lâmpada ' + index,
-                                        'nl': 'Status van lamp ' + index,
-                                        'fr': 'État du feu ' + index,
-                                        'it': 'Stato della lampada ' + index,
-                                        'es': 'Estado de la lámpara ' + index,
-                                        'pl': 'Status lampy ' + index,
-                                        'uk': 'Статус лампи ' + index,
-                                        'zh-cn': '口粮' + index
+                                type: 'state',
+                                common: {
+                                    role: 'indicator.maintenance',
+                                    name: {
+                                        en: `Status of lamp ${index}`,
+                                        de: `Status der Lampe ${index}`,
+                                        ru: `Статус лампы ${index}`,
+                                        pt: `Estado da lâmpada ${index}`,
+                                        nl: `Status van lamp ${index}`,
+                                        fr: `État du feu ${index}`,
+                                        it: `Stato della lampada ${index}`,
+                                        es: `Estado de la lámpara ${index}`,
+                                        pl: `Status lampy ${index}`,
+                                        uk: `Статус лампи ${index}`,
+                                        'zh-cn': `口粮${index}`,
                                     },
-                                    'type': 'number',
-                                    'states': {
-                                        '0': 'Off',
-                                        '1': 'On'
+                                    type: 'number',
+                                    states: {
+                                        0: 'Off',
+                                        1: 'On',
                                     },
-                                    'read': true,
-                                    'write': false,
-                                    'def': 0
+                                    read: true,
+                                    write: false,
+                                    def: 0,
                                 },
-                                'native': {}
+                                native: {},
                             });
                             await this.setObjectNotExistsAsync(`deviceInfo.lamps.lamp${index}Hours`, {
-                                '_id': 'deviceInfo.lamps.lamp1Hours',
-                                'type': 'state',
-                                'common': {
-                                    'role': 'value',
-                                    'name': {
-                                        'en': 'Lighting time of lamp ' + index,
-                                        'de': 'Leuchtdauer der Lampe ' + index,
-                                        'ru': 'Время освещения лампы ' + index,
-                                        'pt': 'Tempo de iluminação da lâmpada ' + index,
-                                        'nl': 'Verlichtingstijd van lamp ' + index,
-                                        'fr': 'Temps d\'éclairage de la lampe ' + index,
-                                        'it': 'Tempo di illuminazione della lampada ' + index,
-                                        'es': 'Tiempo de iluminación de la lámpara ' + index,
-                                        'pl': 'Czas świetlny lampy ' + index,
-                                        'uk': 'Час освітлення лампи ' + index,
-                                        'zh-cn': 'A. 灯' + index
+                                _id: 'deviceInfo.lamps.lamp1Hours',
+                                type: 'state',
+                                common: {
+                                    role: 'value',
+                                    name: {
+                                        en: `Lighting time of lamp ${index}`,
+                                        de: `Leuchtdauer der Lampe ${index}`,
+                                        ru: `Время освещения лампы ${index}`,
+                                        pt: `Tempo de iluminação da lâmpada ${index}`,
+                                        nl: `Verlichtingstijd van lamp ${index}`,
+                                        fr: `Temps d'éclairage de la lampe ${index}`,
+                                        it: `Tempo di illuminazione della lampada ${index}`,
+                                        es: `Tiempo de iluminación de la lámpara ${index}`,
+                                        pl: `Czas świetlny lampy ${index}`,
+                                        uk: `Час освітлення лампи ${index}`,
+                                        'zh-cn': `A. 灯${index}`,
                                     },
-                                    'type': 'number',
-                                    'min': 0,
-                                    'max': 99999,
-                                    'read': true,
-                                    'write': false,
-                                    'def': 0
+                                    type: 'number',
+                                    min: 0,
+                                    max: 99999,
+                                    read: true,
+                                    write: false,
+                                    def: 0,
                                 },
-                                'native': {}
+                                native: {},
                             });
-                            // @ts-ignore
-                            this.setState(`deviceInfo.lamps.lamp${index}Status`, parseInt(state[lamps].on === false ? 0 : 1), true);
-                            // @ts-ignore
+                            this.setState(
+                                `deviceInfo.lamps.lamp${index}Status`,
+                                parseInt(state[lamps].on === false ? '0' : '1'),
+                                true,
+                            );
                             this.setState(`deviceInfo.lamps.lamp${index}Hours`, parseInt(state[lamps].hours), true);
                         }
                         break;
@@ -596,21 +589,22 @@ class Pjlink extends utils.Adapter {
 
     /**
      * Called on error situations and from catch blocks
-	 * @param {any} err
-	 * @param {string} module
-	 */
+     *
+     * @param {any} err the error occured
+     * @param {string} module module name in which the error occured
+     */
     errorHandler(err, module = '') {
         this.log.error(`PJLink error in method: [${module}] error: ${err.message}, stack: ${err.stack}`);
     }
 
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
-     * @param {() => void} callback
+     *
+     * @param {() => void} callback the callback which must be called under any circumstances
      */
     onUnload(callback) {
         try {
             // End the PJLink connection
-            // @ts-ignore
             this.projector.disconnect();
 
             // Here you must clear all timeouts or intervals that may still be active
@@ -621,6 +615,7 @@ class Pjlink extends utils.Adapter {
             this.setState('info.connection', false, true);
 
             callback();
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
             callback();
         }
@@ -628,8 +623,9 @@ class Pjlink extends utils.Adapter {
 
     /**
      * Is called if a subscribed state changes
-     * @param {string} id
-     * @param {ioBroker.State | null | undefined} state
+     *
+     * @param {string} id the id of the state with a change
+     * @param {ioBroker.State | null | undefined} state the state object
      */
     onStateChange(id, state) {
         try {
@@ -640,8 +636,9 @@ class Pjlink extends utils.Adapter {
                     this.log.info(`PJLink state ${id} changed: ${state.val} (ack = ${state.ack})`);
                 }
                 // The state was changed
-                if (!state.ack) {           // only if the state is set manually
-                    const onlyId = id.replace(this.namespace + '.', '');
+                if (!state.ack) {
+                    // only if the state is set manually
+                    const onlyId = id.replace(`${this.namespace}.`, '');
                     switch (onlyId) {
                         case 'power':
                             this.projectorOnOff();
@@ -649,11 +646,11 @@ class Pjlink extends utils.Adapter {
                         case 'input':
                             // the string value is parsed by the pjlink.inputCommand.
                             // For the future and Class 2 it is the preferred format because of e.g. input 3B
-                            // @ts-ignore
+                            // @ts-expect-error state.val can be null but isnt
                             this.projector.setInput(state.val.toString());
                             break;
                         case 'setMute':
-                            // @ts-ignore
+                            // @ts-expect-error state.val is surely a int at this point
                             this.setMute(parseInt(state.val));
                             break;
                     }
@@ -667,25 +664,27 @@ class Pjlink extends utils.Adapter {
     /**
      * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
      * Using this method requires "common.messagebox" property to be set to true in io-package.json
-     * @param {ioBroker.Message} obj
+     *
+     * @param {ioBroker.Message} obj the message object
      */
     async onMessage(obj) {
         if (typeof obj === 'object') {
             if (obj.command === 'updateInputs') {
                 this.log.debug(`updateInputs command gets: ${JSON.stringify(obj)}`);
-                const state = await this.getStateAsync('deviceInfo.inputsAvailable');
-                // @ts-ignore
+                const state = (await this.getStateAsync('deviceInfo.inputsAvailable')) || { val: '' };
                 const inputsAvailable = state.val || '';
-                this.log.info(`Set the following inputs in the native object "system.adapter.${this.namespace}": ${JSON.stringify(inputsAvailable)}`);
-                const instanceObject = await this.getForeignObjectAsync(`system.adapter.${this.namespace}`) || {};
+                this.log.info(
+                    `Set the following inputs in the native object "system.adapter.${this.namespace}": ${JSON.stringify(inputsAvailable)}`,
+                );
+                const instanceObject = await this.getForeignObjectAsync(`system.adapter.${this.namespace}`);
                 try {
-                    // @ts-ignore
+                    // @ts-expect-error expression works at this point
                     instanceObject.native.inputInfo = JSON.parse(inputsAvailable);
                 } catch (err) {
                     this.errorHandler(err, 'onMessage (parse inputsAvailable)');
                 }
-                // @ts-ignore
-                await this.setForeignObjectAsync(`system.adapter.${this.namespace}`, instanceObject);
+                // @ts-expect-error expression works at this point because instanceObject is retrieved before
+                this.setForeignObject(`system.adapter.${this.namespace}`, instanceObject);
                 if (obj.callback) {
                     this.sendTo(obj.from, obj.command, 'done', obj.callback);
                 }
@@ -694,23 +693,31 @@ class Pjlink extends utils.Adapter {
                 if (obj.command === 'setInstanceInputs') {
                     this.log.debug(`setInstanceInputs command gets: ${JSON.stringify(obj)}`);
                     const inputObj = await this.getObjectAsync('input');
-                    // @ts-ignore
-                    if (inputObj.common.min) delete (inputObj.common.min);
-                    // @ts-ignore
-                    if (inputObj.common.max) delete (inputObj.common.max);
-                    // @ts-ignore
+                    // @ts-expect-error expression works at this point
+                    if (inputObj.common.min) {
+                        // @ts-expect-error expression works at this point
+                        delete inputObj.common.min;
+                    }
+                    // @ts-expect-error expression works at this point
+                    if (inputObj.common.max) {
+                        // @ts-expect-error expression works at this point
+                        delete inputObj.common.max;
+                    }
+                    // @ts-expect-error expression works at this point
                     inputObj.common.states = {};
                     for (const i in this.config.inputInfo) {
-                        // @ts-ignore
+                        // @ts-expect-error expression works at this point
                         const inputCode = this.config.inputInfo[i].code;
-                        // @ts-ignore
+                        // @ts-expect-error expression works at this point
                         const inputName = this.config.inputInfo[i].name;
-                        // @ts-ignore
-                        Object.assign(inputObj.common.states, {[inputCode] : inputName});
+                        // @ts-expect-error expression works at this point
+                        Object.assign(inputObj.common.states, { [inputCode]: inputName });
                     }
-                    // @ts-ignore
-                    this.log.info(`setInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`);
-                    // @ts-ignore
+                    this.log.info(
+                        // @ts-expect-error expression works at this point
+                        `setInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`,
+                    );
+                    // @ts-expect-error expression works at this point
                     await this.setObjectAsync('input', inputObj);
                     if (obj.callback) {
                         this.sendTo(obj.from, obj.command, 'done', obj.callback);
@@ -721,16 +728,21 @@ class Pjlink extends utils.Adapter {
                 if (obj.command === 'resetInstanceInputs') {
                     this.log.debug(`resetInstanceInputs command gets: ${JSON.stringify(obj)}`);
                     const inputObj = await this.getObjectAsync('input');
-                    // @ts-ignore
-                    if (inputObj.common.states) delete (inputObj.common.states);
-                    // @ts-ignore
+                    // @ts-expect-error expression works at this point
+                    if (inputObj.common.states) {
+                        // @ts-expect-error expression works at this point
+                        delete inputObj.common.states;
+                    }
+                    // @ts-expect-error expression works at this point
                     inputObj.common.min = 11;
-                    // @ts-ignore
+                    // @ts-expect-error expression works at this point
                     inputObj.common.max = 59;
-                    // @ts-ignore
-                    this.log.info(`resetInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`);
-                    // @ts-ignore
-                    await this.setObjectAsync('input', inputObj);
+                    this.log.info(
+                        // @ts-expect-error expression works at this point
+                        `resetInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`,
+                    );
+                    // @ts-expect-error expression works at this point
+                    this.setObject('input', inputObj);
                     if (obj.callback) {
                         this.sendTo(obj.from, obj.command, 'done', obj.callback);
                     }
@@ -743,9 +755,12 @@ class Pjlink extends utils.Adapter {
 if (require.main !== module) {
     // Export the constructor in compact mode
     /**
-     * @param {Partial<utils.AdapterOptions>} [options={}]
+     * @param {Partial<utils.AdapterOptions>} [options] Options from js-controller
      */
-    module.exports = (options) => {'use strict'; new Pjlink(options); };
+    module.exports = options => {
+        'use strict';
+        new Pjlink(options);
+    };
 } else {
     // otherwise start the instance directly
     new Pjlink();

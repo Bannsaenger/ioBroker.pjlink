@@ -10,6 +10,8 @@ export default [
         ignores: [
             '.dev-server/',
             '.vscode/',
+            '.devel/',
+            'lib/',
             '*.test.js', 
             'test/**/*.js', 
             '*.config.mjs', 
