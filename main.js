@@ -2,7 +2,7 @@
  *
  *      iobroker pjlink Adapter
  *
- *      Copyright (c) 2022-2023, Bannsaenger <bannsaenger@gmx.de>
+ *      Copyright (c) 2022-2025, Bannsaenger <bannsaenger@gmx.de>
  *
  *      MIT License
  *

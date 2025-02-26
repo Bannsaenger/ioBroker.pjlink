@@ -4,37 +4,43 @@
     "items": {
         "_options": {
             "type": "panel",
-            "label": "options",
+            "label": "lblOptions",
             "items": {
                 "host": {
                     "type": "text",
                     "maxLength": 255,
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Host",
-                    "help": "IP address or FQDN from the device"
+                    "xl": 6,
+                    "label": "lblHost",
+                    "help": "hlpHost"
                 },
                 "port": {
                     "type": "number",
                     "min": 1,
                     "max": 65565,
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Port",
-                    "help": "TCP port (default: 4352, some older devices have: 10000)"
+                    "xl": 6,
+                    "label": "lblPort",
+                    "help": "hlpPort"
                 },
                 "password": {
                     "type": "password",
                     "maxLength": 32,
                     "visible": false,
                     "repeat": false,
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Password",
-                    "help": "maximum 32 ASCII Characters (could be left empty if projector security is set to OFF)",
+                    "xl": 6,
+                    "label": "lblPassword",
+                    "help": "hlpPassword",
                     "newLine": true
                 },
                 "class": {
@@ -49,11 +55,13 @@
                             "value": 2
                         }
                     ],
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Class",
-                    "help": "select the maximum supported class from the projector",
+                    "xl": 6,
+                    "label": "lblClass",
+                    "help": "hlpClass",
                     "disabled": "true"
                 },
                 "socketTimeout": {
@@ -61,33 +69,39 @@
                     "min": 0,
                     "max": 10000,
                     "step": 10,
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Socket timeout",
-                    "help": "sets the socket to timeout after timeout milliseconds of inactivity on the socket. Default: 800"
+                    "xl": 6,
+                    "label": "lblSocketTimeout",
+                    "help": "hlpSocketTimeout"
                 },
                 "reconnectDelay": {
                     "type": "number",
                     "min": 10000,
                     "max": 3600000,
                     "step": 1000,
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Reconnect timeout",
-                    "help": "time to recheck the projector connection after a connection failure. Default: 10000 ms (10 Seconds)"
+                    "xl": 6,
+                    "label": "lblReconnectDelay",
+                    "help": "hlpReconnectDelay"
                 },
                 "statusDelay": {
                     "type": "number",
                     "min": 100,
                     "max": 60000,
                     "step": 100,
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Status poll interval",
-                    "help": "interval to refresh the status (power, e.g. input switch and mute)",
+                    "xl": 6,
+                    "label": "lblStatusDelay",
+                    "help": "hlpStatusDelay",
                     "newLine": true
                 },
                 "informationDelay": {
@@ -95,14 +109,16 @@
                     "min": 1000,
                     "max": 36000000,
                     "step": 100,
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Information poll interval",
-                    "help": "interval to refresh the whole projector status, default 60000 ms (1 minute)",
-                    "tooltip": "has to be a multiple of the status poll interval",
+                    "xl": 6,
+                    "label": "lblInformationDelay",
+                    "help": "hlpInformationDelay",
+                    "tooltip": "ttpInformationDelay",
                     "validator": "(data.informationDelay % data.statusDelay) === 0",
-                    "validatorErrorText": "has to be a multiple of the status poll interval",
+                    "validatorErrorText": "ttpInformationDelay",
                     "validatorNoSaveOnError": true
                 },
                 "skippedCyclesAfterPowerOn": {
@@ -110,263 +126,338 @@
                     "min": 0,
                     "max": 100,
                     "step": 1,
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Number of skipped short cycles after power ON event",
-                    "help": "Set the number of skipped short cycles, mainly power queries, after power ON event, default 5 (with 2000 ms statusDelay corresponds to 10s non-guarantee time)",
+                    "xl": 6,
+                    "label": "lblSkippedCyclesAfterPowerOn",
+                    "help": "hlpSkippedCyclesAfterPowerOn",
                     "newLine": true
+                },
+                "_divider01": {
+                    "type": "divider"
+                },
+                "startPingAfterNumFailures": {
+                    "type": "number",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblStartPingAfterNumFailures",
+                    "help": "hlpStartPingAfterNumFailures",
+                    "newLine": true
+                },
+                "reconnectAfterNumPings": {
+                    "type": "number",
+                    "min": 1,
+                    "max": 100,
+                    "step": 1,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblReconnectAfterNumPings",
+                    "help": "hlpReconnectAfterNumPings"
                 }
            }
         },
         "_exten": {
             "type": "panel",
-            "label": "extended",
+            "label": "lblExtended",
             "items": {
                 "_queryType": {
                     "type": "staticText",
+                    "xs": 12,
                     "sm": 12,
                     "md": 12,
                     "lg": 12,
-                    "label": "Select the type of query for all information types and choose whether power state must be in state Power-on prior to that query",
+                    "xl": 12,
+                    "label": "lblQueryType",
                     "style": {"fontSize": 20}
                 },
                 "queryTypeCLSS": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Class information query (CLSS)"
-                },
-                "_queryTypeCLSSSpacer": {
-                    "type": "staticText",
-                    "sm": 0,
-                    "md": 6,
-                    "lg": 6,
-                    "label": ""
+                    "xl": 6,
+                    "label": "lblQueryTypeCLSS"
                 },
                 "queryTypePOWR": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Power status query (PWR)"
-                },
-                "_queryTypePOWRSpacer": {
-                    "type": "staticText",
-                    "sm": 0,
-                    "md": 6,
-                    "lg": 6,
-                    "label": ""
+                    "xl": 6,
+                    "label": "lblQueryTypePWR",
+                    "newLine": true
                 },
                 "queryTypeINPT": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Input switch query (INPT)"
+                    "xl": 6,
+                    "label": "lblQueryTypeINPT",
+                    "newLine": true
                 },
                 "queryOnlyPwrINPT": {
                     "type": "checkbox",
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
-                    "label": "Power state must be ON to query"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblQueryOnlyPwrOn"
                 },
                 "queryTypeAVMT": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Mute status query (AVMT)"
+                    "xl": 6,
+                    "label": "lblQueryTypeAVMT"
                 },
                 "queryOnlyPwrAVMT": {
                     "type": "checkbox",
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
-                    "label": "Power state must be ON to query"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblQueryOnlyPwrOn"
                 },
                 "queryTypeERST": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Error status query (ERST)"
+                    "xl": 6,
+                    "label": "lblQueryTypeERST"
                 },
                 "queryOnlyPwrERST": {
                     "type": "checkbox",
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
-                    "label": "Power state must be ON to query"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblQueryOnlyPwrOn"
                 },
                 "queryTypeLAMP": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Lamp number/ lighting hour query (LAMP)"
+                    "xl": 6,
+                    "label": "lblQueryTypeLAMP"
                 },
                 "queryOnlyPwrLAMP": {
                     "type": "checkbox",
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
-                    "label": "Power state must be ON to query"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblQueryOnlyPwrOn"
                 },
                 "queryTypeINST": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Input toggling list query (INST)"
+                    "xl": 6,
+                    "label": "lblQueryTypeINST"
                 },
                 "queryOnlyPwrINST": {
                     "type": "checkbox",
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
-                    "label": "Power state must be ON to query"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblQueryOnlyPwrOn"
                 },
                 "queryTypeNAME": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Projector name query (NAME)"
+                    "xl": 6,
+                    "label": "lblQueryTypeNAME"
                 },
                 "queryOnlyPwrNAME": {
                     "type": "checkbox",
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
-                    "label": "Power state must be ON to query"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblQueryOnlyPwrOn"
                 },
                 "queryTypeINF1": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Manufacture name information query (INF1)"
+                    "xl": 6,
+                    "label": "lblQueryTypeINF1"
                 },
                 "queryOnlyPwrINF1": {
                     "type": "checkbox",
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
-                    "label": "Power state must be ON to query"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblQueryOnlyPwrOn"
                 },
                 "queryTypeINF2": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Product name information query (INF2)"
+                    "xl": 6,
+                    "label": "lblQueryTypeINF2"
                 },
                 "queryOnlyPwrINF2": {
                     "type": "checkbox",
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
-                    "label": "Power state must be ON to query"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblQueryOnlyPwrOn"
                 },
                 "queryTypeINFO": {
                     "type": "select",
                     "options": [
-                        { "label": {"en": "Never", "de": "Nie"}, "value": 0 },
-                        { "label": {"en": "Only on adapter startup", "de": "Nur beim Start des Adapters"}, "value": 1 },
-                        { "label": {"en": "On status poll interval", "de": "Im Status Abfrage Intervall"}, "value": 2 },
-                        { "label": {"en": "On information poll interval", "de": "Im Informations Abfrage Intervall"}, "value": 3 }
+                        { "label": "lblNever", "value": 0 },
+                        { "label": "lblOnlyOnStartup", "value": 1 },
+                        { "label": "lblOnStatusPoll", "value": 2 },
+                        { "label": "lblOnInformationPoll", "value": 3 }
                     ],
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
+                    "md": 12,
                     "lg": 6,
-                    "label": "Other information query (INFO)"
+                    "xl": 6,
+                    "label": "lblQueryTypeINFO"
                 },
                 "queryOnlyPwrINFO": {
                     "type": "checkbox",
+                    "xs": 12,
                     "sm": 12,
-                    "md": 6,
-                    "label": "Power state must be ON to query"
+                    "md": 12,
+                    "lg": 6,
+                    "xl": 6,
+                    "label": "lblQueryOnlyPwrOn"
                 }
             }
         },
         "_inputs": {
             "type": "panel",
-            "label": "inputs",
-            "disabled": false,
+            "label": "lblInputs",
+            "disabled": "false",
             "items": {
                 "_customizeInputs": {
                     "type": "staticText",
+                    "xs": 12,
                     "sm": 12,
                     "md": 12,
                     "lg": 12,
-                    "label": "Optionally customize your signal inputs and transfer this to the object (pjlink.x.input)",
+                    "xl": 12,
+                    "label": "lblCustomizeInputs",
                     "style": {"fontSize": 20}
                 },
                 "_divider01": {
                     "type": "divider"
                 },
                 "_updateInputInfo": {
-                    "type": "sendto",
+                    "type": "sendTo",
+                    "xs": 12,
                     "sm": 12,
                     "md": 12,
                     "lg": 12,
+                    "xl": 12,
                     "newLine": true,
-                    "label": "Get the actual input configuration from the projector and transfer this object to the inputInfo to customize the inputs",
+                    "label": "lblUpdateInputInfo",
                     "style": {"fontSize": 20},
                     "command": "updateInputs",
                     "variant": "outlined",
@@ -374,7 +465,7 @@
                     "showProcess": true,
                     "confirm": {
                         "condition": "1==1",
-                        "text": "Overwrite the existing inputInfo configuration",
+                        "text": "wrnOverwriteInputInfo",
                         "type": "warning"
                     }
                 },
@@ -383,9 +474,11 @@
                 },
                 "inputInfo": {
                     "type": "table",
+                    "xs": 12,
                     "sm": 12,
                     "md": 12,
                     "lg": 12,
+                    "xl": 12,
                     "items": [
                         {
                             "type": "select",
@@ -426,11 +519,13 @@
                     "type": "divider"
                 },
                 "_setInstanceInput": {
-                    "type": "sendto",
+                    "type": "sendTo",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Set the instance input object to fit the upper edited inputs",
+                    "xl": 6,
+                    "label": "lblSetInstanceInput",
                     "style": {"fontSize": 20},
                     "command": "setInstanceInputs",
                     "variant": "outlined",
@@ -438,16 +533,18 @@
                     "showProcess": true,
                     "confirm": {
                         "condition": "1==1",
-                        "text": "Overwrite the existing input configuration with restart",
+                        "text": "wrnSetInstanceInput",
                         "type": "warning"
                     }
                 },
                 "_resetInstanceInput": {
-                    "type": "sendto",
+                    "type": "sendTo",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
-                    "label": "Set the instance input object to default",
+                    "xl": 6,
+                    "label": "lblResetInstanceInput",
                     "style": {"fontSize": 20},
                     "command": "resetInstanceInputs",
                     "variant": "contained",
@@ -455,7 +552,7 @@
                     "showProcess": true,
                     "confirm": {
                         "condition": "1==1",
-                        "text": "Overwrite the existing input configuration",
+                        "text": "wrnResetInstanceInput",
                         "type": "warning"
                     }
                 }
