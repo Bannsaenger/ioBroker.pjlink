@@ -6,12 +6,10 @@
  *
  *      MIT License
  *
- *      Created with @iobroker/create-adapter 2.1.1
- *
  */
 
 const utils = require('@iobroker/adapter-core');
-const pjlink = require('pjlink');
+const pjlink = require('./lib/pjlink.js');
 
 // possible query types
 const queries = ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO'];
@@ -19,20 +17,11 @@ const queries = ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME',
 /**
  * Projector status constants
  * Four possible power states:
- * 0	/	pjlink.POWER.OFF
+ * 0 /	pjlink.POWER.OFF
  * 1 /	pjlink.POWER.ON
  * 2 /	pjlink.POWER.COOLING_DOWN
  * 3 /	pjlink.POWER.WARMING_UP
  */
-
-/*
-ToDo: go back to pjlink library from github.
-package.json:
-,
-    "pjlink": "Bannsaenger/node-pjlink"
-
-
-*/
 
 class Pjlink extends utils.Adapter {
     /**
@@ -100,6 +89,7 @@ class Pjlink extends utils.Adapter {
                 `PJLink connecting to host: ${this.conOptions.host}:${this.conOptions.port} (timeout: ${this.conOptions.timeout} ms), ${this.conOptions.password ? 'with password set' : 'with security disabled'}`,
             );
 
+            this.log.warn(`password: ${this.conOptions.password}`);
             // instantiate connection object for the projector
             this.projector = new pjlink(this.conOptions);
 

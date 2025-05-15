@@ -93,7 +93,7 @@
             "link": "https://github.com/Bannsaenger/ioBroker.pjlink/blob/master/LICENSE",
             "type": "free",
             "license": "MIT"
-          },
+        },
         "platform": "Javascript/Node.js",
         "icon": "pjlink.png",
         "enabled": true,
@@ -113,12 +113,12 @@
         "messagebox": true,
         "dependencies": [
             {
-              "js-controller": ">=6.0.11"
+                "js-controller": ">=6.0.11"
             }
         ],
-          "globalDependencies": [
+        "globalDependencies": [
             {
-              "admin": ">=7.4.10"
+                "admin": ">=7.4.10"
             }
         ]
     },
@@ -138,7 +138,11 @@
         "informationDelay": 60000,
         "reconnectDelay": 10000,
         "skippedCyclesAfterPowerOn": 5,
-        "startPingAfterNumFailures": 0,
+        "connectionCheckMethod": 0,
+        "tcpPingPort": 4352,
+        "checkTimeout": 500,
+        "precheckDevice": false,
+        "startPingAfterNumFailures": 1,
         "reconnectAfterNumPings": 1,
         "inputInfo": [],
         "queryTypeCLSS": 1,

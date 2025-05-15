@@ -138,34 +138,52 @@
                 "_divider01": {
                     "type": "divider"
                 },
-                "startPingAfterNumFailures": {
-                    "type": "number",
-                    "min": 0,
-                    "max": 100,
-                    "step": 1,
+                "connectionCheckMethod": {
+                    "type": "select",
+                    "options": [
+                        { "label": "lblOff", "value": 0 },
+                        { "label": "lblTcpPing", "value": 1 }
+                    ],
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 6,
                     "xl": 6,
-                    "label": "lblStartPingAfterNumFailures",
-                    "help": "hlpStartPingAfterNumFailures",
-                    "newLine": true
+                    "label": "lblConnectionCheckMethod"
                 },
-                "reconnectAfterNumPings": {
+                "tcpPingPort": {
                     "type": "number",
+                    "disabled": "data.connectionCheckMethod < 1",
                     "min": 1,
-                    "max": 100,
-                    "step": 1,
+                    "max": 65565,
                     "xs": 12,
-                    "sm": 12,
+                    "sm": 6,
                     "md": 6,
-                    "lg": 6,
-                    "xl": 6,
-                    "label": "lblReconnectAfterNumPings",
-                    "help": "hlpReconnectAfterNumPings"
+                    "lg": 3,
+                    "xl": 3,
+                    "label": "lblTcpPort",
+                    "help": "hlpTcpPort",
+                    "onChange": {
+                        "alsoDependsOn": ["port"],
+                        "calculateFunc": "data.port",
+                        "ignoreOwnChanges": true
+                    }
+                },
+                "checkTimeout": {
+                    "type": "number",
+                    "disabled": "data.connectionCheckMethod < 1",
+                    "min": 0,
+                    "max": 10000,
+                    "step": 100,
+                    "xs": 12,
+                    "sm": 6,
+                    "md": 6,
+                    "lg": 3,
+                    "xl": 3,
+                    "label": "lblCheckTimeout",
+                    "help": "hlpCheckTimeout"
                 }
-           }
+            }
         },
         "_exten": {
             "type": "panel",
