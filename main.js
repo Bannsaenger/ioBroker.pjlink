@@ -10,7 +10,7 @@
 
 const utils = require('@iobroker/adapter-core');
 const pjlink = require('./lib/pjlink.js');
-const pjlink2 = require('./lib/pjlinkv2.js');
+// const pjlink2 = require('./lib/pjlinkv2.js');
 
 // possible query types
 const queries = ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO'];
@@ -94,7 +94,7 @@ class Pjlink extends utils.Adapter {
             this.log.warn(`password: ${this.conOptions.password}`);
             // instantiate connection object for the projector
             this.projector = new pjlink(this.conOptions);
-            this.projector2 = new pjlink2(this.conOptions);
+            // this.projector2 = new pjlink2(this.conOptions);
 
             // try to communicate to the projector
             this.reconnectProjector();
