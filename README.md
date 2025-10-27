@@ -83,7 +83,7 @@ the other lamps will be added dynamically.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 0.1.2 (2025-10-27)
 * (Bannsaenger) updated dependencies and issues from repository checker
 * (Bannsaenger) migrate to NPM Trusted Publishing
 * (Bannsaenger) added tcp-ping feature
@@ -104,9 +104,6 @@ the other lamps will be added dynamically.
 ### 0.0.2 (2022-10-19)
 * (Bannsaenger) changed some info logs to debug. Fixed one power state issue.
 * (Bannsaenger) redesign of timer and error handling
-
-### 0.0.1 (2022-10-13)
-* (Bannsaenger) initial release
 
 ## License
 MIT License
