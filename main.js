@@ -9,7 +9,7 @@
  */
 
 const utils = require('@iobroker/adapter-core');
-const pjlink = require('./lib/pjlink.js');
+const pjlink = require('./lib/pjlinkv2.js');
 // const pjlink2 = require('./lib/pjlinkv2.js');
 
 // possible query types
@@ -153,7 +153,8 @@ class Pjlink extends utils.Adapter {
         try {
             this.log.info(`PJLink trying to (re)connect to projector`);
             // only the getPowerState for now
-            this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
+            this.projector.connect();
+            //this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
             // and set the reconnect delay in advance, but only if not running
             if (!this.timers.reconnectDelay) {
                 this.timers.reconnectDelay = setInterval(
@@ -221,47 +222,47 @@ class Pjlink extends utils.Adapter {
                 // ['POWR', 'INPT', 'CLSS', 'AVMT', 'ERST', 'LAMP', 'INST', 'NAME', 'INF1', 'INF2', 'INFO']
                 switch (code) {
                     case 'POWR':
-                        this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
+                        //this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
                         break;
 
                     case 'INPT':
-                        this.projector.getInput(this.pjlinkAnswerHandler.bind(this, 'GETINPUT'));
+                        //this.projector.getInput(this.pjlinkAnswerHandler.bind(this, 'GETINPUT'));
                         break;
 
                     case 'CLSS':
-                        this.projector.getClass(this.pjlinkAnswerHandler.bind(this, 'GETCLASS'));
+                        //this.projector.getClass(this.pjlinkAnswerHandler.bind(this, 'GETCLASS'));
                         break;
 
                     case 'AVMT':
-                        this.projector.getMute(this.pjlinkAnswerHandler.bind(this, 'GETMUTE'));
+                        //this.projector.getMute(this.pjlinkAnswerHandler.bind(this, 'GETMUTE'));
                         break;
 
                     case 'ERST':
-                        this.projector.getErrors(this.pjlinkAnswerHandler.bind(this, 'GETERRORS'));
+                        //this.projector.getErrors(this.pjlinkAnswerHandler.bind(this, 'GETERRORS'));
                         break;
 
                     case 'LAMP':
-                        this.projector.getLamps(this.pjlinkAnswerHandler.bind(this, 'GETLAMPS'));
+                        //this.projector.getLamps(this.pjlinkAnswerHandler.bind(this, 'GETLAMPS'));
                         break;
 
                     case 'INST':
-                        this.projector.getInputs(this.pjlinkAnswerHandler.bind(this, 'GETINPUTS'));
+                        //this.projector.getInputs(this.pjlinkAnswerHandler.bind(this, 'GETINPUTS'));
                         break;
 
                     case 'NAME':
-                        this.projector.getName(this.pjlinkAnswerHandler.bind(this, 'GETNAME'));
+                        //this.projector.getName(this.pjlinkAnswerHandler.bind(this, 'GETNAME'));
                         break;
 
                     case 'INF1':
-                        this.projector.getManufacturer(this.pjlinkAnswerHandler.bind(this, 'GETMANUFACTURER'));
+                        //this.projector.getManufacturer(this.pjlinkAnswerHandler.bind(this, 'GETMANUFACTURER'));
                         break;
 
                     case 'INF2':
-                        this.projector.getModel(this.pjlinkAnswerHandler.bind(this, 'GETMODEL'));
+                        //this.projector.getModel(this.pjlinkAnswerHandler.bind(this, 'GETMODEL'));
                         break;
 
                     case 'INFO':
-                        this.projector.getInfo(this.pjlinkAnswerHandler.bind(this, 'GETINFO'));
+                        //this.projector.getInfo(this.pjlinkAnswerHandler.bind(this, 'GETINFO'));
                         break;
 
                     default:
@@ -305,14 +306,14 @@ class Pjlink extends utils.Adapter {
 
             if (powerStatus === 0) {
                 this.log.info(`PJLink Projector is currently off. Trying to switch projector on`);
-                this.projector.powerOn();
+                //this.projector.powerOn();
                 this.skippedShortCycles = this.config.skippedCyclesAfterPowerOn;
                 this.log.debug(`PJLink now skipping ${this.skippedShortCycles} times the 'short' query cycle`);
                 return;
             }
             if (powerStatus === 1) {
                 this.log.info(`PJLink Projector is currently on. Trying to switch projector off`);
-                this.projector.powerOff();
+                //this.projector.powerOff();
                 return;
             }
             // return if cooling or warming up
@@ -337,7 +338,7 @@ class Pjlink extends utils.Adapter {
     async setMute(status) {
         try {
             this.log.info(`PJLink mute status changed to: ${status}`);
-            this.projector.setMute(status, this.pjlinkAnswerHandler.bind(this, 'ERROR'));
+            //this.projector.setMute(status, this.pjlinkAnswerHandler.bind(this, 'ERROR'));
         } catch (err) {
             this.errorHandler(err, 'setMute');
         }
@@ -598,7 +599,7 @@ class Pjlink extends utils.Adapter {
     onUnload(callback) {
         try {
             // End the PJLink connection
-            this.projector.disconnect();
+            //this.projector.disconnect();
 
             // Here you must clear all timeouts or intervals that may still be active
             clearInterval(this.timers.statusDelay);
@@ -634,13 +635,13 @@ class Pjlink extends utils.Adapter {
                     const onlyId = id.replace(`${this.namespace}.`, '');
                     switch (onlyId) {
                         case 'power':
-                            this.projectorOnOff();
+                            //this.projectorOnOff();
                             break;
                         case 'input':
                             // the string value is parsed by the pjlink.inputCommand.
                             // For the future and Class 2 it is the preferred format because of e.g. input 3B
-                            // @ts-expect-error state.val can be null but isnt
-                            this.projector.setInput(state.val.toString());
+                            //// @ts-expect-error state.val can be null but isnt
+                            //this.projector.setInput(state.val.toString());
                             break;
                         case 'setMute':
                             // @ts-expect-error state.val is surely a int at this point
