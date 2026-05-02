@@ -84,6 +84,7 @@ the other lamps will be added dynamically.
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22 now
 * (Bannsaenger) updated dependencies and issues from repository checker
 
 ### 0.1.2 (2025-10-27)

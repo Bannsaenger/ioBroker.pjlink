@@ -18,7 +18,7 @@
     "url": "https://github.com/Bannsaenger/ioBroker.pjlink"
   },
   "engines": {
-    "node": ">=20.x"
+    "node": ">=22.x"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.3.2",
