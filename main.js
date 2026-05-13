@@ -677,7 +677,6 @@ class Pjlink extends utils.Adapter {
                 } catch (err) {
                     this.errorHandler(err, 'onMessage (parse inputsAvailable)');
                 }
-                // @ts-expect-error expression works at this point because instanceObject is retrieved before
                 this.setForeignObject(`system.adapter.${this.namespace}`, instanceObject);
                 if (obj.callback) {
                     this.sendTo(obj.from, obj.command, 'done', obj.callback);
@@ -687,31 +686,21 @@ class Pjlink extends utils.Adapter {
                 if (obj.command === 'setInstanceInputs') {
                     this.log.debug(`setInstanceInputs command gets: ${JSON.stringify(obj)}`);
                     const inputObj = await this.getObjectAsync('input');
-                    // @ts-expect-error expression works at this point
                     if (inputObj.common.min) {
-                        // @ts-expect-error expression works at this point
                         delete inputObj.common.min;
                     }
-                    // @ts-expect-error expression works at this point
                     if (inputObj.common.max) {
-                        // @ts-expect-error expression works at this point
                         delete inputObj.common.max;
                     }
-                    // @ts-expect-error expression works at this point
                     inputObj.common.states = {};
                     for (const i in this.config.inputInfo) {
-                        // @ts-expect-error expression works at this point
                         const inputCode = this.config.inputInfo[i].code;
-                        // @ts-expect-error expression works at this point
                         const inputName = this.config.inputInfo[i].name;
-                        // @ts-expect-error expression works at this point
                         Object.assign(inputObj.common.states, { [inputCode]: inputName });
                     }
                     this.log.info(
-                        // @ts-expect-error expression works at this point
                         `setInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`,
                     );
-                    // @ts-expect-error expression works at this point
                     await this.setObjectAsync('input', inputObj);
                     if (obj.callback) {
                         this.sendTo(obj.from, obj.command, 'done', obj.callback);
@@ -722,20 +711,14 @@ class Pjlink extends utils.Adapter {
                 if (obj.command === 'resetInstanceInputs') {
                     this.log.debug(`resetInstanceInputs command gets: ${JSON.stringify(obj)}`);
                     const inputObj = await this.getObjectAsync('input');
-                    // @ts-expect-error expression works at this point
                     if (inputObj.common.states) {
-                        // @ts-expect-error expression works at this point
                         delete inputObj.common.states;
                     }
-                    // @ts-expect-error expression works at this point
                     inputObj.common.min = 11;
-                    // @ts-expect-error expression works at this point
                     inputObj.common.max = 59;
                     this.log.info(
-                        // @ts-expect-error expression works at this point
                         `resetInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`,
                     );
-                    // @ts-expect-error expression works at this point
                     this.setObject('input', inputObj);
                     if (obj.callback) {
                         this.sendTo(obj.from, obj.command, 'done', obj.callback);
