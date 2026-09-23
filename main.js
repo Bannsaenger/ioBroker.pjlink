@@ -484,7 +484,7 @@ class Pjlink extends utils.Adapter {
 
                         for (let lamps = 1; lamps < state.length; lamps++) {
                             const index = lamps + 1;
-                            await this.setObjectNotExistsAsync(`deviceInfo.lamps.lamp${index}Status`, {
+                            await this.extendObject(`deviceInfo.lamps.lamp${index}Status`, {
                                 type: 'state',
                                 common: {
                                     role: 'info.status',
@@ -512,7 +512,7 @@ class Pjlink extends utils.Adapter {
                                 },
                                 native: {},
                             });
-                            await this.setObjectNotExistsAsync(`deviceInfo.lamps.lamp${index}Hours`, {
+                            await this.extendObject(`deviceInfo.lamps.lamp${index}Hours`, {
                                 _id: 'deviceInfo.lamps.lamp1Hours',
                                 type: 'state',
                                 common: {
@@ -701,7 +701,7 @@ class Pjlink extends utils.Adapter {
                     this.log.info(
                         `setInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`,
                     );
-                    await this.setObjectNotExistsAsync('input', inputObj);
+                    await this.extendObject('input', inputObj);
                     if (obj.callback) {
                         this.sendTo(obj.from, obj.command, 'done', obj.callback);
                     }
@@ -719,7 +719,7 @@ class Pjlink extends utils.Adapter {
                     this.log.info(
                         `resetInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`,
                     );
-                    await this.setObjectNotExistsAsync('input', inputObj);
+                    await this.extendObject('input', inputObj);
                     if (obj.callback) {
                         this.sendTo(obj.from, obj.command, 'done', obj.callback);
                     }
