@@ -388,7 +388,7 @@ class Pjlink extends utils.Adapter {
                         clearInterval(this.timers.statusDelay);
                         if (!this.timers.reconnectDelay) {
                             // Start reconnection only once
-                            this.timers.reconnectDelay = setInterval(
+                            this.timers.reconnectDelay = this.setInterval(
                                 this.reconnectProjector.bind(this),
                                 this.config.reconnectDelay,
                             );
@@ -416,7 +416,10 @@ class Pjlink extends utils.Adapter {
                     this.timers.reconnectDelay = undefined;
 
                     // start timer for status and information update
-                    this.timers.statusDelay = setInterval(this.getProjectorStatus.bind(this), this.config.statusDelay);
+                    this.timers.statusDelay = this.setInterval(
+                        this.getProjectorStatus.bind(this),
+                        this.config.statusDelay,
+                    );
 
                     // set connection state
                     this.setState('info.connection', true, true);
