@@ -14,7 +14,7 @@
     "lblClass": "Aula",
     "lblConnectionCheckMethod": "Método para verificar a disponibilidade do projetor",
     "lblCustomizeInputs": "Opcionalmente: personalize suas entradas de sinal e transfira isso para o objeto (pjlink.x.input), para que você tenha uma validação no banco de dados do objeto e um menu suspenso para selecionar sua entrada",
-    "lblExtended": "estendido",
+    "lblExtended": "Estendido",
     "lblHost": "Hospedar",
     "lblInformationDelay": "Intervalo de pesquisa de informações",
     "lblInputs": "Personalize entradas",

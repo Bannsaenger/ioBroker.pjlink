@@ -14,7 +14,7 @@
     "lblClass": "Klasa",
     "lblConnectionCheckMethod": "Metoda sprawdzania dostępności projektora",
     "lblCustomizeInputs": "Opcjonalnie: Dostosuj dane wejściowe sygnału i przenieś je do obiektu (pjlink.x.input), aby mieć sprawdzanie poprawności w bazie danych obiektów i menu rozwijanego, aby wybrać wejście",
-    "lblExtended": "rozszerzony",
+    "lblExtended": "Rozszerzony",
     "lblHost": "Gospodarz",
     "lblInformationDelay": "Interwał ankiety informacyjnej",
     "lblInputs": "Dostosuj dane wejściowe",

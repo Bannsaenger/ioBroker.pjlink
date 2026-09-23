@@ -14,7 +14,7 @@
     "lblClass": "Class",
     "lblConnectionCheckMethod": "Method to check the availability of the projector",
     "lblCustomizeInputs": "Optionally: Customize your signal inputs and transfer this to the object (pjlink.x.input), so that you have a validation in the object database and a dropdown menu to select your input",
-    "lblExtended": "extended",
+    "lblExtended": "Extended",
     "lblHost": "Host",
     "lblInformationDelay": "Information poll interval",
     "lblInputs": "customize inputs",

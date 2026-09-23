@@ -14,7 +14,7 @@
     "lblClass": "Klasse",
     "lblConnectionCheckMethod": "Methode zur Überprüfung der Verfügbarkeit des Projektors",
     "lblCustomizeInputs": "Optional: Passen Sie Ihre Signaleingänge an und übertragen Sie diese an das Objekt (pjlink.x.input), damit Sie eine Validierung in der Objektdatenbank und ein Dropdown Menü haben, um Ihren Eingang auszuwählen",
-    "lblExtended": "erweitert",
+    "lblExtended": "Erweitert",
     "lblHost": "Host",
     "lblInformationDelay": "Informationsabfrageintervall",
     "lblInputs": "Eingänge anpassen",
