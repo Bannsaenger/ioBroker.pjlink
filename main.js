@@ -157,7 +157,7 @@ class Pjlink extends utils.Adapter {
             //this.projector.getPowerState(this.pjlinkAnswerHandler.bind(this, 'GETPOWERSTATE'));
             // and set the reconnect delay in advance, but only if not running
             if (!this.timers.reconnectDelay) {
-                this.timers.reconnectDelay = setInterval(
+                this.timers.reconnectDelay = this.setInterval(
                     this.reconnectProjector.bind(this),
                     this.config.reconnectDelay,
                 );
@@ -487,7 +487,7 @@ class Pjlink extends utils.Adapter {
                             await this.setObjectNotExistsAsync(`deviceInfo.lamps.lamp${index}Status`, {
                                 type: 'state',
                                 common: {
-                                    role: 'indicator.maintenance',
+                                    role: 'info.status',
                                     name: {
                                         en: `Status of lamp ${index}`,
                                         de: `Status der Lampe ${index}`,
@@ -701,7 +701,7 @@ class Pjlink extends utils.Adapter {
                     this.log.info(
                         `setInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`,
                     );
-                    await this.setObjectAsync('input', inputObj);
+                    await this.setObjectNotExistsAsync('input', inputObj);
                     if (obj.callback) {
                         this.sendTo(obj.from, obj.command, 'done', obj.callback);
                     }
@@ -719,7 +719,7 @@ class Pjlink extends utils.Adapter {
                     this.log.info(
                         `resetInstanceInputs command sets inputs common to: ${JSON.stringify(inputObj.common)}`,
                     );
-                    this.setObject('input', inputObj);
+                    await this.setObjectNotExistsAsync('input', inputObj);
                     if (obj.callback) {
                         this.sendTo(obj.from, obj.command, 'done', obj.callback);
                     }

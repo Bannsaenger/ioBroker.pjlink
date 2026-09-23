@@ -61,7 +61,7 @@
         "ru": "начальный выпуск",
         "pt": "lançamento inicial",
         "nl": "niet",
-        "fr": "initial release",
+        "fr": "version initiale",
         "it": "rilascio iniziale",
         "es": "liberación inicial",
         "pl": "pierwsze wydanie",
@@ -103,7 +103,6 @@
       "projector"
     ],
     "licenseInformation": {
-      "link": "https://github.com/Bannsaenger/ioBroker.pjlink/blob/master/LICENSE",
       "type": "free",
       "license": "MIT"
     },
@@ -243,7 +242,7 @@
           "zh-cn": "权力转换"
         },
         "type": "boolean",
-        "read": true,
+        "read": false,
         "write": true,
         "def": false
       },
@@ -413,7 +412,7 @@
       "_id": "deviceInfo.fanErrorStatus",
       "type": "state",
       "common": {
-        "role": "indicator.maintenance",
+        "role": "info.status",
         "name": {
           "en": "Fan error status",
           "de": "Lüfter Fehlerstatus",
@@ -443,7 +442,7 @@
       "_id": "deviceInfo.lampErrorStatus",
       "type": "state",
       "common": {
-        "role": "indicator.maintenance",
+        "role": "info.status",
         "name": {
           "en": "Lamp error status",
           "de": "Fehlerstatus der Lampe",
@@ -473,7 +472,7 @@
       "_id": "deviceInfo.temperatureErrorStatus",
       "type": "state",
       "common": {
-        "role": "indicator.maintenance",
+        "role": "info.status",
         "name": {
           "en": "Temperature error status",
           "de": "Temperaturfehlerstatus",
@@ -503,7 +502,7 @@
       "_id": "deviceInfo.coverOpenStatus",
       "type": "state",
       "common": {
-        "role": "indicator.maintenance",
+        "role": "info.status",
         "name": {
           "en": "Cover open status",
           "de": "Gehäuse offen Status",
@@ -533,7 +532,7 @@
       "_id": "deviceInfo.filterErrorStatus",
       "type": "state",
       "common": {
-        "role": "indicator.maintenance",
+        "role": "info.status",
         "name": {
           "en": "Filter error status",
           "de": "Status der Filter",
@@ -563,7 +562,7 @@
       "_id": "deviceInfo.otherErrorStatus",
       "type": "state",
       "common": {
-        "role": "indicator.maintenance",
+        "role": "info.status",
         "name": {
           "en": "Other error status",
           "de": "Sonstige Fehler",
@@ -613,7 +612,7 @@
       "_id": "deviceInfo.lamps.lamp1Status",
       "type": "state",
       "common": {
-        "role": "indicator.maintenance",
+        "role": "info.status",
         "name": {
           "en": "Status of lamp 1",
           "de": "Status der Lampe 1",
